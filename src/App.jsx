@@ -6,7 +6,10 @@ import Brands from "./pages/brands/Brands";
 import Exfoliants from "./pages/Exfoliants/Exfoliants";
 import Exfoliant from "./pages/Exfoliants/Exfoliant";
 import SkinBackground from "./components/SkinBackground/SkinBackground";
-// import Soap from "./pages/Soap/Soap";
+import Soap from "./pages/Soaps/Soaps";
+import Sunscreen from "./pages/Sunscreen/Sunscreen";
+import Cleansers from "./pages/Cleansers/Cleansers";
+
 
 function App() {
   return (
