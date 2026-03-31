@@ -1,0 +1,298 @@
+.sunscreen-page {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 48px 32px 88px;
+  background: #ffffff;
+  color: #1f1b18;
+}
+
+.sunscreen-page--status {
+  min-height: 50vh;
+  display: grid;
+  place-items: center;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sunscreen-page__hero {
+  margin: 0 auto 52px;
+  max-width: 680px;
+  text-align: center;
+}
+
+.sunscreen-page__eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: #8a8178;
+}
+
+.sunscreen-page__title {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.sunscreen-page__subtitle {
+  margin: 16px auto 0;
+  max-width: 560px;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: #6f675f;
+}
+
+.sunscreen-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 72px 42px;
+}
+
+.sunscreen-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.sunscreen-card__image-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1.18;
+  display: grid;
+  place-items: center;
+  margin-bottom: 26px;
+  background: #fbfaf8;
+}
+
+.sunscreen-card__image {
+  width: min(72%, 260px);
+  max-height: 320px;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.08));
+  transition: transform 0.28s ease;
+}
+
+.sunscreen-card:hover .sunscreen-card__image {
+  transform: translateY(-4px);
+}
+
+.sunscreen-card__content {
+  max-width: 300px;
+}
+
+.sunscreen-card__brand {
+  margin: 0 0 10px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.sunscreen-card__name {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #3a342f;
+}
+
+.sunscreen-card__meta {
+  margin: 12px 0 0;
+  font-size: 0.86rem;
+  color: #6f675f;
+  letter-spacing: 0.08em;
+}
+
+.sunscreen-card-link {
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.28s ease;
+}
+
+.sunscreen-card-link:hover {
+  opacity: 0.8;
+}
+
+/* Détail de la crème solaire */
+.sunscreen-detail {
+  padding: 32px 0 0;
+}
+
+.sunscreen-detail__back-link {
+  display: inline-block;
+  margin: 0 0 48px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #6f675f;
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  transition: color 0.28s ease;
+}
+
+.sunscreen-detail__back-link:hover {
+  color: #3a342f;
+}
+
+.sunscreen-detail__container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  align-items: start;
+}
+
+.sunscreen-detail__image-wrap {
+  aspect-ratio: 1 / 1.18;
+  display: grid;
+  place-items: center;
+  background: #fbfaf8;
+  padding: 40px;
+}
+
+.sunscreen-detail__image {
+  width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.08));
+}
+
+.sunscreen-detail__content {
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.sunscreen-detail__brand {
+  margin: 0 0 16px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #8a8178;
+}
+
+.sunscreen-detail__title {
+  margin: 0 0 8px;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1.4;
+  color: #3a342f;
+}
+
+.sunscreen-detail__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sunscreen-detail__field-label {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #8a8178;
+}
+
+.sunscreen-detail__field-value {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: #3a342f;
+}
+
+.sunscreen-detail__field-value--long {
+  line-height: 1.9;
+  color: #6f675f;
+}
+
+.sunscreen-detail__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.sunscreen-detail__tag {
+  display: inline-block;
+  background: #fbfaf8;
+  padding: 8px 14px;
+  border-radius: 3px;
+  font-size: 0.82rem;
+  color: #6f675f;
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 1024px) {
+  .sunscreen-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 56px 28px;
+  }
+
+  .sunscreen-page {
+    padding: 40px 24px 72px;
+  }
+
+  .sunscreen-detail__container {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .sunscreen-detail__image-wrap {
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 640px) {
+  .sunscreen-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .sunscreen-page {
+    padding: 32px 18px 56px;
+  }
+
+  .sunscreen-card__image-wrap {
+    aspect-ratio: 1 / 1.05;
+    margin-bottom: 20px;
+  }
+
+  .sunscreen-card__image {
+    width: min(68%, 220px);
+  }
+
+  .sunscreen-detail__back-link {
+    margin-bottom: 32px;
+    font-size: 0.82rem;
+  }
+
+  .sunscreen-detail__container {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .sunscreen-detail__image-wrap {
+    aspect-ratio: 1 / 1.1;
+    padding: 24px;
+  }
+
+  .sunscreen-detail__image {
+    max-height: 350px;
+  }
+
+  .sunscreen-detail__title {
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    margin-bottom: 24px;
+  }
+
+  .sunscreen-detail__tags {
+    gap: 8px;
+  }
+
+  .sunscreen-detail__tag {
+    font-size: 0.75rem;
+    padding: 6px 10px;
+  }
+}

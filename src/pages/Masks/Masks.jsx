@@ -1,10 +1,10 @@
-import "./Creams";
+//AJOUTER LIMPORT CSS !!!!!
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import axios from "axios";
 
-const Creams = () => {
+const Masks = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -12,7 +12,7 @@ const Creams = () => {
     const fetchdata = async () => {
       try {
         const response = await axios.get(
-          "https://world.openbeautyfacts.org/api/v2/search?categories_tags=en:face-creams&fields=code,product_name,categories_tags,ingredients_text,quantity,image_url,brands&json=1&page_size=50",
+          "https://world.openbeautyfacts.org/api/v2/search?categories_tags=en:face-masks&fields=code,product_name,categories_tags,ingredients_text,quantity,image_url,brands&json=1&page_size=50",
         );
 
         // console.log("ici =>", response.data.products);
@@ -27,20 +27,20 @@ const Creams = () => {
   }, []);
 
   return (
-    <main className="creams-page">
+    <main className="masks-page">
       <div className="container">
         {isLoading ? (
           <p>Loading...</p>
         ) : (
           <section>
-            <h1>Creams</h1>
+            <h1>Masks</h1>
             {data.map((element) => {
               return (
                 // S'il n'y a pas d'image, la marque et le nom du produit on ne l'affiche pas
                 element.image_url &&
                 element.brands &&
                 element.product_name && (
-                  <Link to={"/cremes/" + element.code} key={element.code}>
+                  <Link to={"/masques/" + element.code} key={element.code}>
                     <article>
                       <div>
                         <img
@@ -54,7 +54,7 @@ const Creams = () => {
                         {element.quantity ? (
                           <div>{element.quantity} </div>
                         ) : (
-                          "30 ml"
+                          "10 ml"
                         )}
                       </div>
                     </article>
@@ -69,4 +69,4 @@ const Creams = () => {
   );
 };
 
-export default Creams;
+export default Masks;

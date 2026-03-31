@@ -1,16 +1,23 @@
 import "./App.css";
 import Home from "./pages/Home/Home";
-// import Soap from "./pages/Soap/Soap";
 import Brands from "./pages/brands/Brands";
 import Creams from "./pages/Creams/Creams";
 import Results from "./pages/Results/Results";
 import Header from "./components/Header/Header";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Exfoliants from "./pages/Exfoliants/Exfoliants";
+import Exfoliant from "./pages/Exfoliants/Exfoliant";
+import SkinBackground from "./components/SkinBackground/SkinBackground";
+import Soap from "./pages/Soaps/Soaps";
+import Sunscreen from "./pages/Sunscreen/Sunscreen";
+import Cleansers from "./pages/Cleansers/Cleansers";
+
 
 function App() {
   return (
     <Router>
+      <SkinBackground />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -26,6 +33,11 @@ function App() {
         <Route path="/marques" element={<Brands />} />
         <Route path="/formulaire" element={<Questionnaire />} />
         <Route path="/routine" element={<Results />} />
+        <Route path="/exfoliants" element={<Exfoliants />} />
+        <Route path="/exfoliants/:code" element={<Exfoliant />} />
+
+      
+
 
         <Route
           path="*"
