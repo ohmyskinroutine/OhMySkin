@@ -1,4 +1,3 @@
-import Questionnaire from "../Questionnaire/Questionnaire";
 import "./Home.css";
 const CLOUD_NAME = "dxehv4yky";
 
@@ -25,7 +24,6 @@ const Home = () => {
             </div>
           ))}
         </div>
-        <Questionnaire />
       </section>
     </main>
   );
