@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { questions } from "../../assets/question";
 import { useNavigate } from "react-router-dom";
+import { questions } from "../../assets/question";
+import Question from "../../components/Question/Question";
 
 const Questionnaire = () => {
   const [answers, setAnswers] = useState({});
@@ -21,14 +22,7 @@ const Questionnaire = () => {
   const navigate = useNavigate();
 
   return currentQuestion ? (
-    <div>
-      <h2>{currentQuestion.question}</h2>
-      {currentQuestion.options.map((option) => (
-        <button key={option} onClick={() => handleAnswer(questions.id, option)}>
-          {option}
-        </button>
-      ))}
-    </div>
+    <Question question={currentQuestion} onAnswer={handleAnswer} />
   ) : (
     navigate("/routine", { state: answers })
   );
