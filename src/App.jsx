@@ -19,6 +19,18 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/marques" element={<Brands />} />
+
+
+        {/* <Route path="/cremes" element={<Creams />} />
+        <Route path="/cremes/:code" element={<Cream />} />
+        <Route path="/masques" element={<Masks />} /> */}
+        {/* <Route path="/masques/:code" element={<Masks />} />
+        <Route path="/savons" element={<Soaps />} />
+        <Route path="/savons/:code" element={<Soaps />} />
+        <Route path="/exfoliants" element={<Scrubs />} />
+        <Route path="/exfoliants/:code" element={<Scrubs />} />l
+        <Route path="/marques" element={<Brands />} />
+        <Route path="/formulaire" element={<Questionnaire />} />  */}
         <Route path="/exfoliants" element={<Exfoliants />} />
         <Route path="/exfoliants/:code" element={<Exfoliant />} />
         {/* <Route path="/soap" element={<Soap />} /> */}
