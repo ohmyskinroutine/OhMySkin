@@ -13,15 +13,19 @@ const Header = () => {
             </Link>
           </div>
           <input className="search-input" placeholder="Search" />
-          <button className="routine-btn">Crée ta routine skincare</button>
+          <Link to="/formulaire">
+            <button className="routine-btn">Crée ta routine skincare</button>
+          </Link>
         </div>
       </div>
       <div className="container">
         <nav className="nav">
           <Link to="/cremes">Crèmes</Link>
+          <Link to="/cleanser">Cleanser</Link>
           <Link to="/masques">Masques</Link>
           <Link to="/savons">Savons</Link>
           <Link to="/exfoliants">Exfoliants</Link>
+          <Link to="/solaires">Crèmes solaires</Link>
         </nav>
       </div>
     </header>

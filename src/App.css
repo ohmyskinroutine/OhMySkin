@@ -2,3 +2,9 @@
   max-width: 1280px;
   margin: 0 auto;
 }
+
+/* Ensure app content sits above the background particles */
+#root {
+  position: relative;
+  z-index: 1;
+}
