@@ -39,7 +39,7 @@ const Cleansers = () => {
     if (!singleCleanser) {
       return (
         <section className="cleanser-page">
-          <p>Nettoyant non trouvé</p>
+          <p>Cleanser non trouvé</p>
         </section>
       );
     }
@@ -48,7 +48,7 @@ const Cleansers = () => {
       <section className="cleanser-page">
         <div className="cleanser-detail">
           <Link to="/cleansers" className="cleanser-detail__back-link">
-            ← Retour aux nettoyants
+            ← Retour aux cleansers
           </Link>
 
           <div className="cleanser-detail__container">
@@ -108,7 +108,7 @@ const Cleansers = () => {
   return (
     <section className="cleanser-page">
       <div className="cleanser-page__hero">
-        <h1 className="cleanser-page__title">Nettoyants</h1>
+        <h1 className="cleanser-page__title">Cleansers</h1>
       </div>
 
       <div className="cleanser-grid">
