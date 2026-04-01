@@ -1,9 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useRef } from "react";
-// import logo from "../../assets/logo.webp";
-
+import axios from "axios";
+import Cookies from "js-cookie";
 import "./Header.css";
-const Header = () => {
+
+const Header = ({ user, setUser }) => {
   const navigate = useNavigate();
   const debounceRef = useRef(null);
 
@@ -17,6 +18,21 @@ const Header = () => {
     }, 400);
   };
 
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        "https://site--oh-my-skin--cvtt47qfxcv8.code.run/logout",
+        {},
+        { headers: { Authorization: `Bearer ${user.token}` } }
+      );
+    } catch {
+      // on déconnecte côté client même si le serveur ne répond pas
+    }
+    Cookies.remove("user");
+    setUser(null);
+    navigate("/");
+  };
+
   return (
     <header className="header">
       <div className="container">
@@ -27,9 +43,28 @@ const Header = () => {
             </Link>
           </div>
           <input className="search-input" placeholder="Search" onChange={handleChange} />
-          <Link to="/formulaire">
-            <button className="routine-btn">Crée ta routine skincare</button>
-          </Link>
+          <div className="header-actions">
+            <Link to="/formulaire">
+              <button className="routine-btn">Crée ta routine skincare</button>
+            </Link>
+            {user ? (
+              <div className="auth-buttons">
+                <span className="username-display">Bonjour, {user.username}</span>
+                <button className="logout-btn" onClick={handleLogout}>
+                  Déconnexion
+                </button>
+              </div>
+            ) : (
+              <div className="auth-buttons">
+                <Link to="/login">
+                  <button className="login-btn">Connexion</button>
+                </Link>
+                <Link to="/signup">
+                  <button className="signup-btn">Inscription</button>
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <div className="container">

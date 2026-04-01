@@ -1,3 +1,5 @@
+import { useState } from "react";
+import Cookies from "js-cookie";
 import "./App.css";
 import Home from "./pages/Home/Home";
 import Masks from "./pages/Masks/Masks";
@@ -12,16 +14,25 @@ import Exfoliant from "./pages/Exfoliants/Exfoliant";
 import Exfoliants from "./pages/Exfoliants/Exfoliants";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
 import Search from "./pages/Search/Search";
+import Login from "./pages/Login/Login";
+import Signup from "./pages/Signup/Signup";
 import SkinBackground from "./components/SkinBackground/SkinBackground";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
+  const [user, setUser] = useState(() => {
+    const stored = Cookies.get("user");
+    return stored ? JSON.parse(stored) : null;
+  });
+
   return (
     <Router>
       <SkinBackground />
-      <Header />
+      <Header user={user} setUser={setUser} />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login setUser={setUser} />} />
+        <Route path="/signup" element={<Signup setUser={setUser} />} />
         <Route path="/marques" element={<Brands />} />
         <Route path="/cremes" element={<Creams />} />
         <Route path="/cremes/:code" element={<Creams />} />
@@ -29,9 +40,6 @@ function App() {
         <Route path="/masques/:code" element={<Masks />} />
         <Route path="/savons" element={<Soaps />} />
         <Route path="/savons/:code" element={<Soaps />} />
-        {/* <Route path="/exfoliants" element={<Scrubs />} /> */}
-        {/* <Route path="/exfoliants/:code" element={<Scrubs />} /> */}
-        <Route path="/marques" element={<Brands />} />
         <Route path="/formulaire" element={<Questionnaire />} />
         <Route path="/routine" element={<Results />} />
         <Route path="/exfoliants" element={<Exfoliants />} />

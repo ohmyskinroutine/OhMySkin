@@ -49,6 +49,71 @@
   background-color: #333;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.login-btn {
+  padding: 0.5rem 1.2rem;
+  background-color: transparent;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.login-btn:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.signup-btn {
+  padding: 0.5rem 1.2rem;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.signup-btn:hover {
+  background-color: #333;
+}
+
+.logout-btn {
+  padding: 0.5rem 1.2rem;
+  background-color: transparent;
+  color: #e53935;
+  border: 1px solid #e53935;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.logout-btn:hover {
+  background-color: #e53935;
+  color: #fff;
+}
+
+.username-display {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #333;
+}
+
 .nav {
   display: flex;
   gap: 2rem;
