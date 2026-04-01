@@ -13,7 +13,6 @@ const Sunscreen = () => {
       try {
         const response = await axios.get(
           "https://world.openbeautyfacts.org/api/v2/search?categories_tags=en:sunscreens&fields=code,product_name,categories_tags,ingredients_text,quantity,image_url,brands&json=1&page_size=50",
-          //   "https://world.openbeautyfacts.org/api/v2/product/$%7Bcode%7D?fields=code,product_name,categories_tags,ingredients_text,quantity,image_url,brands",
         );
         setData(response.data);
         setIsLoading(false);
@@ -33,22 +32,16 @@ const Sunscreen = () => {
     );
   }
 
-  // Si on a un code, afficher le détail
+  // Si un code (id du produit) existe dans l'URL -> Afficher la page détail
   if (code) {
-    const singleSunscreen = data?.products?.find((s) => s.code === code);
-
-    if (!singleSunscreen) {
-      return (
-        <section className="sunscreen-page">
-          <p>Crème solaire non trouvée</p>
-        </section>
-      );
-    }
+    const singleSunscreen = data?.products?.find(
+      (sunscreen) => sunscreen.code === code,
+    );
 
     return (
       <section className="sunscreen-page">
         <div className="sunscreen-detail">
-          <Link to="/sunscreen" className="sunscreen-detail__back-link">
+          <Link to="/solaires" className="sunscreen-detail__back-link">
             ← Retour aux crèmes solaires
           </Link>
 
@@ -109,19 +102,26 @@ const Sunscreen = () => {
     );
   }
 
-  // Afficher la liste de tous les sunscreen
   return (
     <section className="sunscreen-page">
       <div className="sunscreen-page__hero">
         <h1 className="sunscreen-page__title">Crèmes Solaires</h1>
       </div>
 
+      {/* Afficher la liste de toutes les crèmes solaires avec image */}
       <div className="sunscreen-grid">
+        {/* 
+          Étapes:
+          1. Récupérer tous les produits
+          2. Filtrer: garder seulement ceux qui ont une image
+          3. Boucler sur chaque crème solaire et créer une carte produit
+          4. Chaque lien utilise le code de la crème solaire comme ID dans l'URL (/solaires/[code])
+        */}
         {data?.products
           ?.filter((sunscreen) => sunscreen.image_url)
           ?.map((sunscreen) => (
             <Link
-              to={`/sunscreen/${sunscreen.code}`}
+              to={`/solaires/${sunscreen.code}`}
               key={sunscreen.code}
               className="sunscreen-card-link"
             >
