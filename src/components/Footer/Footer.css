@@ -1,0 +1,29 @@
+footer {
+  background-color: white;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+footer div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+footer a {
+  text-decoration: none;
+  color: #82766b;
+}
+
+footer p {
+  color: #82766b;
+  font-size: 18px;
+  display: flex;
+  gap: 10px;
+}
+
+footer img {
+  height: 20px;
+}

@@ -1,0 +1,17 @@
+.question-page .container {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.question-page .container > button {
+  color: #78736f;
+  border: none;
+  cursor: pointer;
+  margin: 20px;
+  text-align: center;
+  font-size: 16px;
+  display: inline-flex;
+  gap: 5px;
+  background-color: transparent;
+}

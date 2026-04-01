@@ -1,0 +1,35 @@
+.question-block h2 {
+  margin: 50px 0;
+  font-weight: bold;
+  font-size: 24px;
+  color: #231d19;
+}
+
+.question-block button {
+  cursor: pointer;
+  margin: 20px 0;
+  background-color: #f8f4ef;
+  font-size: 18px;
+  font-family: "Quicksand", sans-serif;
+  color: #231d19;
+  border: solid 1px #231d19;
+  border-radius: 30px;
+  padding: 20px;
+}
+
+.question-block button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+}
+
+.question-block > div {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+/* Permet au dernier bouton s'il est seul sur sa ligne d'être centré */
+.question-block > div button:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  justify-self: center;
+}

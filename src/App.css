@@ -1,6 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+body {
+  font-family: "Quicksand", sans-serif;
+}
+
 .container {
   max-width: 1280px;
   margin: 0 auto;
+  min-height: 100vh - 130px;
 }
 
 /* Ensure app content sits above the background particles */

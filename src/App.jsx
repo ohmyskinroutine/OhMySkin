@@ -13,6 +13,7 @@ import Exfoliants from "./pages/Exfoliants/Exfoliants";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
 import SkinBackground from "./components/SkinBackground/SkinBackground";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
           }
         />
       </Routes>
+      <Footer />
     </Router>
   );
 }
