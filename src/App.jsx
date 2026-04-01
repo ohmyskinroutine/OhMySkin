@@ -9,6 +9,7 @@ import Questionnaire from "./pages/Questionnaire/Questionnaire";
 import Search from "./pages/Search/Search";
 import SkinBackground from "./components/SkinBackground/SkinBackground";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   // Liens catégories
@@ -89,6 +90,7 @@ function App() {
           }
         />
       </Routes>
+      <Footer />
     </Router>
   );
 }
