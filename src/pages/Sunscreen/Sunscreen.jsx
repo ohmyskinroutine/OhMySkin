@@ -48,7 +48,7 @@ const Sunscreen = () => {
     return (
       <section className="sunscreen-page">
         <div className="sunscreen-detail">
-          <Link to="/sunscreen" className="sunscreen-detail__back-link">
+          <Link to="/solaires" className="sunscreen-detail__back-link">
             ← Retour aux crèmes solaires
           </Link>
 
@@ -121,7 +121,7 @@ const Sunscreen = () => {
           ?.filter((sunscreen) => sunscreen.image_url)
           ?.map((sunscreen) => (
             <Link
-              to={`/sunscreen/${sunscreen.code}`}
+              to={`/solaires/${sunscreen.code}`}
               key={sunscreen.code}
               className="sunscreen-card-link"
             >
