@@ -1,4 +1,5 @@
 import "./Home.css";
+
 const CLOUD_NAME = "dxehv4yky";
 
 const images = [
