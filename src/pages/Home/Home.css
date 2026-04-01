@@ -51,6 +51,28 @@
   transform: scale(1.05);
 }
 
+.home-brands-link {
+  max-width: 1200px;
+  margin: 1.5rem auto 0;
+  padding: 0 2rem;
+  text-align: right;
+}
+
+.home-brands-link a {
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5d5b5b;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  transition: color 0.2s;
+}
+
+.home-brands-link a:hover {
+  color: #1f1b18;
+}
+
 .gallery-card p {
   font-size: 0.85rem;
   color: #444;

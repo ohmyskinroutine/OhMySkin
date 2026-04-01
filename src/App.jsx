@@ -11,6 +11,7 @@ import Sunscreen from "./pages/Sunscreen/Sunscreen";
 import Exfoliant from "./pages/Exfoliants/Exfoliant";
 import Exfoliants from "./pages/Exfoliants/Exfoliants";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
+import Search from "./pages/Search/Search";
 import SkinBackground from "./components/SkinBackground/SkinBackground";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -35,6 +36,7 @@ function App() {
         <Route path="/routine" element={<Results />} />
         <Route path="/exfoliants" element={<Exfoliants />} />
         <Route path="/exfoliants/:code" element={<Exfoliant />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/cleansers" element={<Cleansers />} />
         <Route path="/solaires" element={<Sunscreen />} />
         <Route
