@@ -32,17 +32,11 @@ const Cleansers = () => {
     );
   }
 
-  // Si on a un code, afficher le détail
+  // Si un code (id du produit) existe dans l'URL -> Afficher la page détail
   if (code) {
-    const singleCleanser = data?.products?.find((s) => s.code === code);
-
-    if (!singleCleanser) {
-      return (
-        <section className="cleanser-page">
-          <p>Cleanser non trouvé</p>
-        </section>
-      );
-    }
+    const singleCleanser = data?.products?.find(
+      (cleanser) => cleanser.code === code,
+    );
 
     return (
       <section className="cleanser-page">
@@ -104,14 +98,21 @@ const Cleansers = () => {
     );
   }
 
-  // Afficher la liste de tous les nettoyants
   return (
     <section className="cleanser-page">
       <div className="cleanser-page__hero">
         <h1 className="cleanser-page__title">Cleansers</h1>
       </div>
 
+      {/* Afficher la liste de tous les nettoyants avec image */}
       <div className="cleanser-grid">
+        {/* 
+          Étapes:
+          1. Récupérer tous les produits
+          2. Filtrer: garder seulement ceux qui ont une image
+          3. Boucler sur chaque nettoyant et créer une carte produit
+          4. Chaque lien utilise le code du nettoyant comme ID dans l'URL (/cleansers/[code])
+        */}
         {data?.products
           ?.filter((cleanser) => cleanser.image_url)
           ?.map((cleanser) => (

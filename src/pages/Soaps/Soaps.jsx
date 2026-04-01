@@ -30,18 +30,9 @@ const Soap = () => {
       </section>
     );
   }
-
-  // Si on a un code, afficher le détail
+  // Si un code (id du produit) existe dans l'URL -> Afficher la page détail
   if (code) {
-    const singleSoap = data?.products?.find((s) => s.code === code);
-
-    if (!singleSoap) {
-      return (
-        <section className="soap-page">
-          <p>Savon non trouvé</p>
-        </section>
-      );
-    }
+    const singleSoap = data?.products?.find((soap) => soap.code === code);
 
     return (
       <section className="soap-page">
@@ -103,14 +94,21 @@ const Soap = () => {
     );
   }
 
-  // Afficher la liste de tous les savons
   return (
     <section className="soap-page">
       <div className="soap-page__hero">
         <h1 className="soap-page__title">Savons</h1>
       </div>
 
+      {/* Afficher la liste de tous les savons avec image */}
       <div className="soap-grid">
+        {/* 
+          Étapes:
+          1. Récupérer tous les produits
+          2. Filtrer: garder seulement ceux qui ont une image
+          3. Boucler sur chaque savon et créer une carte produit
+          4. Chaque lien utilise le code du savon comme ID dans l'URL (/savons/[code])
+        */}
         {data?.products
           ?.filter((soap) => soap.image_url)
           ?.map((soap) => (
