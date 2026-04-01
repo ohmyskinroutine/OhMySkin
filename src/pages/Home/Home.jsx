@@ -1,5 +1,5 @@
 import "./Home.css";
-
+import { Link } from "react-router-dom";
 const CLOUD_NAME = "dxehv4yky";
 
 const images = [
@@ -31,6 +31,9 @@ const Home = () => {
           ))}
         </div>
       </section>
+      <div className="home-brands-link">
+        <Link to="/marques">Voir toutes les marques →</Link>
+      </div>
     </main>
   );
 };
