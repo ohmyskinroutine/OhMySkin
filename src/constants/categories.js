@@ -34,11 +34,11 @@ export const CATEGORIES = [
   {
     label: "Cleansers",
     slug: "cleansers",
-    url: "https://world.openbeautyfacts.org/api/v2/search?categories_tags=en:cleansers&fields=code,product_name,ingredients_text,image_url,brands&page_size=50",
+    url: "https://world.openbeautyfacts.org/api/v2/search?categories_tags=en:cleansers&fields=code,product_name,categories_tags,ingredients_text,quantity,image_url,brands&json=1&page_size=50",
   },
   {
     label: "Sunscreen",
     slug: "sunscreens",
-    url: "https://world.openbeautyfacts.org/api/v2/search?categories_tags=en:sunscreens&fields=code,product_name,ingredients_text,image_url,brands&page_size=50",
+    url: "https://world.openbeautyfacts.org/api/v2/search?categories_tags=en:sunscreens&fields=code,product_name,categories_tags,ingredients_text,quantity,image_url,brands&json=1&page_size=50",
   },
 ];
