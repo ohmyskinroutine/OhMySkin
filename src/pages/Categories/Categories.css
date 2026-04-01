@@ -1,23 +1,23 @@
-.exfoliants-page {
+.categories-page {
   max-width: 1380px;
   margin: 0 auto;
   padding: 44px 48px 88px;
   color: #1f1b18;
 }
 
-.exfoliants-page__hero {
+.categories-page__hero {
   margin: 0 auto 52px;
   text-align: center;
 }
 
-.exfoliants-page__title {
+.categories-page__title {
   margin: 0;
   font-size: clamp(2.4rem, 4vw, 3.6rem);
   font-weight: 400;
   letter-spacing: 0.01em;
 }
 
-.exfoliants-page__count {
+.categories-page__count {
   margin: 0 0 40px;
   text-align: center;
   font-size: 0.76rem;
@@ -26,7 +26,7 @@
   color: #6f675f;
 }
 
-.exfoliants-page__status {
+.categories-page__status {
   min-height: 40vh;
   display: grid;
   place-items: center;
@@ -36,34 +36,37 @@
   text-transform: uppercase;
 }
 
-.exfoliants-grid {
+.categories-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 28px;
 }
 
-.exfoliant-card,
-a.exfoliant-card {
+.categories-card,
+a.categories-card {
   text-decoration: none;
   cursor: pointer;
+  color: #6f675f;
 }
 
-.exfoliant-card {
+.categories-card {
   background: #fff;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.exfoliant-card:hover {
+.categories-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
 }
 
-.exfoliant-card__img {
+.categories-card__img {
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: contain;
@@ -71,7 +74,7 @@ a.exfoliant-card {
   padding: 12px;
 }
 
-.exfoliant-card__no-img {
+.categories-card__no-img {
   width: 100%;
   aspect-ratio: 1 / 1;
   background: #f2ede9;
@@ -83,7 +86,7 @@ a.exfoliant-card {
   color: #b0a89f;
 }
 
-.exfoliant-card__body {
+.categories-card__body {
   padding: 14px 16px 18px;
   display: flex;
   flex-direction: column;
@@ -91,7 +94,7 @@ a.exfoliant-card {
   flex: 1;
 }
 
-.exfoliant-card__brand {
+.categories-card__brand {
   font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 0.22em;
@@ -99,35 +102,35 @@ a.exfoliant-card {
   color: #90877f;
 }
 
-.exfoliant-card__name {
+.categories-card__name {
   font-size: 0.88rem;
   font-weight: 500;
   line-height: 1.4;
   color: #2f2a25;
 }
 
-.exfoliant-card__qty {
+.categories-card__qty {
   font-size: 0.75rem;
   color: #a09890;
   margin-top: 4px;
 }
 
 @media (max-width: 1024px) {
-  .exfoliants-page {
+  .categories-page {
     padding: 40px 28px 72px;
   }
 }
 
 @media (max-width: 640px) {
-  .exfoliants-page {
+  .categories-page {
     padding: 32px 18px 56px;
   }
 
-  .exfoliants-page__hero {
+  .categories-page__hero {
     margin-bottom: 36px;
   }
 
-  .exfoliants-grid {
+  .categories-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
