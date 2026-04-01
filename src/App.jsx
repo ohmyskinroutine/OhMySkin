@@ -36,7 +36,10 @@ function App() {
         <Route path="/exfoliants" element={<Exfoliants />} />
         <Route path="/exfoliants/:code" element={<Exfoliant />} />
         <Route path="/cleansers" element={<Cleansers />} />
+        <Route path="/cleansers/:code" element={<Cleansers />} />
         <Route path="/solaires" element={<Sunscreen />} />
+        <Route path="/solaires/:code" element={<Sunscreen />} />
+
         <Route
           path="*"
           element={
