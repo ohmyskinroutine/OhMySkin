@@ -6,6 +6,7 @@ import ProductDetails from "./pages/Products/ProductDetails";
 import Results from "./pages/Results/Results";
 import Brands from "./pages/brands/Brands";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
+import Search from "./pages/Search/Search";
 import SkinBackground from "./components/SkinBackground/SkinBackground";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
