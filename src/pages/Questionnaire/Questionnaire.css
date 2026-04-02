@@ -15,3 +15,17 @@
   gap: 5px;
   background-color: transparent;
 }
+.progress-bar {
+  width: 100px;
+  height: 10px;
+  background: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 0 20px;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  background: #513c2d;
+  transition: width 0.3s ease;
+}

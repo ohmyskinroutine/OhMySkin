@@ -1,5 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useRef } from "react";
+import logoO from "../../assets/Logo.png";
+
 import axios from "axios";
 import Cookies from "js-cookie";
 import "./Header.css";
@@ -39,7 +41,7 @@ const Header = ({ user, setUser }) => {
         <div className="header-top">
           <div className="logo">
             <Link to="/">
-              <h1>OH MY SKIN !</h1>
+              <img src={logoO} alt="logo oh my skin" />
             </Link>
           </div>
           <input className="search-input" placeholder="Search" onChange={handleSearch} />

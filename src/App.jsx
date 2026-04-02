@@ -2,11 +2,13 @@ import { useState } from "react";
 import Cookies from "js-cookie";
 import "./App.css";
 import Home from "./pages/Home/Home";
+import Brands from "./pages/brands/Brands";
+import Search from "./pages/Search/Search";
+import Results from "./pages/Results/Results";
 import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 import Categories from "./pages/Categories/Categories";
 import ProductDetails from "./pages/Products/ProductDetails";
-import Results from "./pages/Results/Results";
-import Brands from "./pages/brands/Brands";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
 import Search from "./pages/Search/Search";
 import Login from "./pages/Login/Login";
@@ -93,6 +95,7 @@ function App() {
           path="/solaires/:code"
           element={<ProductDetails backPath="/solaires" />}
         />
+        <Route path="/search" element={<Search />} />
         <Route path="/marques" element={<Brands />} />
         <Route path="/search" element={<Search />} />
         <Route path="/formulaire" element={<Questionnaire />} />
