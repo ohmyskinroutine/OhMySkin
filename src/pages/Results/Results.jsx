@@ -4,6 +4,7 @@ import { fetchProducts } from "../../services/api";
 import { mapProducts } from "../../utils/mapProducts";
 import { generateRoutine } from "../../utils/generateRoutine";
 import RoutineBlock from "../../components/RoutineBlock";
+import SkinBackground from "../../components/SkinBackground/SkinBackground";
 
 function Results() {
   const location = useLocation();
@@ -40,6 +41,7 @@ function Results() {
 
   return (
     <div>
+      <SkinBackground />
       <h2>Ta routine personnalisée</h2>
 
       <RoutineBlock title="Matin 🌞" products={routine.morning} />

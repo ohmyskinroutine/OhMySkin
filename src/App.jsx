@@ -16,7 +16,6 @@ import Questionnaire from "./pages/Questionnaire/Questionnaire";
 import Search from "./pages/Search/Search";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
-import SkinBackground from "./components/SkinBackground/SkinBackground";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -27,7 +26,6 @@ function App() {
 
   return (
     <Router>
-      <SkinBackground />
       <Header user={user} setUser={setUser} />
       <Routes>
         <Route path="/" element={<Home />} />

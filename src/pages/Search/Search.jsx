@@ -20,13 +20,33 @@ const Search = () => {
       setData([]);
 
       try {
-        const response = await axios.get(
-          `https://world.openbeautyfacts.org/api/v2/search?search_terms=${encodeURIComponent(query)}&fields=code,product_name,quantity,image_front_url,brands&json=1&page_size=50`,
-        );
-        const products = response.data.products ?? [];
-        setData(
-          products.filter((p) => p.product_name?.trim() && p.image_front_url),
-        );
+        const base = `https://world.openbeautyfacts.org/cgi/search.pl?action=process&json=1&page_size=100&sort_by=unique_scans_n`;
+        const encoded = encodeURIComponent(query);
+
+        const [byName, byBrand] = await Promise.all([
+          axios.get(`${base}&tagtype_0=product_name&tag_contains_0=contains&tag_0=${encoded}`),
+          axios.get(`${base}&tagtype_0=brands&tag_contains_0=contains&tag_0=${encoded}`),
+        ]);
+
+        const seen = new Set();
+        const merged = [...(byName.data.products ?? []), ...(byBrand.data.products ?? [])]
+          .filter((p) => {
+            if (!p.code || seen.has(p.code)) return false;
+            seen.add(p.code);
+            return true;
+          })
+          .map((p) => ({
+            ...p,
+            image_front_url:
+              p.image_front_small_url ||
+              p.image_front_url ||
+              p.image_small_url ||
+              p.image_url ||
+              null,
+          }))
+          .filter((p) => p.product_name?.trim() && p.image_front_url);
+
+        setData(merged);
       } catch (err) {
         setError("Erreur lors de la recherche.");
         console.error(err);
@@ -35,7 +55,8 @@ const Search = () => {
       }
     };
 
-    fetchResults();
+    const debounceTimer = setTimeout(fetchResults, 400);
+    return () => clearTimeout(debounceTimer);
   }, [query]);
 
   return (
