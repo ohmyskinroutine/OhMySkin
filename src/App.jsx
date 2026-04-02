@@ -13,6 +13,10 @@ import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Footer from "./components/Footer/Footer";
+import Payment from "./pages/Payment/Payment";
+// I've imported this (payment) import in the project - Keanu
+import Success from "./pages/Success/Success";
+// I've imported this import (success) in the project - Keanu
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -34,7 +38,7 @@ function App() {
     "https://world.openbeautyfacts.org/api/v2/search?categories_tags=en:sunscreens&fields=code,product_name,categories_tags,ingredients_text,quantity,image_url,brands&json=1&page_size=50";
 
   return (
-    <Router>
+    <Router>    
       <Header user={user} setUser={setUser} />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -93,6 +97,10 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/formulaire" element={<Questionnaire />} />
         <Route path="/routine" element={<Results />} />
+        <Route path="/payment" element={<Payment />} />
+        {/* I've added this Route (payment) in the project - Keanu */}
+        <Route path="/success" element={<Success />} />
+        {/* I've added this Route (success) in the project - Keanu */}
         <Route
           path="*"
           element={
