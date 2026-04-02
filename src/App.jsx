@@ -1,24 +1,20 @@
-import { useState } from "react";
-import Cookies from "js-cookie";
 import "./App.css";
+import Cookies from "js-cookie";
+import { useState } from "react";
 import Home from "./pages/Home/Home";
+import Login from "./pages/Login/Login";
+import Signup from "./pages/Signup/Signup";
 import Brands from "./pages/brands/Brands";
 import Search from "./pages/Search/Search";
 import Results from "./pages/Results/Results";
+import Payment from "./pages/Payment/Payment";
+import Success from "./pages/Success/Success";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Categories from "./pages/Categories/Categories";
 import ProductDetails from "./pages/Products/ProductDetails";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
-import Search from "./pages/Search/Search";
-import Login from "./pages/Login/Login";
-import Signup from "./pages/Signup/Signup";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Footer from "./components/Footer/Footer";
-import Payment from "./pages/Payment/Payment";
-// I've imported this (payment) import in the project - Keanu
-import Success from "./pages/Success/Success";
-// I've imported this import (success) in the project - Keanu
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -40,14 +36,14 @@ function App() {
     "https://world.openbeautyfacts.org/api/v2/search?categories_tags=en:sunscreens&fields=code,product_name,categories_tags,ingredients_text,quantity,image_url,brands&json=1&page_size=50";
 
   return (
-    <Router>    
+    <Router>
       <Header user={user} setUser={setUser} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login setUser={setUser} />} />
         <Route path="/signup" element={<Signup setUser={setUser} />} />
         <Route path="/marques" element={<Brands />} />
-            <Route
+        <Route
           path="/cremes"
           element={<Categories title="Crèmes" url={creamUrl} />}
         />
@@ -101,9 +97,7 @@ function App() {
         <Route path="/formulaire" element={<Questionnaire />} />
         <Route path="/routine" element={<Results />} />
         <Route path="/payment" element={<Payment />} />
-        {/* I've added this Route (payment) in the project - Keanu */}
         <Route path="/success" element={<Success />} />
-        {/* I've added this Route (success) in the project - Keanu */}
         <Route
           path="*"
           element={

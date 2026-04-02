@@ -1,10 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useRef } from "react";
-import logoO from "../../assets/Logo.png";
-
+import "./Header.css";
 import axios from "axios";
 import Cookies from "js-cookie";
-import "./Header.css";
+import { useRef } from "react";
+import logoO from "../../assets/Logo.png";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = ({ user, setUser }) => {
   const navigate = useNavigate();
@@ -44,7 +43,11 @@ const Header = ({ user, setUser }) => {
               <img src={logoO} alt="logo oh my skin" />
             </Link>
           </div>
-          <input className="search-input" placeholder="Search" onChange={handleSearch} />
+          <input
+            className="search-input"
+            placeholder="Search"
+            onChange={handleSearch}
+          />
           <div className="header-actions">
             <Link to="/formulaire">
               <button className="routine-btn">Crée ta routine skincare</button>
