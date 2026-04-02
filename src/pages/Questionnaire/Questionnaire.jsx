@@ -1,6 +1,8 @@
+import "./Questionnaire.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { questions } from "../../assets/question";
+import { IoArrowUpOutline } from "react-icons/io5";
 import Question from "../../components/Question/Question";
 
 const Questionnaire = () => {
@@ -18,11 +20,26 @@ const Questionnaire = () => {
     setStep((prev) => prev + 1);
   };
 
+  // Fonction qui permet de revenir en arrière et le Math.max permet de ne pas avoir de step négatif
+  const handleBack = () => {
+    setStep((prev) => Math.max(prev - 1, 0));
+  };
+
   const currentQuestion = questions[step];
   const navigate = useNavigate();
 
   return currentQuestion ? (
-    <Question question={currentQuestion} onAnswer={handleAnswer} />
+    <main className="question-page">
+      <div className="container">
+        {/* Condition qui permet l'affichage du bouton retour seulement si on est pas à la 1ère question */}
+        {step > 0 && (
+          <button onClick={handleBack}>
+            <IoArrowUpOutline /> Retour
+          </button>
+        )}
+        <Question question={currentQuestion} onAnswer={handleAnswer} />
+      </div>
+    </main>
   ) : (
     navigate("/routine", { state: answers })
   );
