@@ -53,7 +53,7 @@ function Results() {
             className="buy-link"
             state={{ price: routine.totalPrice, title: "Routine complète" }}
           >
-            <button className="buy-btn">Acheter ces produits</button>
+            <button className="buy-btn">Achètes ta routine</button>
           </Link>
           {/* J'ai jouter un lien pour acheter les produits - Keanu */}
         </div>

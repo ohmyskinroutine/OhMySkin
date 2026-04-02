@@ -15,6 +15,7 @@ import Categories from "./pages/Categories/Categories";
 import ProductDetails from "./pages/Products/ProductDetails";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import BrandProducts from "./pages/Brands/BrandProduct";
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -42,7 +43,6 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login setUser={setUser} />} />
         <Route path="/signup" element={<Signup setUser={setUser} />} />
-        <Route path="/marques" element={<Brands />} />
         <Route
           path="/cremes"
           element={<Categories title="Crèmes" url={creamUrl} />}
@@ -98,6 +98,7 @@ function App() {
         <Route path="/routine" element={<Results />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/success" element={<Success />} />
+        <Route path="/marques/:brand" element={<BrandProducts />} />
         <Route
           path="*"
           element={
