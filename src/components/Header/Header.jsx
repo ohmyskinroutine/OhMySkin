@@ -1,8 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
+import "./Header.css";
 import axios from "axios";
 import Cookies from "js-cookie";
-import "./Header.css";
+import { useRef } from "react";
+import logoO from "../../assets/Logo.png";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = ({ user, setUser }) => {
   const navigate = useNavigate();
@@ -36,21 +38,26 @@ const Header = ({ user, setUser }) => {
   };
 
   return (
+
     <>
-      <header className="header">
-        <div className="container">
-          <div className="header-top">
-            <div className="logo">
-              <Link to="/">
-                <h1>OH MY SKIN !</h1>
-              </Link>
-            </div>
-            <input className="search-input" placeholder="Search" onChange={handleSearch} />
-            <div className="header-actions">
-              <Link to="/formulaire">
-                <button className="routine-btn">Crée ta routine skincare</button>
-              </Link>
-              {user ? (
+     <header className="header">
+      <div className="container">
+        <div className="header-top">
+          <div className="logo">
+            <Link to="/">
+              <img src={logoO} alt="logo oh my skin" />
+            </Link>
+          </div>
+          <input
+            className="search-input"
+            placeholder="Search"
+            onChange={handleSearch}
+          />
+          <div className="header-actions">
+            <Link to="/formulaire">
+              <button className="routine-btn">Crée ta routine skincare</button>
+            </Link>
+            {user ? (
                 <div className="auth-buttons">
                   <span className="username-display">Bonjour, {user.username}</span>
                   <button className="logout-btn" onClick={() => setShowLogoutModal(true)}>
@@ -94,6 +101,7 @@ const Header = ({ user, setUser }) => {
                 Déconnexion
               </button>
             </div>
+
           </div>
         </div>
       )}

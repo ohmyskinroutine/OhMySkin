@@ -1,18 +1,20 @@
-import { useState } from "react";
-import Cookies from "js-cookie";
 import "./App.css";
+import Cookies from "js-cookie";
+import { useState } from "react";
 import Home from "./pages/Home/Home";
-import Header from "./components/Header/Header";
-import Categories from "./pages/Categories/Categories";
-import ProductDetails from "./pages/Products/ProductDetails";
-import Results from "./pages/Results/Results";
-import Brands from "./pages/brands/Brands";
-import Questionnaire from "./pages/Questionnaire/Questionnaire";
-import Search from "./pages/Search/Search";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Brands from "./pages/brands/Brands";
+import Search from "./pages/Search/Search";
+import Results from "./pages/Results/Results";
+import Payment from "./pages/Payment/Payment";
+import Success from "./pages/Success/Success";
+import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import Categories from "./pages/Categories/Categories";
+import ProductDetails from "./pages/Products/ProductDetails";
+import Questionnaire from "./pages/Questionnaire/Questionnaire";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -41,7 +43,7 @@ function App() {
         <Route path="/login" element={<Login setUser={setUser} />} />
         <Route path="/signup" element={<Signup setUser={setUser} />} />
         <Route path="/marques" element={<Brands />} />
-            <Route
+        <Route
           path="/cremes"
           element={<Categories title="Crèmes" url={creamUrl} />}
         />
@@ -89,10 +91,13 @@ function App() {
           path="/solaires/:code"
           element={<ProductDetails backPath="/solaires" />}
         />
+        <Route path="/search" element={<Search />} />
         <Route path="/marques" element={<Brands />} />
         <Route path="/search" element={<Search />} />
         <Route path="/formulaire" element={<Questionnaire />} />
         <Route path="/routine" element={<Results />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/success" element={<Success />} />
         <Route
           path="*"
           element={
