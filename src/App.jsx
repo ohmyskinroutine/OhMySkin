@@ -10,6 +10,10 @@ import Search from "./pages/Search/Search";
 import SkinBackground from "./components/SkinBackground/SkinBackground";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Footer from "./components/Footer/Footer";
+import Payment from "./pages/Payment/Payment";
+// I've imported this (payment) import in the project - Keanu
+import Success from "./pages/Success/Success";
+// I've imported this import (success) in the project - Keanu
 
 function App() {
   // Liens catégories
@@ -30,66 +34,72 @@ function App() {
     <Router>
       <SkinBackground />
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/cremes"
-          element={<Categories title="Crèmes" url={creamUrl} />}
-        />
-        <Route
-          path="/cremes/:code"
-          element={<ProductDetails backPath="/cremes" />}
-        />
-        <Route
-          path="/masques"
-          element={<Categories title="Masques" url={masksUrl} />}
-        />
-        <Route
-          path="/masques/:code"
-          element={<ProductDetails backPath="/masques" />}
-        />
-        <Route
-          path="/savons"
-          element={<Categories title="Savons" url={soapsUrl} />}
-        />
-        <Route
-          path="/savons/:code"
-          element={<ProductDetails backPath="/savons" />}
-        />
-        <Route
-          path="/exfoliants"
-          element={<Categories title="Exfoliants" url={exfoliantsUrl} />}
-        />
-        <Route
-          path="/exfoliants/:code"
-          element={<ProductDetails backPath="/exfoliants" />}
-        />
-        <Route
-          path="/cleansers"
-          element={<Categories title="Cleansers" url={cleansersUrl} />}
-        />
-        <Route
-          path="/cleansers/:code"
-          element={<ProductDetails backPath="/cleansers" />}
-        />
-        <Route
-          path="/solaires"
-          element={<Categories title="Crèmes solaires" url={sunscreenUrl} />}
-        />
-        <Route
-          path="/solaires/:code"
-          element={<ProductDetails backPath="/solaires" />}
-        />
-        <Route path="/marques" element={<Brands />} />
-        <Route path="/formulaire" element={<Questionnaire />} />
-        <Route path="/routine" element={<Results />} />
-        <Route
-          path="*"
-          element={
-            <div className="container">Vous n'êtes pas censés etre ici</div>
-          }
-        />
-      </Routes>
+      <main className="app-main">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/cremes"
+            element={<Categories title="Crèmes" url={creamUrl} />}
+          />
+          <Route
+            path="/cremes/:code"
+            element={<ProductDetails backPath="/cremes" />}
+          />
+          <Route
+            path="/masques"
+            element={<Categories title="Masques" url={masksUrl} />}
+          />
+          <Route
+            path="/masques/:code"
+            element={<ProductDetails backPath="/masques" />}
+          />
+          <Route
+            path="/savons"
+            element={<Categories title="Savons" url={soapsUrl} />}
+          />
+          <Route
+            path="/savons/:code"
+            element={<ProductDetails backPath="/savons" />}
+          />
+          <Route
+            path="/exfoliants"
+            element={<Categories title="Exfoliants" url={exfoliantsUrl} />}
+          />
+          <Route
+            path="/exfoliants/:code"
+            element={<ProductDetails backPath="/exfoliants" />}
+          />
+          <Route
+            path="/cleansers"
+            element={<Categories title="Cleansers" url={cleansersUrl} />}
+          />
+          <Route
+            path="/cleansers/:code"
+            element={<ProductDetails backPath="/cleansers" />}
+          />
+          <Route
+            path="/solaires"
+            element={<Categories title="Crèmes solaires" url={sunscreenUrl} />}
+          />
+          <Route
+            path="/solaires/:code"
+            element={<ProductDetails backPath="/solaires" />}
+          />
+          <Route path="/marques" element={<Brands />} />
+          <Route path="/formulaire" element={<Questionnaire />} />
+          <Route path="/routine" element={<Results />} />
+          <Route path="/payment" element={<Payment />} />
+          {/* I've added this Route (payment) in the project - Keanu */}
+          <Route path="/success" element={<Success />} />
+          {/* I've added this Route (success) in the project - Keanu */}
+          <Route
+            path="*"
+            element={
+              <div className="container">Vous n'êtes pas censés etre ici</div>
+            }
+          />
+        </Routes>
+      </main>
       <Footer />
     </Router>
   );
