@@ -8,7 +8,7 @@ const Header = ({ user, setUser }) => {
   const navigate = useNavigate();
   const debounceRef = useRef(null);
 
-  const handleChange = (e) => {
+  const handleSearch = (e) => {
     const value = e.target.value;
     clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
@@ -23,7 +23,7 @@ const Header = ({ user, setUser }) => {
       await axios.post(
         "https://site--oh-my-skin--cvtt47qfxcv8.code.run/logout",
         {},
-        { headers: { Authorization: `Bearer ${user.token}` } }
+        { headers: { Authorization: `Bearer ${user.token}` } },
       );
     } catch {
       // on déconnecte côté client même si le serveur ne répond pas
@@ -42,14 +42,16 @@ const Header = ({ user, setUser }) => {
               <h1>OH MY SKIN !</h1>
             </Link>
           </div>
-          <input className="search-input" placeholder="Search" onChange={handleChange} />
+          <input className="search-input" placeholder="Search" onChange={handleSearch} />
           <div className="header-actions">
             <Link to="/formulaire">
               <button className="routine-btn">Crée ta routine skincare</button>
             </Link>
             {user ? (
               <div className="auth-buttons">
-                <span className="username-display">Bonjour, {user.username}</span>
+                <span className="username-display">
+                  Bonjour, {user.username}
+                </span>
                 <button className="logout-btn" onClick={handleLogout}>
                   Déconnexion
                 </button>

@@ -1,9 +1,10 @@
+import "./Results.css";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import { fetchProducts } from "../../services/api";
 import { mapProducts } from "../../utils/mapProducts";
+import { useLocation, useNavigate } from "react-router-dom";
 import { generateRoutine } from "../../utils/generateRoutine";
-import RoutineBlock from "../../components/RoutineBlock";
+import RoutineBlock from "../../components/RoutineBlock/RoutineBlock";
 import SkinBackground from "../../components/SkinBackground/SkinBackground";
 
 function Results() {
@@ -40,13 +41,15 @@ function Results() {
   if (loading) return <div>Chargement...</div>;
 
   return (
-    <div>
+    <main className="routine">
       <SkinBackground />
-      <h2>Ta routine personnalisée</h2>
+      <div className="container">
+        <h2>Ta routine personnalisée</h2>
 
-      <RoutineBlock title="Matin 🌞" products={routine.morning} />
-      <RoutineBlock title="Soir 🌙" products={routine.evening} />
-    </div>
+        <RoutineBlock title="Routine du Matin" products={routine.morning} />
+        <RoutineBlock title="Routine du Soir" products={routine.evening} />
+      </div>
+    </main>
   );
 }
 

@@ -1,63 +1,88 @@
 import "./Search.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import axios from "axios";
+
+const CATEGORIES = [
+  { tag: "en:face-creams", path: "/cremes" },
+  { tag: "en:face-masks", path: "/masques" },
+  { tag: "en:soaps", path: "/savons" },
+  { tag: "en:face-scrubs", path: "/exfoliants" },
+  { tag: "en:cleansers", path: "/cleansers" },
+  { tag: "en:sunscreens", path: "/solaires" },
+];
+
+const FIELDS = "code,product_name,quantity,image_front_url,image_url,brands";
+
+async function fetchCategory(tag, path) {
+  try {
+    const res = await fetch(
+      `https://world.openbeautyfacts.org/api/v2/search?categories_tags=${tag}&fields=${FIELDS}&json=1&page_size=100`,
+    );
+    const data = await res.json();
+    return (data.products ?? []).map((p) => ({ ...p, _path: path }));
+  } catch {
+    return [];
+  }
+}
 
 const Search = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("q") ?? "";
 
+  const allProductsRef = useRef(null);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // Fetch toutes les catégories une seule fois
   useEffect(() => {
-    if (!query.trim()) return;
+    if (allProductsRef.current) return;
 
-    const fetchResults = async () => {
+    async function load() {
       setIsLoading(true);
-      setError("");
-      setData([]);
-
       try {
-        const base = `https://world.openbeautyfacts.org/cgi/search.pl?action=process&json=1&page_size=100&sort_by=unique_scans_n`;
-        const encoded = encodeURIComponent(query);
-
-        const [byName, byBrand] = await Promise.all([
-          axios.get(`${base}&tagtype_0=product_name&tag_contains_0=contains&tag_0=${encoded}`),
-          axios.get(`${base}&tagtype_0=brands&tag_contains_0=contains&tag_0=${encoded}`),
-        ]);
-
+        const results = await Promise.all(
+          CATEGORIES.map((c) => fetchCategory(c.tag, c.path)),
+        );
         const seen = new Set();
-        const merged = [...(byName.data.products ?? []), ...(byBrand.data.products ?? [])]
+        allProductsRef.current = results
+          .flat()
           .filter((p) => {
-            if (!p.code || seen.has(p.code)) return false;
+            if (!p.code || seen.has(p.code) || !p.product_name?.trim())
+              return false;
+            if (!p.image_front_url && !p.image_url) return false;
             seen.add(p.code);
             return true;
           })
           .map((p) => ({
             ...p,
-            image_front_url:
-              p.image_front_small_url ||
-              p.image_front_url ||
-              p.image_small_url ||
-              p.image_url ||
-              null,
-          }))
-          .filter((p) => p.product_name?.trim() && p.image_front_url);
-
-        setData(merged);
-      } catch (err) {
-        setError("Erreur lors de la recherche.");
-        console.error(err);
+            image: p.image_front_url || p.image_url,
+          }));
+      } catch {
+        setError("Erreur lors du chargement des produits.");
       } finally {
         setIsLoading(false);
       }
-    };
+    }
 
-    const debounceTimer = setTimeout(fetchResults, 400);
-    return () => clearTimeout(debounceTimer);
-  }, [query]);
+    load();
+  }, []);
+
+  // Filtrer par nom ou marque à chaque changement de query
+  useEffect(() => {
+    if (!allProductsRef.current || !query.trim()) {
+      setData([]);
+      return;
+    }
+    const lowerQuery = query.toLowerCase();
+    setData(
+      allProductsRef.current.filter(
+        (p) =>
+          p.product_name?.toLowerCase().includes(lowerQuery) ||
+          p.brands?.toLowerCase().includes(lowerQuery),
+      ),
+    );
+  }, [query, isLoading]);
 
   return (
     <section className="search-page">
@@ -69,7 +94,7 @@ const Search = () => {
 
       {isLoading && (
         <div className="search-page__status">
-          <p>Recherche en cours...</p>
+          <p>Chargement des produits...</p>
         </div>
       )}
 
@@ -96,13 +121,13 @@ const Search = () => {
             <div className="search-grid">
               {data.map((product) => (
                 <Link
-                  to={`/produit/${product.code}`}
-                  className="search-card"
                   key={product.code}
+                  to={`${product._path}/${product.code}`}
+                  className="search-card"
                 >
                   <img
                     className="search-card__img"
-                    src={product.image_front_url}
+                    src={product.image}
                     alt={product.product_name}
                   />
                   <div className="search-card__body">

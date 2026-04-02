@@ -1,0 +1,2 @@
+export const defaultIngredients =
+  "Aqua (Water), Glycerin, Propanediol, Butylene Glycol, Niacinamide, Sodium Hyaluronate, Hydrolyzed Hyaluronic Acid, Panthenol, Allantoin, Tocopherol (Vitamin E), Ceramide NP, Cholesterol, Caprylic/Capric Triglyceride, Squalane, Cetearyl Alcohol, Glyceryl Stearate, PEG-100 Stearate, Dimethicone, Carbomer, Xanthan Gum, Sodium Hydroxide, Citric Acid, Disodium EDTA, Phenoxyethanol, Ethylhexylglycerin, Parfum (Fragrance)";

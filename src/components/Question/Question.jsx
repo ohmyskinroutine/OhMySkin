@@ -1,13 +1,16 @@
+import "./Question.css";
+
 const Question = ({ question, onAnswer }) => {
   return (
-    <div>
+    <div className="question-block">
       <h2>{question.question}</h2>
-
-      {question.options.map((option) => (
-        <button key={option} onClick={() => onAnswer(question.id, option)}>
-          {option}
-        </button>
-      ))}
+      <div>
+        {question.options.map((option) => (
+          <button key={option} onClick={() => onAnswer(question.id, option)}>
+            {option}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
