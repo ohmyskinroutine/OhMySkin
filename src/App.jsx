@@ -1,15 +1,15 @@
 import "./App.css";
 import Home from "./pages/Home/Home";
+import Brands from "./pages/brands/Brands";
+import Search from "./pages/Search/Search";
+import Results from "./pages/Results/Results";
 import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
 import Categories from "./pages/Categories/Categories";
 import ProductDetails from "./pages/Products/ProductDetails";
-import Results from "./pages/Results/Results";
-import Brands from "./pages/brands/Brands";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
-import Search from "./pages/Search/Search";
 import SkinBackground from "./components/SkinBackground/SkinBackground";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Footer from "./components/Footer/Footer";
 
 function App() {
   // Liens catégories
@@ -80,6 +80,7 @@ function App() {
           path="/solaires/:code"
           element={<ProductDetails backPath="/solaires" />}
         />
+        <Route path="/search" element={<Search />} />
         <Route path="/marques" element={<Brands />} />
         <Route path="/formulaire" element={<Questionnaire />} />
         <Route path="/routine" element={<Results />} />

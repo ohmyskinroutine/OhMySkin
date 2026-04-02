@@ -27,6 +27,7 @@ const Questionnaire = () => {
 
   const currentQuestion = questions[step];
   const navigate = useNavigate();
+  const progress = ((step + 1) / questions.length) * 100;
 
   return currentQuestion ? (
     <main className="question-page">
@@ -38,6 +39,12 @@ const Questionnaire = () => {
           </button>
         )}
         <Question question={currentQuestion} onAnswer={handleAnswer} />
+        <div className="progress-bar">
+          <div
+            className="progress-bar__fill"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
       </div>
     </main>
   ) : (

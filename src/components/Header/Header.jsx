@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useRef } from "react";
-// import logo from "../../assets/logo.webp";
+import logoO from "../../assets/Logo.png";
 
 import "./Header.css";
 const Header = () => {
@@ -23,10 +23,14 @@ const Header = () => {
         <div className="header-top">
           <div className="logo">
             <Link to="/">
-              <h1>OH MY SKIN !</h1>
+              <img src={logoO} alt="logo oh my skin" />
             </Link>
           </div>
-          <input className="search-input" placeholder="Search" onChange={handleChange} />
+          <input
+            className="search-input"
+            placeholder="Search"
+            onChange={handleChange}
+          />
           <Link to="/formulaire">
             <button className="routine-btn">Crée ta routine skincare</button>
           </Link>
