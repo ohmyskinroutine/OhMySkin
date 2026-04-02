@@ -11,7 +11,6 @@ import Questionnaire from "./pages/Questionnaire/Questionnaire";
 import Search from "./pages/Search/Search";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
-import SkinBackground from "./components/SkinBackground/SkinBackground";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Footer from "./components/Footer/Footer";
 
@@ -36,7 +35,6 @@ function App() {
 
   return (
     <Router>
-      <SkinBackground />
       <Header user={user} setUser={setUser} />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -92,6 +90,7 @@ function App() {
           element={<ProductDetails backPath="/solaires" />}
         />
         <Route path="/marques" element={<Brands />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/formulaire" element={<Questionnaire />} />
         <Route path="/routine" element={<Results />} />
         <Route
