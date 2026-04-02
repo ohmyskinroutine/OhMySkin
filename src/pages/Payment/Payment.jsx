@@ -40,7 +40,7 @@ const Payment = () => {
           <section className="payment-summary">
             <div className="summary-item">
               <span className="label">You have to pay</span>
-              <span className="amount">${price.toFixed(2)}</span>
+              <span className="amount">{price.toFixed(2)} €</span>
             </div>
           </section>
         </aside>
