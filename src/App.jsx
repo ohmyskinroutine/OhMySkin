@@ -7,6 +7,8 @@ import Signup from "./pages/Signup/Signup";
 import Brands from "./pages/brands/Brands";
 import Search from "./pages/Search/Search";
 import Results from "./pages/Results/Results";
+import Payment from "./pages/Payment/Payment";
+import Success from "./pages/Success/Success";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Categories from "./pages/Categories/Categories";
@@ -94,6 +96,8 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/formulaire" element={<Questionnaire />} />
         <Route path="/routine" element={<Results />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/success" element={<Success />} />
         <Route
           path="*"
           element={
