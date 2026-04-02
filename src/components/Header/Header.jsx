@@ -1,13 +1,15 @@
-import { Link, useNavigate } from "react-router-dom";
+import "./Header.css";
+import axios from "axios";
+import Cookies from "js-cookie";
 import { useRef } from "react";
 import logoO from "../../assets/Logo.png";
+import { Link, useNavigate } from "react-router-dom";
 
-import "./Header.css";
-const Header = () => {
+const Header = ({ user, setUser }) => {
   const navigate = useNavigate();
   const debounceRef = useRef(null);
 
-  const handleChange = (e) => {
+  const handleSearch = (e) => {
     const value = e.target.value;
     clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
@@ -15,6 +17,21 @@ const Header = () => {
         navigate(`/search?q=${encodeURIComponent(value.trim())}`);
       }
     }, 400);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(
+        "https://site--oh-my-skin--cvtt47qfxcv8.code.run/logout",
+        {},
+        { headers: { Authorization: `Bearer ${user.token}` } },
+      );
+    } catch {
+      // on déconnecte côté client même si le serveur ne répond pas
+    }
+    Cookies.remove("user");
+    setUser(null);
+    navigate("/");
   };
 
   return (
@@ -29,11 +46,32 @@ const Header = () => {
           <input
             className="search-input"
             placeholder="Search"
-            onChange={handleChange}
+            onChange={handleSearch}
           />
-          <Link to="/formulaire">
-            <button className="routine-btn">Crée ta routine skincare</button>
-          </Link>
+          <div className="header-actions">
+            <Link to="/formulaire">
+              <button className="routine-btn">Crée ta routine skincare</button>
+            </Link>
+            {user ? (
+              <div className="auth-buttons">
+                <span className="username-display">
+                  Bonjour, {user.username}
+                </span>
+                <button className="logout-btn" onClick={handleLogout}>
+                  Déconnexion
+                </button>
+              </div>
+            ) : (
+              <div className="auth-buttons">
+                <Link to="/login">
+                  <button className="login-btn">Connexion</button>
+                </Link>
+                <Link to="/signup">
+                  <button className="signup-btn">Inscription</button>
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <div className="container">

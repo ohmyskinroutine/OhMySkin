@@ -5,6 +5,7 @@ import { mapProducts } from "../../utils/mapProducts";
 import { useLocation, useNavigate } from "react-router-dom";
 import { generateRoutine } from "../../utils/generateRoutine";
 import RoutineBlock from "../../components/RoutineBlock/RoutineBlock";
+import SkinBackground from "../../components/SkinBackground/SkinBackground";
 
 function Results() {
   const location = useLocation();
@@ -41,6 +42,7 @@ function Results() {
 
   return (
     <main className="routine">
+      <SkinBackground />
       <div className="container">
         <h2>Ta routine personnalisée</h2>
 

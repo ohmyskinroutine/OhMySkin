@@ -1,42 +1,88 @@
 import "./Search.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import axios from "axios";
+
+const CATEGORIES = [
+  { tag: "en:face-creams", path: "/cremes" },
+  { tag: "en:face-masks", path: "/masques" },
+  { tag: "en:soaps", path: "/savons" },
+  { tag: "en:face-scrubs", path: "/exfoliants" },
+  { tag: "en:cleansers", path: "/cleansers" },
+  { tag: "en:sunscreens", path: "/solaires" },
+];
+
+const FIELDS = "code,product_name,quantity,image_front_url,image_url,brands";
+
+async function fetchCategory(tag, path) {
+  try {
+    const res = await fetch(
+      `https://world.openbeautyfacts.org/api/v2/search?categories_tags=${tag}&fields=${FIELDS}&json=1&page_size=100`,
+    );
+    const data = await res.json();
+    return (data.products ?? []).map((p) => ({ ...p, _path: path }));
+  } catch {
+    return [];
+  }
+}
 
 const Search = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("q") ?? "";
 
+  const allProductsRef = useRef(null);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // Fetch toutes les catégories une seule fois
   useEffect(() => {
-    if (!query.trim()) return;
+    if (allProductsRef.current) return;
 
-    const fetchResults = async () => {
+    async function load() {
       setIsLoading(true);
-      setError("");
-      setData([]);
-
       try {
-        const response = await axios.get(
-          `https://world.openbeautyfacts.org/api/v2/search?search_terms=${encodeURIComponent(query)}&fields=code,product_name,quantity,image_front_url,brands&json=1&page_size=50`,
+        const results = await Promise.all(
+          CATEGORIES.map((c) => fetchCategory(c.tag, c.path)),
         );
-        const products = response.data.products ?? [];
-        setData(
-          products.filter((p) => p.product_name?.trim() && p.image_front_url),
-        );
-      } catch (err) {
-        setError("Erreur lors de la recherche.");
-        console.error(err);
+        const seen = new Set();
+        allProductsRef.current = results
+          .flat()
+          .filter((p) => {
+            if (!p.code || seen.has(p.code) || !p.product_name?.trim())
+              return false;
+            if (!p.image_front_url && !p.image_url) return false;
+            seen.add(p.code);
+            return true;
+          })
+          .map((p) => ({
+            ...p,
+            image: p.image_front_url || p.image_url,
+          }));
+      } catch {
+        setError("Erreur lors du chargement des produits.");
       } finally {
         setIsLoading(false);
       }
-    };
+    }
 
-    fetchResults();
-  }, [query]);
+    load();
+  }, []);
+
+  // Filtrer par nom ou marque à chaque changement de query
+  useEffect(() => {
+    if (!allProductsRef.current || !query.trim()) {
+      setData([]);
+      return;
+    }
+    const lowerQuery = query.toLowerCase();
+    setData(
+      allProductsRef.current.filter(
+        (p) =>
+          p.product_name?.toLowerCase().includes(lowerQuery) ||
+          p.brands?.toLowerCase().includes(lowerQuery),
+      ),
+    );
+  }, [query, isLoading]);
 
   return (
     <section className="search-page">
@@ -48,7 +94,7 @@ const Search = () => {
 
       {isLoading && (
         <div className="search-page__status">
-          <p>Recherche en cours...</p>
+          <p>Chargement des produits...</p>
         </div>
       )}
 
@@ -75,13 +121,13 @@ const Search = () => {
             <div className="search-grid">
               {data.map((product) => (
                 <Link
-                  to={`/produit/${product.code}`}
-                  className="search-card"
                   key={product.code}
+                  to={`${product._path}/${product.code}`}
+                  className="search-card"
                 >
                   <img
                     className="search-card__img"
-                    src={product.image_front_url}
+                    src={product.image}
                     alt={product.product_name}
                   />
                   <div className="search-card__body">
