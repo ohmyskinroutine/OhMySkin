@@ -1,12 +1,97 @@
+.routine {
+  padding: 2rem;
+}
+
 .routine .container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-section {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 4rem;
 }
 
 .routine h2 {
-  margin: 50px 0;
-  font-weight: bold;
-  font-size: 24px;
+  margin: 0;
+  font-weight: 700;
+  font-size: 2.5rem;
   color: #231d19;
+  line-height: 1.2;
+}
+
+/* ==================== BUY BUTTON ==================== */
+.buy-link {
+  text-decoration: none;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.buy-btn {
+  padding: 0.85rem 1.5rem;
+  background: linear-gradient(135deg, #c8a882 0%, #a87a52 100%);
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(200, 168, 130, 0.3);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.buy-btn:hover {
+  background: linear-gradient(135deg, #c8a882 0%, #a87a52 100%);
+  box-shadow: 0 4px 15px rgba(200, 168, 130, 0.3);
+}
+
+.buy-btn:active {
+  background: linear-gradient(135deg, #c8a882 0%, #a87a52 100%);
+  box-shadow: 0 4px 15px rgba(200, 168, 130, 0.3);
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1200px) {
+  .routine h2 {
+    font-size: 2.3rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .routine {
+    padding: 1rem;
+  }
+
+  .header-section {
+    flex-direction: column;
+    margin-bottom: 2rem;
+  }
+
+  .routine h2 {
+    font-size: 1.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .buy-link {
+    position: static;
+    transform: none;
+    width: 100%;
+  }
+
+  .buy-btn {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    font-size: 0.9rem;
+  }
 }
