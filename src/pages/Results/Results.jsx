@@ -7,6 +7,7 @@ import { generateRoutine } from "../../utils/generateRoutine";
 import RoutineBlock from "../../components/RoutineBlock/RoutineBlock";
 import { Link } from "react-router-dom";
 // I've imported the Link in this page - Keanu
+import SkinBackground from "../../components/SkinBackground/SkinBackground";
 
 function Results() {
   const location = useLocation();
@@ -43,6 +44,7 @@ function Results() {
 
   return (
     <main className="routine">
+      <SkinBackground />
       <div className="container">
         <div className="header-section">
           <h2>Ta routine personnalisée</h2>
