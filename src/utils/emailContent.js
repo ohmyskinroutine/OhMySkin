@@ -26,10 +26,10 @@ const buildEmailHtml = (routine) => {
       
       <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
         
-        <!-- 🔥 LOGO (REMPLACE ICI) -->
+        <!-- LOGO -->
         <div style="text-align: center; padding: 24px;">
           <img 
-            src="https://TON-LOGO-ICI.png" 
+            src="https://res.cloudinary.com/dxehv4yky/image/upload/v1775205815/Capture_d_e%CC%81cran_2026-04-03_a%CC%80_10.43.27_idhpkz.png" 
             alt="Oh My Skin"
             style="width: 120px;"
           />
@@ -49,15 +49,15 @@ const buildEmailHtml = (routine) => {
           </h1>
 
 
-          <!-- 🌞 ROUTINE MATIN -->
+          <!-- ROUTINE MATIN -->
           <div style="margin-bottom: 24px;">
-            <h2 style="font-size: 18px; margin-bottom: 12px;">Routine du matin</h2>
+            <h2 style="font-size: 18px; margin-bottom: 12px;">🌞 Routine du matin</h2>
             ${morningHtml || "<p>Aucun produit</p>"}
           </div>
 
-          <!-- 🌙 ROUTINE SOIR -->
+          <!-- ROUTINE SOIR -->
           <div style="margin-bottom: 24px;">
-            <h2 style="font-size: 18px; margin-bottom: 12px;">Routine du soir</h2>
+            <h2 style="font-size: 18px; margin-bottom: 12px;"> 🌙 Routine du soir</h2>
             ${eveningHtml || "<p>Aucun produit</p>"}
           </div>
 

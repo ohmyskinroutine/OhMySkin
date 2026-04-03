@@ -1,0 +1,205 @@
+.profile-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 3rem 2rem;
+  box-sizing: border-box;
+}
+
+.profile-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Avatar section ── */
+.profile-avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.profile-avatar-wrapper {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  cursor: pointer;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-avatar-wrapper:hover .profile-avatar-overlay {
+  opacity: 1;
+}
+
+.profile-avatar-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+  border-radius: 50%;
+}
+
+.profile-avatar-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e0e0e0;
+}
+
+.profile-avatar-placeholder {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.profile-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #000;
+  margin: 0;
+}
+
+.profile-email-display {
+  font-size: 0.85rem;
+  color: #777;
+  margin: 0;
+}
+
+/* ── Form section ── */
+.profile-section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 1.4rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.profile-success {
+  color: #2e7d32;
+  font-size: 0.85rem;
+  margin: 0;
+  text-align: center;
+}
+
+/* ── Reuse auth-field styles from Login.css ── */
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.auth-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.auth-field input {
+  padding: 0.6rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.auth-field input:focus {
+  border-color: #999;
+}
+
+.auth-error {
+  color: #e53935;
+  font-size: 0.85rem;
+  margin: 0;
+  text-align: center;
+}
+
+.auth-submit-btn {
+  width: 100%;
+  padding: 0.65rem 1.2rem;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.4rem;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.profile-form > a {
+  width: 100%;
+  text-decoration: none;
+}
+
+.favorites-btn {
+  width: 100%;
+  padding: 0.65rem 1.2rem;
+  background-color: #e53935;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.4rem;
+  display: block;
+  box-sizing: border-box;
+  box-shadow:
+    0 4px 12px rgba(229, 57, 53, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.auth-submit-btn:hover:not(:disabled) {
+  background-color: #333;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.auth-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.favorites-btn:hover {
+  background-color: #c62828;
+  box-shadow:
+    0 6px 16px rgba(229, 57, 53, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}

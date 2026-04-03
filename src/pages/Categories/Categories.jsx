@@ -5,44 +5,67 @@ import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { useState, useEffect } from "react";
 
-const Categories = ({ title, url }) => {
+const BASE_URL = "https://site--oh-my-skin--cvtt47qfxcv8.code.run";
+
+const Categories = ({ title, url, user }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [favorites, setFavorites] = useState([]);
 
-  const getFavorites = () => {
-    const favs = localStorage.getItem("favorites");
-    return favs ? JSON.parse(favs) : [];
-  };
+  // Charger les favoris depuis MongoDB si connecté
+  useEffect(() => {
+    if (!user) return;
 
-  const [favorites, setFavorites] = useState(getFavorites());
+    const fetchFavorites = async () => {
+      try {
+        const { data } = await axios.get(`${BASE_URL}/favorites`, {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
+        setFavorites(data.favorites);
+      } catch {
+        // silencieux
+      }
+    };
 
-  const toggleFavorite = (product) => {
-    const exists = favorites.find((prdt) => prdt.code === product.code);
+    fetchFavorites();
+  }, [user]);
 
-    let updated;
+  const toggleFavorite = async (product) => {
+    if (!user) return;
+
+    const exists = favorites.some((f) => f.code === product.code);
 
     if (exists) {
-      updated = favorites.filter((prdt) => prdt.code !== product.code);
+      try {
+        const { data } = await axios.delete(
+          `${BASE_URL}/favorites/${product.code}`,
+          { headers: { Authorization: `Bearer ${user.token}` } }
+        );
+        setFavorites(data.favorites);
+      } catch {
+        // silencieux
+      }
     } else {
-      updated = [
-        ...favorites,
-        {
-          code: product.code,
-          product_name: product.product_name,
-          image: product.image_front_url || product.image_url,
-          brands: product.brands,
-        },
-      ];
+      try {
+        const { data } = await axios.post(
+          `${BASE_URL}/favorites`,
+          {
+            code: product.code,
+            product_name: product.product_name,
+            image: product.image_front_url || product.image_url,
+            brands: product.brands,
+          },
+          { headers: { Authorization: `Bearer ${user.token}` } }
+        );
+        setFavorites(data.favorites);
+      } catch {
+        // silencieux
+      }
     }
-
-    setFavorites(updated);
-    localStorage.setItem("favorites", JSON.stringify(updated));
   };
 
-  const isFavorite = (code) => {
-    return favorites.some((prdt) => prdt.code === code);
-  };
+  const isFavorite = (code) => favorites.some((f) => f.code === code);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,14 +78,13 @@ const Categories = ({ title, url }) => {
         const products = response.data.products ?? [];
 
         setData(
-          //si pas d'image, de marque ou de nom on n'affiche pas le produit
           products.filter((product) => {
             const hasName = product.product_name?.trim();
             const hasImage = product.image_front_url || product.image_url;
             const hasBrand = product.brands?.trim();
 
             return hasName && hasImage && hasBrand;
-          }),
+          })
         );
       } catch (error) {
         setError(`Erreur lors du chargement de ${title.toLowerCase()}.`);
@@ -100,7 +122,6 @@ const Categories = ({ title, url }) => {
           <div className="categories-grid">
             {data.map((product) => (
               <Link
-                //route correspondante et code correspondant
                 to={`${location.pathname}/${product.code}`}
                 className="categories-card"
                 key={product.code}
@@ -111,19 +132,21 @@ const Categories = ({ title, url }) => {
                     src={product.image_front_url || product.image_url}
                     alt={product.product_name}
                   />
-                  <span
-                    className="favorite-icon"
-                    onClick={(event) => {
-                      event.preventDefault();
-                      toggleFavorite(product);
-                    }}
-                  >
-                    {isFavorite(product.code) ? (
-                      <FaHeart className="heart active" />
-                    ) : (
-                      <FaRegHeart className="heart" />
-                    )}
-                  </span>
+                  {user && (
+                    <span
+                      className="favorite-icon"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        toggleFavorite(product);
+                      }}
+                    >
+                      {isFavorite(product.code) ? (
+                        <FaHeart className="heart active" />
+                      ) : (
+                        <FaRegHeart className="heart" />
+                      )}
+                    </span>
+                  )}
                 </div>
 
                 <div className="categories-card__body">

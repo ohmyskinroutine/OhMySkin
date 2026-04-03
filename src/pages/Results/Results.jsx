@@ -49,7 +49,8 @@ function Results({ user }) {
 
       alert("Email envoyé !");
     } catch (error) {
-      console.error(error);
+      console.log(error.response?.data || error.message);
+
       alert("Erreur lors de l'envoi");
     }
   };
