@@ -69,7 +69,10 @@ const Header = ({ user, setUser }) => {
                     )}
                     <span className="username-display">Bonjour, {user.username}</span>
                   </Link>
-                  <button className="logout-btn" onClick={() => setShowLogoutModal(true)}>
+                  <button
+                    className="logout-btn"
+                    onClick={() => setShowLogoutModal(true)}
+                  >
                     Déconnexion
                   </button>
                 </div>

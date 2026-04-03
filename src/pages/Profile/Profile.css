@@ -1,8 +1,9 @@
 .profile-page {
   display: flex;
   justify-content: center;
+  align-items: flex-start;
   padding: 3rem 2rem;
-  min-height: 80vh;
+  box-sizing: border-box;
 }
 
 .profile-card {
@@ -22,6 +23,34 @@
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 2rem;
+}
+
+.profile-avatar-wrapper {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  cursor: pointer;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-avatar-wrapper:hover .profile-avatar-overlay {
+  opacity: 1;
+}
+
+.profile-avatar-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+  border-radius: 50%;
 }
 
 .profile-avatar-img {

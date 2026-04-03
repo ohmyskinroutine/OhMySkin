@@ -4,6 +4,7 @@ import { useState } from "react";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
+import Profile from "./pages/Profile/Profile";
 import Brands from "./pages/brands/Brands";
 import Search from "./pages/Search/Search";
 import Results from "./pages/Results/Results";
@@ -94,7 +95,6 @@ function App() {
         />
         <Route path="/search" element={<Search />} />
         <Route path="/marques" element={<Brands />} />
-        <Route path="/search" element={<Search />} />
         <Route path="/formulaire" element={<Questionnaire />} />
         <Route path="/routine" element={<Results />} />
         <Route path="/profile" element={<Profile user={user} setUser={setUser} />} />
