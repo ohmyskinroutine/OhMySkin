@@ -47,7 +47,7 @@ function App() {
         <Route path="/signup" element={<Signup setUser={setUser} />} />
         <Route
           path="/cremes"
-          element={<Categories title="Crèmes" url={creamUrl} />}
+          element={<Categories title="Crèmes" url={creamUrl} user={user} />}
         />
         <Route
           path="/cremes/:code"
@@ -55,7 +55,7 @@ function App() {
         />
         <Route
           path="/masques"
-          element={<Categories title="Masques" url={masksUrl} />}
+          element={<Categories title="Masques" url={masksUrl} user={user} />}
         />
         <Route
           path="/masques/:code"
@@ -63,7 +63,7 @@ function App() {
         />
         <Route
           path="/savons"
-          element={<Categories title="Savons" url={soapsUrl} />}
+          element={<Categories title="Savons" url={soapsUrl} user={user} />}
         />
         <Route
           path="/savons/:code"
@@ -71,7 +71,7 @@ function App() {
         />
         <Route
           path="/exfoliants"
-          element={<Categories title="Exfoliants" url={exfoliantsUrl} />}
+          element={<Categories title="Exfoliants" url={exfoliantsUrl} user={user} />}
         />
         <Route
           path="/exfoliants/:code"
@@ -79,7 +79,7 @@ function App() {
         />
         <Route
           path="/cleansers"
-          element={<Categories title="Cleansers" url={cleansersUrl} />}
+          element={<Categories title="Cleansers" url={cleansersUrl} user={user} />}
         />
         <Route
           path="/cleansers/:code"
@@ -87,7 +87,7 @@ function App() {
         />
         <Route
           path="/solaires"
-          element={<Categories title="Crèmes solaires" url={sunscreenUrl} />}
+          element={<Categories title="Crèmes solaires" url={sunscreenUrl} user={user} />}
         />
         <Route
           path="/solaires/:code"
