@@ -1,8 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import "./Header.css";
 import axios from "axios";
 import Cookies from "js-cookie";
-import "./Header.css";
+import { useRef, useState } from "react";
+import logoO from "../../assets/Logo.png";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = ({ user, setUser }) => {
   const navigate = useNavigate();
@@ -42,13 +43,19 @@ const Header = ({ user, setUser }) => {
           <div className="header-top">
             <div className="logo">
               <Link to="/">
-                <h1>OH MY SKIN !</h1>
+                <img src={logoO} alt="logo oh my skin" />
               </Link>
             </div>
-            <input className="search-input" placeholder="Search" onChange={handleSearch} />
+            <input
+              className="search-input"
+              placeholder="Search"
+              onChange={handleSearch}
+            />
             <div className="header-actions">
               <Link to="/formulaire">
-                <button className="routine-btn">Crée ta routine skincare</button>
+                <button className="routine-btn">
+                  Crée ta routine skincare
+                </button>
               </Link>
               {user ? (
                 <div className="auth-buttons">
@@ -92,14 +99,25 @@ const Header = ({ user, setUser }) => {
       </header>
 
       {showLogoutModal && (
-        <div className="modal-overlay" onClick={() => setShowLogoutModal(false)}>
+        <div
+          className="modal-overlay"
+          onClick={() => setShowLogoutModal(false)}
+        >
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <p className="modal__text">Êtes-vous sûr de vouloir vous déconnecter ?</p>
+            <p className="modal__text">
+              Êtes-vous sûr de vouloir vous déconnecter ?
+            </p>
             <div className="modal__actions">
-              <button className="modal__btn modal__btn--cancel" onClick={() => setShowLogoutModal(false)}>
+              <button
+                className="modal__btn modal__btn--cancel"
+                onClick={() => setShowLogoutModal(false)}
+              >
                 Annuler
               </button>
-              <button className="modal__btn modal__btn--confirm" onClick={handleLogout}>
+              <button
+                className="modal__btn modal__btn--confirm"
+                onClick={handleLogout}
+              >
                 Déconnexion
               </button>
             </div>

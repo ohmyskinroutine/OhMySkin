@@ -11,6 +11,12 @@
   margin: 0 auto;
   padding: 0 2rem;
 }
+
+.logo img {
+  height: 70px;
+  width: 90px;
+  /* object-fit: contain; */
+}
 .logo a {
   text-decoration: none;
   color: inherit;
@@ -37,16 +43,12 @@
 
 .routine-btn {
   padding: 0.5rem 1.2rem;
-  background-color: #000;
-  color: #fff;
+  background-color: #eed9c4;
+  color: #333;
   border: none;
   border-radius: 20px;
   font-size: 0.9rem;
   cursor: pointer;
-}
-
-.routine-btn:hover {
-  background-color: #333;
 }
 
 .header-actions {
@@ -64,24 +66,26 @@
 .login-btn {
   padding: 0.5rem 1.2rem;
   background-color: transparent;
-  color: #000;
-  border: 1px solid #000;
+  color: #333333;
+  border: 1px solid #eed9c4;
   border-radius: 20px;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 }
 
 .login-btn:hover {
-  background-color: #000;
+  background-color: #eed9c4;
   color: #fff;
 }
 
 .signup-btn {
   padding: 0.5rem 1.2rem;
-  background-color: #000;
+  background-color: #eed9c4;
   color: #fff;
-  border: none;
+  border: solid 1px #eed9c4;
   border-radius: 20px;
   font-size: 0.9rem;
   cursor: pointer;
@@ -89,22 +93,25 @@
 }
 
 .signup-btn:hover {
-  background-color: #333;
+  background-color: #fff;
+  color: #333333;
 }
 
 .logout-btn {
   padding: 0.5rem 1.2rem;
   background-color: transparent;
-  color: #e53935;
-  border: 1px solid #e53935;
+  color: #333333;
+  border: 1px solid #eed9c4;
   border-radius: 20px;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 }
 
 .logout-btn:hover {
-  background-color: #e53935;
+  background-color: #eed9c4;
   color: #fff;
 }
 
@@ -200,7 +207,9 @@
   font-size: 0.9rem;
   cursor: pointer;
   border: none;
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 }
 
 .modal__btn--cancel {
