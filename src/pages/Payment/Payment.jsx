@@ -35,20 +35,9 @@ const Payment = () => {
 
   return (
     <main className="payment">
-      <div className="payment-container">
-        <aside className="payment-left">
-          <section className="payment-summary">
-            <div className="summary-item">
-              <span className="label">You have to pay</span>
-              <span className="amount">{price.toFixed(2)} €</span>
-            </div>
-          </section>
-        </aside>
-
-        <Elements stripe={stripePromise} options={options}>
-          <CheckoutForm title={title} price={price} />
-        </Elements>
-      </div>
+      <Elements stripe={stripePromise} options={options}>
+        <CheckoutForm title={title} price={price} />
+      </Elements>
     </main>
   );
 };
