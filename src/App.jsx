@@ -1,5 +1,5 @@
 import "./App.css";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import { useState } from "react";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
@@ -19,8 +19,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   const [user, setUser] = useState(() => {
-    const stored = Cookies.get("user");
-    return stored ? JSON.parse(stored) : null;
+    // const stored = Cookies.get("user");
+    // return stored ? JSON.parse(stored) : null;
   });
   // Liens catégories
   const creamUrl =

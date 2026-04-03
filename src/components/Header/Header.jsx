@@ -1,6 +1,6 @@
 import "./Header.css";
 import axios from "axios";
-import Cookies from "js-cookie";
+// import Cookies from "js-cookie";
 import { useRef, useState } from "react";
 import logoO from "../../assets/Logo.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -30,7 +30,7 @@ const Header = ({ user, setUser }) => {
     } catch {
       // on déconnecte côté client même si le serveur ne répond pas
     }
-    Cookies.remove("user");
+    // Cookies.remove("user");
     setUser(null);
     setShowLogoutModal(false);
     navigate("/");
