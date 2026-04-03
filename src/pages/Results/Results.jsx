@@ -36,7 +36,7 @@ function Results() {
       }
       // console.log("routine envoyée =", routine);
 
-      await axios.post(
+      const response = await axios.post(
         "https://site--oh-my-skin--cvtt47qfxcv8.code.run/send-email",
         {
           email: email, // defini le destinataire du mail
@@ -46,8 +46,9 @@ function Results() {
           routine: routine,
         },
       );
-
+      console.log(response.data);
       alert("Email envoyé !");
+
       console.log("Email envoyé !");
     } catch (error) {
       console.log(error.response?.data || error.message);
