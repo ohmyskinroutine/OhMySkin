@@ -78,13 +78,13 @@
 
 .login-btn:hover {
   background-color: #eed9c4;
-  color: #333333;
+  color: #fff;
 }
 
 .signup-btn {
   padding: 0.5rem 1.2rem;
   background-color: #eed9c4;
-  color: #333333;
+  color: #fff;
   border: solid 1px #eed9c4;
   border-radius: 20px;
   font-size: 0.9rem;
@@ -94,13 +94,14 @@
 
 .signup-btn:hover {
   background-color: #fff;
+  color: #333333;
 }
 
 .logout-btn {
   padding: 0.5rem 1.2rem;
   background-color: transparent;
-  color: #e53935;
-  border: 1px solid #e53935;
+  color: #333333;
+  border: 1px solid #eed9c4;
   border-radius: 20px;
   font-size: 0.9rem;
   cursor: pointer;
@@ -110,7 +111,7 @@
 }
 
 .logout-btn:hover {
-  background-color: #e53935;
+  background-color: #eed9c4;
   color: #fff;
 }
 
@@ -177,7 +178,9 @@
   font-size: 0.9rem;
   cursor: pointer;
   border: none;
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 }
 
 .modal__btn--cancel {
