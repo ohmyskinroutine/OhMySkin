@@ -79,7 +79,7 @@ const CheckoutForm = ({ price }) => {
         <div className="checkout-header-center">
           <h1 className="checkout-title">Méthode de paiement</h1>
           <p className="checkout-price">
-            You have to pay €{price?.toFixed(2) || "0.00"}
+            Ta routine pour {price?.toFixed(2) || "0.00"}€
           </p>
         </div>
         <div style={{ width: "32px" }}></div>
@@ -92,7 +92,7 @@ const CheckoutForm = ({ price }) => {
           disabled={!stripe || loading}
           type="submit"
         >
-          {loading ? "Processing..." : "Acheter"}
+          {loading ? "En cours..." : "Acheter"}
         </button>
         {errorMessage && <p className="checkout-error">{errorMessage}</p>}
       </form>
