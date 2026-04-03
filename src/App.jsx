@@ -15,6 +15,7 @@ import Categories from "./pages/Categories/Categories";
 import BrandProducts from "./pages/Brands/BrandProduct";
 import ProductDetails from "./pages/Products/ProductDetails";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
+import Profile from "./pages/Profile/Profile";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -96,6 +97,7 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/formulaire" element={<Questionnaire />} />
         <Route path="/routine" element={<Results />} />
+        <Route path="/profile" element={<Profile user={user} setUser={setUser} />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/success" element={<Success />} />
         <Route path="/marques/:brand" element={<BrandProducts />} />
