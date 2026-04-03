@@ -1,27 +1,30 @@
 import "./Results.css";
-import { useEffect, useState } from "react";
-import { fetchProducts } from "../../services/api";
-import { mapProducts } from "../../utils/mapProducts";
-import { useLocation, useNavigate } from "react-router-dom";
-import { generateRoutine } from "../../utils/generateRoutine";
-import RoutineBlock from "../../components/RoutineBlock/RoutineBlock";
-import emailContent from "../../utils/emailContent";
 import axios from "axios";
 import { Link } from "react-router-dom";
-// I've imported the Link in this page - Keanu
+import { useEffect, useState } from "react";
+import { fetchProducts } from "../../services/api";
+import emailContent from "../../utils/emailContent";
+import { mapProducts } from "../../utils/mapProducts";
+import { useLocation, useNavigate } from "react-router-dom";
+import RoutineBlock from "../../components/RoutineBlock/RoutineBlock";
 import SkinBackground from "../../components/SkinBackground/SkinBackground";
 
-function Results() {
+function Results({ user }) {
+  // token optionnel
   const location = useLocation();
   const navigate = useNavigate();
   const answers = location.state;
+  let token;
+  if (user) {
+    token = user.token;
+  }
+
+  // console.log("token", token);
 
   const [products, setProducts] = useState([]);
   const [routine, setRoutine] = useState(null);
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState("");
-
-  // Emailing
 
   const handleSendEmail = async () => {
     try {
@@ -29,27 +32,22 @@ function Results() {
         alert("Entre ton email");
         return;
       }
-
       if (!email.includes("@")) {
         alert("Email invalide");
         return;
       }
-      // console.log("routine envoyée =", routine);
 
       const response = await axios.post(
         "https://site--oh-my-skin--cvtt47qfxcv8.code.run/send-email",
         {
-          email: email, // defini le destinataire du mail
-          //l'objet et corpss de lmail
+          email,
           subject: "Ta routine skincare est prête ✨",
           html: emailContent(routine),
-          routine: routine,
+          routine,
         },
       );
       console.log(response.data);
       alert("Email envoyé !");
-
-      console.log("Email envoyé !");
     } catch (error) {
       console.log(error.response?.data || error.message);
 
@@ -64,19 +62,48 @@ function Results() {
     }
 
     async function load() {
-      const apiProducts = await fetchProducts();
-      const mapped = mapProducts(apiProducts);
+      try {
+        const apiProducts = await fetchProducts();
+        const mapped = mapProducts(apiProducts);
+        setProducts(mapped);
 
-      setProducts(mapped);
+        const res = await axios.post(
+          "https://site--oh-my-skin--cvtt47qfxcv8.code.run/routine",
+          { answers, products: mapped },
+          { headers: token ? { Authorization: `Bearer ${token}` } : {} },
+        );
 
-      const generated = generateRoutine(answers, mapped);
-      setRoutine(generated);
+        setRoutine(res.data);
+      } catch (error) {
+        console.error(error);
+        alert("Erreur lors du chargement de la routine");
+      }
 
       setLoading(false);
     }
 
     load();
   }, [answers, navigate]);
+
+  const handleResetRoutine = async () => {
+    try {
+      if (!token) {
+        alert("Seuls les utilisateurs connectés peuvent reset");
+        return;
+      }
+
+      await axios.post(
+        "https://site--oh-my-skin--cvtt47qfxcv8.code.run/reset",
+        {},
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+
+      window.location.reload();
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors de la réinitialisation de la routine");
+    }
+  };
 
   if (!answers) return null;
   if (loading) return <div>Chargement...</div>;
@@ -92,10 +119,15 @@ function Results() {
             className="buy-link"
             state={{ price: routine.totalPrice, title: "Routine complète" }}
           >
-            <button className="buy-btn">Achètes ta routine</button>
+            <button className="buy-btn">Obtiens ta routine</button>
           </Link>
-          {/* J'ai jouter un lien pour acheter les produits - Keanu */}
+          {token && (
+            <button onClick={handleResetRoutine} className="reset-btn">
+              Re-générer ma routine
+            </button>
+          )}
         </div>
+
         <RoutineBlock title="Routine du Matin" products={routine.morning} />
         <RoutineBlock title="Routine du Soir" products={routine.evening} />
 
@@ -106,7 +138,6 @@ function Results() {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
-
           <button onClick={handleSendEmail}>
             Recevoir ma routine par email
           </button>
