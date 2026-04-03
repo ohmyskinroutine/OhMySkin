@@ -16,6 +16,7 @@ import Categories from "./pages/Categories/Categories";
 import BrandProducts from "./pages/Brands/BrandProduct";
 import ProductDetails from "./pages/Products/ProductDetails";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
+import Profile from "./pages/Profile/Profile";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
