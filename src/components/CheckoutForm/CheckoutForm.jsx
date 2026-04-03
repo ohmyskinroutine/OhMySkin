@@ -38,7 +38,9 @@ const CheckoutForm = ({ price }) => {
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/payment");
+      const response = await axios.post(
+        "https://site--oh-my-skin--cvtt47qfxcv8.code.run/payment",
+      );
 
       console.log("response => ", response.data);
 
