@@ -37,7 +37,7 @@ function Results({ user }) {
         return;
       }
 
-      await axios.post(
+      const response = await axios.post(
         "https://site--oh-my-skin--cvtt47qfxcv8.code.run/send-email",
         {
           email,
@@ -46,7 +46,7 @@ function Results({ user }) {
           routine,
         },
       );
-
+      console.log(response.data);
       alert("Email envoyé !");
     } catch (error) {
       console.log(error.response?.data || error.message);
