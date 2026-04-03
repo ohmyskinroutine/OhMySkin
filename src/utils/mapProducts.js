@@ -97,8 +97,8 @@ export function mapProducts(products) {
 
     return {
       id: product.code,
-      name: product.product_name || "Produit inconnu",
-      brand: product.brands || "Marque inconnue",
+      name: product.product_name || "Oh My Skin Exclusive Care",
+      brand: product.brands || "Oh My Skin",
       image: productImage, // Image du produit ou générique
       tags,
     };

@@ -7,6 +7,7 @@ import { generateRoutine } from "../../utils/generateRoutine";
 import RoutineBlock from "../../components/RoutineBlock/RoutineBlock";
 import { Link } from "react-router-dom";
 // I've imported the Link in this page - Keanu
+import SkinBackground from "../../components/SkinBackground/SkinBackground";
 
 function Results() {
   const location = useLocation();
@@ -43,6 +44,7 @@ function Results() {
 
   return (
     <main className="routine">
+      <SkinBackground />
       <div className="container">
         <div className="header-section">
           <h2>Ta routine personnalisée</h2>
@@ -51,7 +53,7 @@ function Results() {
             className="buy-link"
             state={{ price: routine.totalPrice, title: "Routine complète" }}
           >
-            <button className="buy-btn">Acheter ces produits</button>
+            <button className="buy-btn">Achètes ta routine</button>
           </Link>
           {/* J'ai jouter un lien pour acheter les produits - Keanu */}
         </div>

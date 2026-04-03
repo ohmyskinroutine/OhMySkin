@@ -74,16 +74,34 @@ a.categories-card {
   padding: 12px;
 }
 
-.categories-card__no-img {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  background: #f2ede9;
-  display: grid;
-  place-items: center;
-  font-size: 0.72rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #b0a89f;
+.categories-card__image-wrapper {
+  position: relative;
+}
+
+.favorite-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 50%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heart {
+  font-size: 22px;
+}
+
+.heart.active {
+  color: #e53935;
+  transform: scale(1.2);
+}
+
+.favorite-icon:hover .heart {
+  transform: scale(1.15);
 }
 
 .categories-card__body {

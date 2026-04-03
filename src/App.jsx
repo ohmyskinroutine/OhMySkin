@@ -1,21 +1,27 @@
 import "./App.css";
+import Cookies from "js-cookie";
+import { useState } from "react";
 import Home from "./pages/Home/Home";
-import Header from "./components/Header/Header";
-import Categories from "./pages/Categories/Categories";
-import ProductDetails from "./pages/Products/ProductDetails";
-import Results from "./pages/Results/Results";
+import Login from "./pages/Login/Login";
+import Signup from "./pages/Signup/Signup";
 import Brands from "./pages/brands/Brands";
-import Questionnaire from "./pages/Questionnaire/Questionnaire";
 import Search from "./pages/Search/Search";
-import SkinBackground from "./components/SkinBackground/SkinBackground";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Footer from "./components/Footer/Footer";
+import Results from "./pages/Results/Results";
 import Payment from "./pages/Payment/Payment";
-// I've imported this (payment) import in the project - Keanu
 import Success from "./pages/Success/Success";
-// I've imported this import (success) in the project - Keanu
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import Categories from "./pages/Categories/Categories";
+import BrandProducts from "./pages/Brands/BrandProduct";
+import ProductDetails from "./pages/Products/ProductDetails";
+import Questionnaire from "./pages/Questionnaire/Questionnaire";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
+  const [user, setUser] = useState(() => {
+    const stored = Cookies.get("user");
+    return stored ? JSON.parse(stored) : null;
+  });
   // Liens catégories
   const creamUrl =
     "https://world.openbeautyfacts.org/api/v2/search?categories_tags=en:face-creams&fields=code,product_name,categories_tags,ingredients_text,quantity,image_url,brands&json=1&page_size=50";
@@ -32,74 +38,74 @@ function App() {
 
   return (
     <Router>
-      <SkinBackground />
-      <Header />
-      <main className="app-main">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/cremes"
-            element={<Categories title="Crèmes" url={creamUrl} />}
-          />
-          <Route
-            path="/cremes/:code"
-            element={<ProductDetails backPath="/cremes" />}
-          />
-          <Route
-            path="/masques"
-            element={<Categories title="Masques" url={masksUrl} />}
-          />
-          <Route
-            path="/masques/:code"
-            element={<ProductDetails backPath="/masques" />}
-          />
-          <Route
-            path="/savons"
-            element={<Categories title="Savons" url={soapsUrl} />}
-          />
-          <Route
-            path="/savons/:code"
-            element={<ProductDetails backPath="/savons" />}
-          />
-          <Route
-            path="/exfoliants"
-            element={<Categories title="Exfoliants" url={exfoliantsUrl} />}
-          />
-          <Route
-            path="/exfoliants/:code"
-            element={<ProductDetails backPath="/exfoliants" />}
-          />
-          <Route
-            path="/cleansers"
-            element={<Categories title="Cleansers" url={cleansersUrl} />}
-          />
-          <Route
-            path="/cleansers/:code"
-            element={<ProductDetails backPath="/cleansers" />}
-          />
-          <Route
-            path="/solaires"
-            element={<Categories title="Crèmes solaires" url={sunscreenUrl} />}
-          />
-          <Route
-            path="/solaires/:code"
-            element={<ProductDetails backPath="/solaires" />}
-          />
-          <Route path="/marques" element={<Brands />} />
-          <Route path="/formulaire" element={<Questionnaire />} />
-          <Route path="/routine" element={<Results />} />
-          <Route path="/payment" element={<Payment />} />
-          {/* I've added this Route (payment) in the project - Keanu */}
-          <Route path="/success" element={<Success />} />
-          {/* I've added this Route (success) in the project - Keanu */}
-          <Route
-            path="*"
-            element={
-              <div className="container">Vous n'êtes pas censés etre ici</div>
-            }
-          />
-        </Routes>
-      </main>
+      <Header user={user} setUser={setUser} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login setUser={setUser} />} />
+        <Route path="/signup" element={<Signup setUser={setUser} />} />
+        <Route
+          path="/cremes"
+          element={<Categories title="Crèmes" url={creamUrl} />}
+        />
+        <Route
+          path="/cremes/:code"
+          element={<ProductDetails backPath="/cremes" />}
+        />
+        <Route
+          path="/masques"
+          element={<Categories title="Masques" url={masksUrl} />}
+        />
+        <Route
+          path="/masques/:code"
+          element={<ProductDetails backPath="/masques" />}
+        />
+        <Route
+          path="/savons"
+          element={<Categories title="Savons" url={soapsUrl} />}
+        />
+        <Route
+          path="/savons/:code"
+          element={<ProductDetails backPath="/savons" />}
+        />
+        <Route
+          path="/exfoliants"
+          element={<Categories title="Exfoliants" url={exfoliantsUrl} />}
+        />
+        <Route
+          path="/exfoliants/:code"
+          element={<ProductDetails backPath="/exfoliants" />}
+        />
+        <Route
+          path="/cleansers"
+          element={<Categories title="Cleansers" url={cleansersUrl} />}
+        />
+        <Route
+          path="/cleansers/:code"
+          element={<ProductDetails backPath="/cleansers" />}
+        />
+        <Route
+          path="/solaires"
+          element={<Categories title="Crèmes solaires" url={sunscreenUrl} />}
+        />
+        <Route
+          path="/solaires/:code"
+          element={<ProductDetails backPath="/solaires" />}
+        />
+        <Route path="/search" element={<Search />} />
+        <Route path="/marques" element={<Brands />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/formulaire" element={<Questionnaire />} />
+        <Route path="/routine" element={<Results />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/success" element={<Success />} />
+        <Route path="/marques/:brand" element={<BrandProducts />} />
+        <Route
+          path="*"
+          element={
+            <div className="container">Vous n'êtes pas censés etre ici</div>
+          }
+        />
+      </Routes>
       <Footer />
     </Router>
   );

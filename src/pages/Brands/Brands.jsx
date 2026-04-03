@@ -1,4 +1,5 @@
 import "./Brands.css";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { CATEGORIES } from "../../constants/categories";
 // on importe la liste d'urls d'API pour chaque catégorie depuis categories.js
@@ -111,7 +112,12 @@ const Brands = () => {
               <ul className="brands-group__list">
                 {groupedBrands[letter].map((brand) => (
                   <li key={brand} className="brands-group__item">
-                    {brand}
+                    <Link
+                      to={`/marques/${encodeURIComponent(brand)}`}
+                      style={{ color: "#513c2d" }}
+                    >
+                      {brand}
+                    </Link>
                   </li>
                 ))}
               </ul>
