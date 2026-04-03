@@ -51,6 +51,7 @@ function Results() {
       console.log("Email envoyé !");
     } catch (error) {
       console.log(error.response?.data || error.message);
+
       alert("Erreur lors de l'envoi");
     }
   };
