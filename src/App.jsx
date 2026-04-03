@@ -1,9 +1,10 @@
 import "./App.css";
-// import Cookies from "js-cookie";
+import Cookies from "js-cookie";
 import { useState } from "react";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
+import Profile from "./pages/Profile/Profile";
 import Brands from "./pages/brands/Brands";
 import Search from "./pages/Search/Search";
 import Results from "./pages/Results/Results";
@@ -15,12 +16,16 @@ import Categories from "./pages/Categories/Categories";
 import BrandProducts from "./pages/Brands/BrandProduct";
 import ProductDetails from "./pages/Products/ProductDetails";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
+// import Profile from "./pages/Profile/Profile";
+// ⬆️⬆️⬆️ Keanu - j'ai commenter cette ligne car l'import avait déjà été faite
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoutes/ProtectedRoute";
+// ⬆️⬆️⬆️ Keanu - j'ai importer cette ligne pour la connection d'utilisateur Stripe
 
 function App() {
   const [user, setUser] = useState(() => {
-    // const stored = Cookies.get("user");
-    // return stored ? JSON.parse(stored) : null;
+    const stored = Cookies.get("user");
+    return stored ? JSON.parse(stored) : null;
   });
   // Liens catégories
   const creamUrl =
@@ -93,11 +98,33 @@ function App() {
         />
         <Route path="/search" element={<Search />} />
         <Route path="/marques" element={<Brands />} />
-        <Route path="/search" element={<Search />} />
         <Route path="/formulaire" element={<Questionnaire />} />
         <Route path="/routine" element={<Results />} />
-        <Route path="/payment" element={<Payment />} />
-        <Route path="/success" element={<Success />} />
+        <Route
+          path="/profile"
+          element={<Profile user={user} setUser={setUser} />}
+        />
+        {/* <Route path="/payment" element={<Payment />} />
+        <Route path="/success" element={<Success />} /> */}
+        {/* ⬆️ Plus besoin de ces 2 lignes ⬆️ */}
+
+        {/* ⬇️⬇️⬇️⬇️ Nouvelle logique à garder pour que l'utilisateur ne puisse accéder à Stripe que si connecter */}
+        <Route
+          path="/payment"
+          element={
+            <ProtectedRoute user={user}>
+              <Payment />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/success"
+          element={
+            <ProtectedRoute user={user}>
+              <Success />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/marques/:brand" element={<BrandProducts />} />
         <Route
           path="*"

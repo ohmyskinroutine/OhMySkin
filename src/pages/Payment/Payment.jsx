@@ -1,6 +1,5 @@
 import "./Payment.css";
-// import Cookies from "js-cookie";
-// import { Navigate, useLocation } from "react-router-dom";
+
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../../components/CheckoutForm/CheckoutForm";

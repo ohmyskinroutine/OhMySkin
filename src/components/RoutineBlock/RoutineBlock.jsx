@@ -1,7 +1,7 @@
 import "./RoutineBlock.css";
 
 function RoutineBlock({ title, products }) {
-  console.log(products);
+  // console.log(products);
   return (
     <div className="routine-block">
       <h3>{title}</h3>

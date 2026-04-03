@@ -1,6 +1,6 @@
 import "./Header.css";
 import axios from "axios";
-// import Cookies from "js-cookie";
+import Cookies from "js-cookie";
 import { useRef, useState } from "react";
 import logoO from "../../assets/Logo.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -30,7 +30,7 @@ const Header = ({ user, setUser }) => {
     } catch {
       // on déconnecte côté client même si le serveur ne répond pas
     }
-    // Cookies.remove("user");
+    Cookies.remove("user");
     setUser(null);
     setShowLogoutModal(false);
     navigate("/");
@@ -59,9 +59,22 @@ const Header = ({ user, setUser }) => {
               </Link>
               {user ? (
                 <div className="auth-buttons">
-                  <span className="username-display">
-                    Bonjour, {user.username}
-                  </span>
+                  <Link to="/profile" className="header-profile-link">
+                    {user.avatar ? (
+                      <img
+                        src={user.avatar}
+                        alt="avatar"
+                        className="header-avatar-img"
+                      />
+                    ) : (
+                      <div className="header-avatar-placeholder">
+                        {user.username?.slice(0, 2).toUpperCase()}
+                      </div>
+                    )}
+                    <span className="username-display">
+                      Bonjour, {user.username}
+                    </span>
+                  </Link>
                   <button
                     className="logout-btn"
                     onClick={() => setShowLogoutModal(true)}

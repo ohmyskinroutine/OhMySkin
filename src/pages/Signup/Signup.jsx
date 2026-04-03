@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-// import Cookies from "js-cookie";
+import Cookies from "js-cookie";
 import "./Signup.css";
 
 const Signup = ({ setUser }) => {
@@ -23,7 +23,7 @@ const Signup = ({ setUser }) => {
         { username, email, password },
       );
 
-      // Cookies.set("user", JSON.stringify(data.user), { expires: 7 });
+      Cookies.set("user", JSON.stringify(data.user), { expires: 7 });
       setUser(data.user);
       navigate("/");
     } catch (err) {
