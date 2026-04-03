@@ -3,6 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import "./Profile.css";
+import { Link } from "react-router-dom";
 
 const BASE_URL = "https://site--oh-my-skin--cvtt47qfxcv8.code.run";
 
@@ -84,7 +85,7 @@ const Profile = ({ user, setUser }) => {
       setSuccess("Profil mis à jour avec succès !");
     } catch (err) {
       setError(
-        err.response?.data?.message || "Impossible de mettre à jour le profil."
+        err.response?.data?.message || "Impossible de mettre à jour le profil.",
       );
     } finally {
       setLoading(false);
@@ -159,13 +160,12 @@ const Profile = ({ user, setUser }) => {
           {error && <p className="auth-error">{error}</p>}
           {success && <p className="profile-success">{success}</p>}
 
-          <button
-            type="submit"
-            className="auth-submit-btn"
-            disabled={loading}
-          >
+          <button type="submit" className="auth-submit-btn" disabled={loading}>
             {loading ? "Mise à jour..." : "Enregistrer"}
           </button>
+          <Link to="/favorites">
+            <button className="favorites-btn">Voir vos produits favoris</button>
+          </Link>
         </form>
       </div>
     </div>

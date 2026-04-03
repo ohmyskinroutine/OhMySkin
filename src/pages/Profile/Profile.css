@@ -145,6 +145,7 @@
 }
 
 .auth-submit-btn {
+  width: 100%;
   padding: 0.65rem 1.2rem;
   background-color: #000;
   color: #fff;
@@ -153,15 +154,52 @@
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
   margin-top: 0.4rem;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.profile-form > a {
+  width: 100%;
+  text-decoration: none;
+}
+
+.favorites-btn {
+  width: 100%;
+  padding: 0.65rem 1.2rem;
+  background-color: #e53935;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.4rem;
+  display: block;
+  box-sizing: border-box;
+  box-shadow:
+    0 4px 12px rgba(229, 57, 53, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .auth-submit-btn:hover:not(:disabled) {
   background-color: #333;
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .auth-submit-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.favorites-btn:hover {
+  background-color: #c62828;
+  box-shadow:
+    0 6px 16px rgba(229, 57, 53, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
