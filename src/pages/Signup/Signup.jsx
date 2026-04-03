@@ -20,14 +20,16 @@ const Signup = ({ setUser }) => {
     try {
       const { data } = await axios.post(
         "https://site--oh-my-skin--cvtt47qfxcv8.code.run/signup",
-        { username, email, password }
+        { username, email, password },
       );
 
       Cookies.set("user", JSON.stringify(data.user), { expires: 7 });
       setUser(data.user);
       navigate("/");
     } catch (err) {
-      setError(err.response?.data?.message || "Impossible de joindre le serveur");
+      setError(
+        err.response?.data?.message || "Impossible de joindre le serveur",
+      );
     } finally {
       setLoading(false);
     }
@@ -74,8 +76,7 @@ const Signup = ({ setUser }) => {
           </button>
         </form>
         <p className="auth-redirect">
-          Déjà un compte ?{" "}
-          <Link to="/login">Se connecter</Link>
+          Déjà un compte ? <Link to="/login">Se connecter</Link>
         </p>
       </div>
     </div>

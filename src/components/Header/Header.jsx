@@ -61,13 +61,19 @@ const Header = ({ user, setUser }) => {
                 <div className="auth-buttons">
                   <Link to="/profile" className="header-profile-link">
                     {user.avatar ? (
-                      <img src={user.avatar} alt="avatar" className="header-avatar-img" />
+                      <img
+                        src={user.avatar}
+                        alt="avatar"
+                        className="header-avatar-img"
+                      />
                     ) : (
                       <div className="header-avatar-placeholder">
                         {user.username?.slice(0, 2).toUpperCase()}
                       </div>
                     )}
-                    <span className="username-display">Bonjour, {user.username}</span>
+                    <span className="username-display">
+                      Bonjour, {user.username}
+                    </span>
                   </Link>
                   <button
                     className="logout-btn"
