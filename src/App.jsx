@@ -95,7 +95,7 @@ function App() {
         <Route path="/marques" element={<Brands />} />
         <Route path="/search" element={<Search />} />
         <Route path="/formulaire" element={<Questionnaire />} />
-        <Route path="/routine" element={<Results />} />
+        <Route path="/routine" element={<Results user={user} />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/success" element={<Success />} />
         <Route path="/marques/:brand" element={<BrandProducts />} />
