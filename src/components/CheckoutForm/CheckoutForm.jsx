@@ -6,8 +6,9 @@ import {
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import "./CheckoutForm.css";
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ price }) => {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -70,13 +71,32 @@ const CheckoutForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <PaymentElement />
-      <Link to="/success">
-        <button disabled={!stripe || loading}>Submit</button>
-        {errorMessage && <p>{errorMessage}</p>}
-      </Link>
-    </form>
+    <div className="checkout-container">
+      <div className="checkout-header">
+        <Link to="/formulaire" className="checkout-back-btn">
+          ←
+        </Link>
+        <div className="checkout-header-center">
+          <h1 className="checkout-title">Méthode de paiement</h1>
+          <p className="checkout-price">
+            You have to pay €{price?.toFixed(2) || "0.00"}
+          </p>
+        </div>
+        <div style={{ width: "32px" }}></div>
+      </div>
+
+      <form onSubmit={handleSubmit} className="checkout-form">
+        <PaymentElement />
+        <button
+          className="checkout-pay-btn"
+          disabled={!stripe || loading}
+          type="submit"
+        >
+          {loading ? "Processing..." : "Acheter"}
+        </button>
+        {errorMessage && <p className="checkout-error">{errorMessage}</p>}
+      </form>
+    </div>
   );
 };
 
