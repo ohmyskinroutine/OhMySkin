@@ -61,6 +61,28 @@
   box-shadow: 0 4px 15px rgba(200, 168, 130, 0.3);
 }
 
+/* ==================== RESET BUTTON ==================== */
+
+.reset-btn {
+  padding: 0.85rem 1.5rem;
+  background: linear-gradient(135deg, #c8a882 0%, #a87a52 100%);
+  border: none;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(200, 168, 130, 0.3);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.reset-btn:hover {
+  background: linear-gradient(135deg, #c8a882 0%, #a87a52 100%);
+  box-shadow: 0 4px 15px rgba(200, 168, 130, 0.3);
+}
+
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 1200px) {
   .routine h2 {

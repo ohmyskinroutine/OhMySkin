@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 yarn.lock
+package-lock.json
 .claude
 
 # Editor directories and files

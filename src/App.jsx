@@ -111,7 +111,9 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/marques" element={<Brands />} />
         <Route path="/formulaire" element={<Questionnaire />} />
-        <Route path="/routine" element={<Results />} />
+
+        <Route path="/routine" element={<Results user={user} />} />
+
         <Route
           path="/profile"
           element={<Profile user={user} setUser={setUser} />}
