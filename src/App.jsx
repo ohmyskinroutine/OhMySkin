@@ -21,6 +21,8 @@ import Questionnaire from "./pages/Questionnaire/Questionnaire";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoutes/ProtectedRoute";
 // ⬆️⬆️⬆️ Keanu - j'ai importer cette ligne pour la connection d'utilisateur Stripe
+import Favorites from "./pages/Favorites/Favorites";
+// ⬆️⬆️⬆️ Keanu - j'ai importer cette ligne pour que les utilisateurs puissent acceder à leur favoris sur leur page profil
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -74,7 +76,9 @@ function App() {
         />
         <Route
           path="/exfoliants"
-          element={<Categories title="Exfoliants" url={exfoliantsUrl} user={user} />}
+          element={
+            <Categories title="Exfoliants" url={exfoliantsUrl} user={user} />
+          }
         />
         <Route
           path="/exfoliants/:code"
@@ -82,7 +86,9 @@ function App() {
         />
         <Route
           path="/cleansers"
-          element={<Categories title="Cleansers" url={cleansersUrl} user={user} />}
+          element={
+            <Categories title="Cleansers" url={cleansersUrl} user={user} />
+          }
         />
         <Route
           path="/cleansers/:code"
@@ -90,7 +96,13 @@ function App() {
         />
         <Route
           path="/solaires"
-          element={<Categories title="Crèmes solaires" url={sunscreenUrl} user={user} />}
+          element={
+            <Categories
+              title="Crèmes solaires"
+              url={sunscreenUrl}
+              user={user}
+            />
+          }
         />
         <Route
           path="/solaires/:code"
@@ -107,7 +119,6 @@ function App() {
         {/* <Route path="/payment" element={<Payment />} />
         <Route path="/success" element={<Success />} /> */}
         {/* ⬆️ Plus besoin de ces 2 lignes ⬆️ */}
-
         {/* ⬇️⬇️⬇️⬇️ Nouvelle logique à garder pour que l'utilisateur ne puisse accéder à Stripe que si connecter */}
         <Route
           path="/payment"
@@ -132,6 +143,8 @@ function App() {
             <div className="container">Vous n'êtes pas censés etre ici</div>
           }
         />
+        <Route path="/favorites" element={<Favorites user={user} />} />
+        {/* ⬆️⬆️⬆️⬆️ À garder. Pour que l'utilisateur puisse accéder à ses favoris uniquement s'il est connecté */}
       </Routes>
       <Footer />
     </Router>

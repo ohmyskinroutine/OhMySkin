@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(find /Users/lassanabaradji/Documents/andromeda26/Project/OhMySkin/src -type f \\\\\\(-name *.js -o -name *.jsx \\\\\\))"
-    ]
-  }
-}
