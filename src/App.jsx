@@ -12,10 +12,10 @@ import Success from "./pages/Success/Success";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Categories from "./pages/Categories/Categories";
+import BrandProducts from "./pages/Brands/BrandProduct";
 import ProductDetails from "./pages/Products/ProductDetails";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import BrandProducts from "./pages/Brands/BrandProduct";
 
 function App() {
   const [user, setUser] = useState(() => {

@@ -96,7 +96,7 @@ a.categories-card {
 }
 
 .heart.active {
-  color: red;
+  color: #e53935;
   transform: scale(1.2);
 }
 
