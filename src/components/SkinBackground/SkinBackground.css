@@ -1,17 +1,27 @@
 /* ── Animated gradient background on body ── */
 body {
   min-height: 100vh;
-  background: linear-gradient(135deg, #efeaec, #ebebec, #faf2ec, #e8f5f0);
+  background: #f1e9d2;
   background-size: 400% 400%;
   animation: gradientShift 12s ease infinite;
 }
 
 @keyframes gradientShift {
-  0%   { background-position: 0%   50%; }
-  25%  { background-position: 100% 50%; }
-  50%  { background-position: 100% 0%;  }
-  75%  { background-position: 0%   0%;  }
-  100% { background-position: 0%   50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 100% 0%;
+  }
+  75% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* ── Particles container ── */
