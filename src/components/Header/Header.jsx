@@ -52,7 +52,16 @@ const Header = ({ user, setUser }) => {
               </Link>
               {user ? (
                 <div className="auth-buttons">
-                  <span className="username-display">Bonjour, {user.username}</span>
+                  <Link to="/profile" className="header-profile-link">
+                    {user.avatar ? (
+                      <img src={user.avatar} alt="avatar" className="header-avatar-img" />
+                    ) : (
+                      <div className="header-avatar-placeholder">
+                        {user.username?.slice(0, 2).toUpperCase()}
+                      </div>
+                    )}
+                    <span className="username-display">Bonjour, {user.username}</span>
+                  </Link>
                   <button className="logout-btn" onClick={() => setShowLogoutModal(true)}>
                     Déconnexion
                   </button>

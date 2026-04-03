@@ -11,6 +11,7 @@ import Questionnaire from "./pages/Questionnaire/Questionnaire";
 import Search from "./pages/Search/Search";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
+import Profile from "./pages/Profile/Profile";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Footer from "./components/Footer/Footer";
 
@@ -93,6 +94,7 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/formulaire" element={<Questionnaire />} />
         <Route path="/routine" element={<Results />} />
+        <Route path="/profile" element={<Profile user={user} setUser={setUser} />} />
         <Route
           path="*"
           element={
