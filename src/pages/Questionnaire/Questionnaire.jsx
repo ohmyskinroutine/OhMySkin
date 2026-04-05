@@ -2,7 +2,7 @@ import "./Questionnaire.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { questions } from "../../assets/question";
-import { IoArrowUpOutline } from "react-icons/io5";
+// import { IoArrowUpOutline } from "react-icons/io5";
 import Question from "../../components/Question/Question";
 
 const Questionnaire = () => {
@@ -32,19 +32,21 @@ const Questionnaire = () => {
   return currentQuestion ? (
     <main className="question-page">
       <div className="container">
-        {/* Condition qui permet l'affichage du bouton retour seulement si on est pas à la 1ère question */}
-        {step > 0 && (
-          <button onClick={handleBack}>
-            <IoArrowUpOutline /> Retour
-          </button>
-        )}
-        <Question question={currentQuestion} onAnswer={handleAnswer} />
-        <div className="progress-bar">
-          <div
-            className="progress-bar__fill"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
+        <section className="question-page-blocs">
+          {/* Condition qui permet l'affichage du bouton retour seulement si on est pas à la 1ère question */}
+          {step > 0 && (
+            <button onClick={handleBack}>
+              {/* <IoArrowUpOutline />*/} ← Retour
+            </button>
+          )}
+          <Question question={currentQuestion} onAnswer={handleAnswer} />
+          <div className="progress-bar">
+            <div
+              className="progress-bar__fill"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </section>
       </div>
     </main>
   ) : (

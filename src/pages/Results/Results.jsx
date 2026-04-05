@@ -28,11 +28,15 @@ function Results({ user }) {
 
   const handleSendEmail = async () => {
     try {
-      if (!email) {
+      //si connecté n utilise le mail user sinon celui rentré dans
+      const emailToSend = token ? user.email : email;
+      console.log("ici user", user);
+
+      if (!emailToSend) {
         alert("Entre ton email");
         return;
       }
-      if (!email.includes("@")) {
+      if (!emailToSend.includes("@")) {
         alert("Email invalide");
         return;
       }
@@ -40,7 +44,7 @@ function Results({ user }) {
       const response = await axios.post(
         "https://site--oh-my-skin--cvtt47qfxcv8.code.run/send-email",
         {
-          email,
+          email: emailToSend,
           subject: "Ta routine skincare est prête ✨",
           html: emailContent(routine),
           routine,
@@ -93,7 +97,7 @@ function Results({ user }) {
       }
 
       await axios.post(
-        "https://site--oh-my-skin--cvtt47qfxcv8.code.run/reset",
+        "https://site--oh-my-skin--cvtt47qfxcv8.code.run/routine/reset",
         {},
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -101,6 +105,7 @@ function Results({ user }) {
       window.location.reload();
     } catch (err) {
       console.error(err);
+      // console.log("ici msgggggg=>", err.message);
       alert("Erreur lors de la réinitialisation de la routine");
     }
   };
@@ -111,36 +116,66 @@ function Results({ user }) {
   return (
     <main className="routine">
       <SkinBackground />
-      <div className="container">
-        <div className="header-section">
-          <h2>Ta routine personnalisée</h2>
-          <Link
-            to="/payment"
-            className="buy-link"
-            state={{ price: routine.totalPrice, title: "Routine complète" }}
-          >
-            <button className="buy-btn">Obtiens ta routine</button>
-          </Link>
-          {token && (
-            <button onClick={handleResetRoutine} className="reset-btn">
-              Re-générer ma routine
-            </button>
-          )}
-        </div>
+      <div className="container results-container">
+        <div className="results-layout">
+          <section className="results-content">
+            <div className="header-section">
+              <h2>Ta routine personnalisée</h2>
+              {token && (
+                <div className="reset-block">
+                  <p>
+                    Tu n'es pas satisfait.e ?{" "}
+                    <button onClick={handleResetRoutine} className="reset-link">
+                      Génère de nouveaux résultats
+                    </button>
+                  </p>
+                </div>
+              )}
+            </div>
 
-        <RoutineBlock title="Routine du Matin" products={routine.morning} />
-        <RoutineBlock title="Routine du Soir" products={routine.evening} />
+            <RoutineBlock title="MATIN" products={routine.morning} />
+            <RoutineBlock title="SOIR" products={routine.evening} />
+          </section>
 
-        <div className="email-block">
-          <input
-            type="email"
-            placeholder="Entre ton email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-          <button onClick={handleSendEmail}>
-            Recevoir ma routine par email
-          </button>
+          <aside className="results-sidebar">
+            <div className="summary-card">
+              <h3>Prescription</h3>
+              <p>Elaborée selon les besoins déclarés dans le questionnaire.</p>
+
+              <Link
+                to="/payment"
+                className="buy-link"
+                state={{ price: routine.totalPrice, title: "Routine complète" }}
+              >
+                <button className="buy-btn">AJOUTER AU PANIER - 42 €</button>
+              </Link>
+            </div>
+            {token ? (
+              <div className="email-card">
+                <p>Recevoir les résultats par email</p>
+
+                <button onClick={handleSendEmail} className="email-btn">
+                  M’envoyer ma routine
+                </button>
+              </div>
+            ) : (
+              <div className="email-card">
+                <p>Recevoir les résultats par email</p>
+
+                <input
+                  type="email"
+                  placeholder="Entre ton email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  className="email-input"
+                />
+
+                <button onClick={handleSendEmail} className="email-btn">
+                  M’envoyer ma routine
+                </button>
+              </div>
+            )}
+          </aside>
         </div>
       </div>
     </main>
@@ -148,3 +183,30 @@ function Results({ user }) {
 }
 
 export default Results;
+
+//old
+
+// <main className="routine">
+//   <SkinBackground />
+//   <div className="container">
+//     <div className="header-section">
+//       <h2>Ta routine personnalisée</h2>
+
+//       <Link
+//         to="/payment"
+//         className="buy-link"
+//         state={{ price: routine.totalPrice, title: "Routine complète" }}
+//       >
+//         <button className="buy-btn">Obtiens ta routine</button>
+//       </Link>
+//       {token && (
+//         <button onClick={handleResetRoutine} className="reset-btn">
+//           Re-générer ma routine
+//         </button>
+//       )}
+//     </div>
+
+//     <RoutineBlock title="MATIN" products={routine.morning} />
+//     <RoutineBlock title="SOIR" products={routine.evening} />
+//   </div>
+// </main>

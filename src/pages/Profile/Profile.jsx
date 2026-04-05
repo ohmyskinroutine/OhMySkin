@@ -123,7 +123,11 @@ const Profile = ({ user, setUser }) => {
           <h2 className="profile-name">{user?.username}</h2>
           <p className="profile-email-display">{user?.email}</p>
         </div>
-
+        <div className="fav-link">
+          <Link to="/favorites">
+            <button className="favorites-btn"> Voir mes favoris</button>
+          </Link>
+        </div>
         <form onSubmit={handleSubmit} className="profile-form">
           <h3 className="profile-section-title">Modifier le profil</h3>
 
@@ -153,7 +157,7 @@ const Profile = ({ user, setUser }) => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Laisser vide pour ne pas changer"
+              placeholder="Laisser vide pour conserver votre mot de passe actuel"
             />
           </div>
 
@@ -163,9 +167,6 @@ const Profile = ({ user, setUser }) => {
           <button type="submit" className="auth-submit-btn" disabled={loading}>
             {loading ? "Mise à jour..." : "Enregistrer"}
           </button>
-          <Link to="/favorites">
-            <button className="favorites-btn">Voir vos produits favoris</button>
-          </Link>
         </form>
       </div>
     </div>
