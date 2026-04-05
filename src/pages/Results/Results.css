@@ -91,6 +91,23 @@
   background-color: #f4ece8;
 }
 
+.email-error .email-success {
+  text-align: center;
+  font-size: 13px;
+}
+
+.email-success {
+  color: #3a7d44 !important;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.email-error {
+  color: #c0392b !important;
+  text-align: center;
+  padding-top: 20px;
+}
+
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 1024px) {
   .routine h2 {

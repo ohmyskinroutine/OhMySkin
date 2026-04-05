@@ -25,6 +25,7 @@ function Results({ user }) {
   const [routine, setRoutine] = useState(null);
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState("");
+  const [emailStatus, setEmailStatus] = useState(null);
 
   const handleSendEmail = async () => {
     try {
@@ -33,11 +34,12 @@ function Results({ user }) {
       console.log("ici user", user);
 
       if (!emailToSend) {
-        alert("Entre ton email");
+        setEmailStatus("error");
         return;
       }
+
       if (!emailToSend.includes("@")) {
-        alert("Email invalide");
+        setEmailStatus("error");
         return;
       }
 
@@ -50,12 +52,11 @@ function Results({ user }) {
           routine,
         },
       );
+      setEmailStatus("success");
       console.log(response.data);
-      alert("Email envoyé !");
     } catch (error) {
       console.log(error.response?.data || error.message);
-
-      alert("Erreur lors de l'envoi");
+      setEmailStatus("error");
     }
   };
 
@@ -157,6 +158,13 @@ function Results({ user }) {
                 <button onClick={handleSendEmail} className="email-btn">
                   M’envoyer ma routine
                 </button>
+                {emailStatus === "success" && (
+                  <p className="email-success">Email envoyé avec succès !</p>
+                )}
+
+                {emailStatus === "error" && (
+                  <p className="email-error">Erreur lors de l’envoi</p>
+                )}
               </div>
             ) : (
               <div className="email-card">
@@ -173,6 +181,13 @@ function Results({ user }) {
                 <button onClick={handleSendEmail} className="email-btn">
                   M’envoyer ma routine
                 </button>
+                {emailStatus === "success" && (
+                  <p className="email-success">Email envoyé avec succès !</p>
+                )}
+
+                {emailStatus === "error" && (
+                  <p className="email-error">Erreur lors de l’envoi</p>
+                )}
               </div>
             )}
           </aside>
