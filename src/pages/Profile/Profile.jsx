@@ -128,6 +128,13 @@ const Profile = ({ user, setUser }) => {
             <button className="favorites-btn"> Voir mes favoris</button>
           </Link>
         </div>
+        <div className="fav-link">
+          <Link to="/historique">
+            <button className="favorites-btn">
+              Voir mes anciennes routines
+            </button>
+          </Link>
+        </div>
         <form onSubmit={handleSubmit} className="profile-form">
           <h3 className="profile-section-title">Modifier le profil</h3>
 

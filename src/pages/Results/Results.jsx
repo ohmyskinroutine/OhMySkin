@@ -140,8 +140,10 @@ function Results({ user }) {
 
           <aside className="results-sidebar">
             <div className="summary-card">
+
               <h3>Rituel journalier</h3>
-              <p>Elaboré selon les besoins déclarés dans le questionnaire.</p>
+                   <p>Élaborée selon les besoins déclarés dans le questionnaire.</p>
+
 
               <Link
                 to="/payment"
