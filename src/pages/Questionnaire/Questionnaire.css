@@ -1,10 +1,11 @@
-.question-page .container {
+.question-page-blocs {
   display: flex;
   justify-content: center;
   align-items: baseline;
+  gap: 2.5rem;
 }
 
-.question-page .container > button {
+.question-page-blocs > button {
   color: #78736f;
   border: none;
   cursor: pointer;
@@ -15,6 +16,7 @@
   gap: 5px;
   background-color: transparent;
 }
+
 .progress-bar {
   width: 100px;
   height: 10px;
@@ -28,4 +30,40 @@
   height: 100%;
   background: #513c2d;
   transition: width 0.3s ease;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  .question-page-blocs {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .question-page-blocs > button {
+    margin-top: 20px;
+    font-size: 14px;
+  }
+
+  .progress-bar {
+    width: 180px;
+    margin: 0;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .question-page-blocs {
+    gap: 15px;
+  }
+
+  .question-page-blocs > button {
+    font-size: 13px;
+    margin: 8px 0;
+  }
+
+  .progress-bar {
+    width: 140px;
+    height: 8px;
+  }
 }

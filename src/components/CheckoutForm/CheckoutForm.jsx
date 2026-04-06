@@ -100,7 +100,7 @@ const CheckoutForm = ({ price }) => {
           ←
         </Link>
         <div className="checkout-header-center">
-          <h1 className="checkout-title">Méthode de paiement</h1>
+          <h1 className="checkout-title">Méthodes de paiement</h1>
           <p className="checkout-price">
             Ta routine pour {price?.toFixed(2) || "0.00"}€
           </p>

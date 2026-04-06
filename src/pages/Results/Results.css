@@ -1,4 +1,192 @@
-.routine {
+/* ==================== TEST ==================== */
+.routine h2 {
+  font-size: 50px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: #231d19;
+  padding-top: 70px;
+  padding-bottom: 50px;
+  display: flex;
+  text-align: left;
+}
+
+/* ==================== Reset link ==================== */
+.reset-link {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: #1f1a17;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.reset-link:hover {
+  opacity: 0.7;
+}
+.results-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 60px;
+  align-items: start;
+}
+
+/* ==================== RIGHT SIDE BAR ==================== */
+.results-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 70px;
+  margin-top: 70px;
+  margin-bottom: 60px;
+}
+
+.email-card,
+.summary-card {
+  background-color: white;
+  border: 1px #f4ece8 solid;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.email-card h3,
+.summary-card h3 {
+  margin: 0 0 14px;
+  font-size: 22px;
+  color: #1f1a17;
+}
+
+.email-card p,
+.summary-card p {
+  margin: 0 0 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #4d433d;
+}
+
+.email-input {
+  width: 100%;
+  height: 46px;
+  border: 1px solid #d2c9c0;
+  background: white;
+  padding: 0 14px;
+  font-size: 14px;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+.buy-btn,
+.email-btn {
+  width: 100%;
+  border: none;
+  color: black;
+  padding: 18px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 12px;
+  background-color: #f4ece8;
+}
+
+.email-error .email-success {
+  text-align: center;
+  font-size: 13px;
+}
+
+.email-success {
+  color: #3a7d44 !important;
+  text-align: center;
+  padding-top: 20px;
+}
+
+.email-error {
+  color: #c0392b !important;
+  text-align: center;
+  padding-top: 20px;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1024px) {
+  .routine h2 {
+    font-size: 40px;
+    padding-top: 50px;
+    padding-bottom: 35px;
+  }
+
+  .results-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .results-sidebar {
+    position: static;
+    margin-top: 0;
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .routine h2 {
+    font-size: 32px;
+    padding-top: 35px;
+    padding-bottom: 25px;
+  }
+
+  .results-layout {
+    gap: 20px;
+  }
+
+  .email-card,
+  .summary-card {
+    padding: 18px;
+  }
+
+  .email-card h3,
+  .summary-card h3 {
+    font-size: 18px;
+  }
+
+  .email-card p,
+  .summary-card p {
+    font-size: 13px;
+  }
+
+  .email-input {
+    height: 42px;
+    font-size: 13px;
+  }
+
+  .buy-btn,
+  .email-btn {
+    padding: 14px 16px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .routine h2 {
+    font-size: 26px;
+    padding-top: 25px;
+    padding-bottom: 20px;
+  }
+
+  .email-card,
+  .summary-card {
+    padding: 14px;
+    border-radius: 10px;
+  }
+
+  .buy-btn,
+  .email-btn {
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+}
+/* ==================== OLD ========================================================================================= */
+/* .routine {
   padding: 2rem;
 }
 
@@ -25,10 +213,10 @@
   font-size: 2.5rem;
   color: #231d19;
   line-height: 1.2;
-}
+} */
 
 /* ==================== BUY BUTTON ==================== */
-.buy-link {
+/* .buy-link {
   text-decoration: none;
   position: absolute;
   right: 0;
@@ -43,11 +231,11 @@
   border-radius: 8px;
   color: #ffffff;
   font-size: 0.9rem;
-  font-weight: 600;
+
   cursor: pointer;
   box-shadow: 0 4px 15px rgba(200, 168, 130, 0.3);
   letter-spacing: 0.3px;
-  text-transform: uppercase;
+
   white-space: nowrap;
 }
 
@@ -63,18 +251,18 @@
 
 /* ==================== RESET BUTTON ==================== */
 
-.reset-btn {
+/* .reset-btn {
   padding: 0.85rem 1.5rem;
   background: linear-gradient(135deg, #c8a882 0%, #a87a52 100%);
   border: none;
   border-radius: 8px;
   color: #ffffff;
   font-size: 0.9rem;
-  font-weight: 600;
+
   cursor: pointer;
   box-shadow: 0 4px 15px rgba(200, 168, 130, 0.3);
   letter-spacing: 0.3px;
-  text-transform: uppercase;
+
   white-space: nowrap;
 }
 
@@ -83,8 +271,8 @@
   box-shadow: 0 4px 15px rgba(200, 168, 130, 0.3);
 }
 
-/* ==================== RESPONSIVE ==================== */
-@media (max-width: 1200px) {
+==================== RESPONSIVE ==================== */
+/* @media (max-width: 1200px) {
   .routine h2 {
     font-size: 2.3rem;
   }
@@ -116,4 +304,4 @@
     padding: 0.85rem 1rem;
     font-size: 0.9rem;
   }
-}
+}  */

@@ -114,7 +114,7 @@ const Header = ({ user, setUser }) => {
         >
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <p className="modal__text">
-              Êtes-vous sûr de vouloir vous déconnecter ?
+              Êtes-vous sûr.e de vouloir vous déconnecter ?
             </p>
             <div className="modal__actions">
               <button
