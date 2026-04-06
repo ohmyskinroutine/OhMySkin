@@ -3,6 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import "./Profile.css";
+import { Link } from "react-router-dom";
 
 const BASE_URL = "https://site--oh-my-skin--cvtt47qfxcv8.code.run";
 
@@ -84,7 +85,7 @@ const Profile = ({ user, setUser }) => {
       setSuccess("Profil mis à jour avec succès !");
     } catch (err) {
       setError(
-        err.response?.data?.message || "Impossible de mettre à jour le profil."
+        err.response?.data?.message || "Impossible de mettre à jour le profil.",
       );
     } finally {
       setLoading(false);
@@ -122,7 +123,11 @@ const Profile = ({ user, setUser }) => {
           <h2 className="profile-name">{user?.username}</h2>
           <p className="profile-email-display">{user?.email}</p>
         </div>
-
+        <div className="fav-link">
+          <Link to="/favorites">
+            <button className="favorites-btn"> Voir mes favoris</button>
+          </Link>
+        </div>
         <form onSubmit={handleSubmit} className="profile-form">
           <h3 className="profile-section-title">Modifier le profil</h3>
 
@@ -152,18 +157,14 @@ const Profile = ({ user, setUser }) => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Laisser vide pour ne pas changer"
+              placeholder="Laisser vide pour conserver votre mot de passe actuel"
             />
           </div>
 
           {error && <p className="auth-error">{error}</p>}
           {success && <p className="profile-success">{success}</p>}
 
-          <button
-            type="submit"
-            className="auth-submit-btn"
-            disabled={loading}
-          >
+          <button type="submit" className="auth-submit-btn" disabled={loading}>
             {loading ? "Mise à jour..." : "Enregistrer"}
           </button>
         </form>

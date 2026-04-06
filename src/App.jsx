@@ -16,7 +16,13 @@ import Categories from "./pages/Categories/Categories";
 import BrandProducts from "./pages/Brands/BrandProduct";
 import ProductDetails from "./pages/Products/ProductDetails";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
+// import Profile from "./pages/Profile/Profile";
+// ⬆️⬆️⬆️ Keanu - j'ai commenter cette ligne car l'import avait déjà été faite
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoutes/ProtectedRoute";
+// ⬆️⬆️⬆️ Keanu - j'ai importer cette ligne pour la connection d'utilisateur Stripe
+import Favorites from "./pages/Favorites/Favorites";
+// ⬆️⬆️⬆️ Keanu - j'ai importer cette ligne pour que les utilisateurs puissent acceder à leur favoris sur leur page profil
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -50,7 +56,7 @@ function App() {
         />
         <Route
           path="/cremes/:code"
-          element={<ProductDetails backPath="/cremes" />}
+          element={<ProductDetails backPath="/cremes" user={user} />}
         />
         <Route
           path="/masques"
@@ -58,7 +64,7 @@ function App() {
         />
         <Route
           path="/masques/:code"
-          element={<ProductDetails backPath="/masques" />}
+          element={<ProductDetails backPath="/masques" user={user} />}
         />
         <Route
           path="/savons"
@@ -66,39 +72,68 @@ function App() {
         />
         <Route
           path="/savons/:code"
-          element={<ProductDetails backPath="/savons" />}
+          element={<ProductDetails backPath="/savons" user={user} />}
         />
         <Route
           path="/exfoliants"
-          element={<Categories title="Exfoliants" url={exfoliantsUrl} user={user} />}
+          element={
+            <Categories title="Exfoliants" url={exfoliantsUrl} user={user} />
+          }
         />
         <Route
           path="/exfoliants/:code"
-          element={<ProductDetails backPath="/exfoliants" />}
+          element={<ProductDetails backPath="/exfoliants" user={user} />}
         />
         <Route
           path="/cleansers"
-          element={<Categories title="Cleansers" url={cleansersUrl} user={user} />}
+          element={
+            <Categories title="Cleansers" url={cleansersUrl} user={user} />
+          }
         />
         <Route
           path="/cleansers/:code"
-          element={<ProductDetails backPath="/cleansers" />}
+          element={<ProductDetails backPath="/cleansers" user={user} />}
         />
         <Route
           path="/solaires"
-          element={<Categories title="Crèmes solaires" url={sunscreenUrl} user={user} />}
+          element={
+            <Categories
+              title="Crèmes solaires"
+              url={sunscreenUrl}
+              user={user}
+            />
+          }
         />
         <Route
           path="/solaires/:code"
-          element={<ProductDetails backPath="/solaires" />}
+          element={<ProductDetails backPath="/solaires" user={user} />}
         />
         <Route path="/search" element={<Search />} />
         <Route path="/marques" element={<Brands />} />
         <Route path="/formulaire" element={<Questionnaire />} />
-        <Route path="/routine" element={<Results />} />
-        <Route path="/profile" element={<Profile user={user} setUser={setUser} />} />
-        <Route path="/payment" element={<Payment />} />
-        <Route path="/success" element={<Success />} />
+
+        <Route path="/routine" element={<Results user={user} />} />
+
+        <Route
+          path="/profile"
+          element={<Profile user={user} setUser={setUser} />}
+        />
+        <Route
+          path="/payment"
+          element={
+            <ProtectedRoute user={user}>
+              <Payment />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/success"
+          element={
+            <ProtectedRoute user={user}>
+              <Success />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/marques/:brand" element={<BrandProducts />} />
         <Route
           path="*"
@@ -106,6 +141,8 @@ function App() {
             <div className="container">Vous n'êtes pas censés etre ici</div>
           }
         />
+        <Route path="/favorites" element={<Favorites user={user} />} />
+        {/* ⬆️⬆️⬆️⬆️ À garder. Pour que l'utilisateur puisse accéder à ses favoris uniquement s'il est connecté */}
       </Routes>
       <Footer />
     </Router>

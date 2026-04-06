@@ -1,7 +1,7 @@
 /* ── Animated gradient background on body ── */
 body {
   min-height: 100vh;
-  background: #f1e9d2;
+  background: #f8f5f2;
   background-size: 400% 400%;
   animation: gradientShift 12s ease infinite;
 }

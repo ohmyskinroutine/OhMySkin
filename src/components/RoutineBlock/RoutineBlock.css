@@ -1,3 +1,7 @@
+.routine-block {
+  width: 450px;
+  padding-bottom: 60px;
+}
 .routine-block h3 {
   font-weight: bold;
   font-size: 22px;

@@ -14,8 +14,8 @@
 
 .logo img {
   height: 70px;
-  width: 90px;
-  /* object-fit: contain; */
+  /* width: 90px; */
+  object-fit: contain;
 }
 .logo a {
   text-decoration: none;
@@ -43,7 +43,7 @@
 
 .routine-btn {
   padding: 0.5rem 1.2rem;
-  background-color: #eed9c4;
+  background-color: #f4ece8;
   color: #333;
   border: none;
   border-radius: 20px;
@@ -54,20 +54,21 @@
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+
+  gap: 1.25rem;
 }
 
 .auth-buttons {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 1.25rem;
 }
 
 .login-btn {
   padding: 0.5rem 1.2rem;
   background-color: transparent;
   color: #333333;
-  border: 1px solid #eed9c4;
+  border: solid 1px #f4ece8;
   border-radius: 20px;
   font-size: 0.9rem;
   cursor: pointer;
@@ -77,15 +78,14 @@
 }
 
 .login-btn:hover {
-  background-color: #eed9c4;
-  color: #fff;
+  background-color: #f4ece8;
 }
 
 .signup-btn {
   padding: 0.5rem 1.2rem;
-  background-color: #eed9c4;
-  color: #fff;
-  border: solid 1px #eed9c4;
+  background-color: #f4ece8;
+  color: black;
+  border: solid 1px #f4ece8;
   border-radius: 20px;
   font-size: 0.9rem;
   cursor: pointer;
@@ -101,7 +101,7 @@
   padding: 0.5rem 1.2rem;
   background-color: transparent;
   color: #333333;
-  border: 1px solid #eed9c4;
+  border: 1px solid #f4ece8;
   border-radius: 20px;
   font-size: 0.9rem;
   cursor: pointer;
@@ -111,8 +111,8 @@
 }
 
 .logout-btn:hover {
-  background-color: #eed9c4;
-  color: #fff;
+  background-color: #f4ece8;
+  color: black;
 }
 
 .header-profile-link {
@@ -229,4 +229,111 @@
 
 .modal__btn--confirm:hover {
   background: #c62828;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  .search-input {
+    width: 220px;
+  }
+
+  .nav {
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .header-top {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .logo {
+    display: flex;
+    justify-content: center;
+  }
+
+  .logo img {
+    height: 60px;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .auth-buttons {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .routine-btn,
+  .login-btn,
+  .signup-btn,
+  .logout-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .header-profile-link {
+    justify-content: center;
+  }
+
+  .nav {
+    justify-content: center;
+    gap: 1rem;
+    padding: 0.8rem 0;
+    flex-wrap: wrap;
+  }
+
+  .nav a {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo img {
+    height: 50px;
+  }
+
+  .username-display {
+    font-size: 0.8rem;
+  }
+
+  .nav {
+    gap: 0.8rem;
+  }
+
+  .nav a {
+    font-size: 0.8rem;
+  }
+
+  .modal {
+    width: calc(100% - 32px);
+    padding: 24px 20px;
+  }
+
+  .modal__actions {
+    flex-direction: column;
+  }
+
+  .modal__btn {
+    width: 100%;
+  }
 }

@@ -19,7 +19,7 @@ const Success = () => {
                 )
               }
             >
-              Ref Alexis
+              Cliquez ici
             </button>
           </Link>
         </div>

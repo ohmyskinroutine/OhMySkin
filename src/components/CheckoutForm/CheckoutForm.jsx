@@ -37,35 +37,58 @@ const CheckoutForm = ({ price }) => {
       return;
     }
 
-    const response = await axios.post("http://localhost:3000/payment");
+    try {
+      const response = await axios.post(
+        "https://site--oh-my-skin--cvtt47qfxcv8.code.run/payment",
+      );
 
-    console.log("response => ", response.data);
+      console.log("response => ", response.data);
 
-    // const { client_secret: clientSecret } = response.data;
+      // const { client_secret: clientSecret } = response.data;
 
-    // Confirm the PaymentIntent using the details collected by the Payment Element
+      // Confirm the PaymentIntent using the details collected by the Payment Element
 
-    // Ajoutez un paramètre return_url à cette fonction pour indiquer à Stripe où rediriger l’utilisateur une fois le paiement effectué.
-    const confirmPaymentResponse = await stripe.confirmPayment({
-      elements: elements,
-      clientSecret: response.data.client_secret,
-      confirmParams: {
-        return_url: "http://localhost:5173/",
-      },
-      // Bloque la redirections
-      redirect: "if_required",
-    });
+      // Ajoutez un paramètre return_url à cette fonction pour indiquer à Stripe où rediriger l’utilisateur une fois le paiement effectué.
+      const confirmPaymentResponse = await stripe.confirmPayment({
+        elements: elements,
+        clientSecret: response.data.client_secret,
+        confirmParams: {
+          return_url: "http://localhost:5173/success",
+        },
+        // Bloque la redirections
+        redirect: "if_required",
+      });
 
-    console.log("confirmPAymentResponse =>", confirmPaymentResponse);
+      console.log("confirmPAymentResponse =>", confirmPaymentResponse);
 
-    if (confirmPaymentResponse.error) {
-      // This point is only reached if there's an immediate error when
-      // confirming the payment. Show the error to your customer (for example, payment details incomplete)
-      handleError(confirmPaymentResponse.error);
-    } else {
-      // Your customer is redirected to your `return_url`. For some payment
-      // methods like iDEAL, your customer is redirected to an intermediate
-      // site first to authorize the payment, then redirected to the `return_url`.
+      if (confirmPaymentResponse.error) {
+        // This point is only reached if there's an immediate error when
+        // confirming the payment. Show the error to your customer (for example, payment details incomplete)
+        handleError(confirmPaymentResponse.error);
+      } else if (confirmPaymentResponse.paymentIntent.status === "succeeded") {
+        // Payment succeeded
+        setLoading(false);
+        setErrorMessage("");
+        // Optionally redirect to success page or show success message
+        window.location.href = "/success";
+      } else if (confirmPaymentResponse.paymentIntent.status === "processing") {
+        // Payment is still processing
+        setErrorMessage("Payment is processing. Please wait...");
+      } else {
+        // Handle other statuses (requires_action, requires_payment_method, etc.)
+        setErrorMessage("Unexpected payment status. Please try again.");
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error("❌ Payment Error:", error);
+      console.error("Error message:", error.message);
+      console.error("Error response:", error.response?.data);
+
+      setErrorMessage(
+        error.response?.data?.message ||
+          error.message ||
+          "Something went wrong with the payment",
+      );
       setLoading(false);
     }
   };
@@ -77,7 +100,7 @@ const CheckoutForm = ({ price }) => {
           ←
         </Link>
         <div className="checkout-header-center">
-          <h1 className="checkout-title">Méthode de paiement</h1>
+          <h1 className="checkout-title">Méthodes de paiement</h1>
           <p className="checkout-price">
             Ta routine pour {price?.toFixed(2) || "0.00"}€
           </p>
