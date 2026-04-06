@@ -137,6 +137,7 @@ const Categories = ({ title, url, user }) => {
                       className="favorite-icon"
                       onClick={(event) => {
                         event.preventDefault();
+                        event.stopPropagation();
                         toggleFavorite(product);
                       }}
                     >
