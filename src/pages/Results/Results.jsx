@@ -140,20 +140,20 @@ function Results({ user }) {
 
           <aside className="results-sidebar">
             <div className="summary-card">
-              <h3>Prescription</h3>
-              <p>Elaborée selon les besoins déclarés dans le questionnaire.</p>
+              <h3>Rituel journalier</h3>
+              <p>Elaboré selon les besoins déclarés dans le questionnaire.</p>
 
               <Link
                 to="/payment"
                 className="buy-link"
                 state={{ price: routine.totalPrice, title: "Routine complète" }}
               >
-                <button className="buy-btn">AJOUTER AU PANIER - 42 €</button>
+                <button className="buy-btn">PAIEMENT - 42 €</button>
               </Link>
             </div>
             {token ? (
               <div className="email-card">
-                <p>Recevoir les résultats par email</p>
+                <p>Recevoir les résultats par email.</p>
 
                 <button onClick={handleSendEmail} className="email-btn">
                   M’envoyer ma routine
@@ -168,7 +168,7 @@ function Results({ user }) {
               </div>
             ) : (
               <div className="email-card">
-                <p>Recevoir les résultats par email</p>
+                <p>Recevoir les résultats par email.</p>
 
                 <input
                   type="email"
@@ -198,30 +198,3 @@ function Results({ user }) {
 }
 
 export default Results;
-
-//old
-
-// <main className="routine">
-//   <SkinBackground />
-//   <div className="container">
-//     <div className="header-section">
-//       <h2>Ta routine personnalisée</h2>
-
-//       <Link
-//         to="/payment"
-//         className="buy-link"
-//         state={{ price: routine.totalPrice, title: "Routine complète" }}
-//       >
-//         <button className="buy-btn">Obtiens ta routine</button>
-//       </Link>
-//       {token && (
-//         <button onClick={handleResetRoutine} className="reset-btn">
-//           Re-générer ma routine
-//         </button>
-//       )}
-//     </div>
-
-//     <RoutineBlock title="MATIN" products={routine.morning} />
-//     <RoutineBlock title="SOIR" products={routine.evening} />
-//   </div>
-// </main>
