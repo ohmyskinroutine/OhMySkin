@@ -56,7 +56,7 @@ function App() {
         />
         <Route
           path="/cremes/:code"
-          element={<ProductDetails backPath="/cremes" />}
+          element={<ProductDetails backPath="/cremes" user={user} />}
         />
         <Route
           path="/masques"
@@ -64,7 +64,7 @@ function App() {
         />
         <Route
           path="/masques/:code"
-          element={<ProductDetails backPath="/masques" />}
+          element={<ProductDetails backPath="/masques" user={user} />}
         />
         <Route
           path="/savons"
@@ -72,7 +72,7 @@ function App() {
         />
         <Route
           path="/savons/:code"
-          element={<ProductDetails backPath="/savons" />}
+          element={<ProductDetails backPath="/savons" user={user} />}
         />
         <Route
           path="/exfoliants"
@@ -82,7 +82,7 @@ function App() {
         />
         <Route
           path="/exfoliants/:code"
-          element={<ProductDetails backPath="/exfoliants" />}
+          element={<ProductDetails backPath="/exfoliants" user={user} />}
         />
         <Route
           path="/cleansers"
@@ -92,7 +92,7 @@ function App() {
         />
         <Route
           path="/cleansers/:code"
-          element={<ProductDetails backPath="/cleansers" />}
+          element={<ProductDetails backPath="/cleansers" user={user} />}
         />
         <Route
           path="/solaires"
@@ -106,7 +106,7 @@ function App() {
         />
         <Route
           path="/solaires/:code"
-          element={<ProductDetails backPath="/solaires" />}
+          element={<ProductDetails backPath="/solaires" user={user} />}
         />
         <Route path="/search" element={<Search />} />
         <Route path="/marques" element={<Brands />} />
@@ -118,10 +118,6 @@ function App() {
           path="/profile"
           element={<Profile user={user} setUser={setUser} />}
         />
-        {/* <Route path="/payment" element={<Payment />} />
-        <Route path="/success" element={<Success />} /> */}
-        {/* ⬆️ Plus besoin de ces 2 lignes ⬆️ */}
-        {/* ⬇️⬇️⬇️⬇️ Nouvelle logique à garder pour que l'utilisateur ne puisse accéder à Stripe que si connecter */}
         <Route
           path="/payment"
           element={
