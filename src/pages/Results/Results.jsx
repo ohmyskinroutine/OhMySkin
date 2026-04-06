@@ -141,7 +141,7 @@ function Results({ user }) {
           <aside className="results-sidebar">
             <div className="summary-card">
               <h3>Prescription</h3>
-              <p>Elaborée selon les besoins déclarés dans le questionnaire.</p>
+              <p>Élaborée selon les besoins déclarés dans le questionnaire.</p>
 
               <Link
                 to="/payment"

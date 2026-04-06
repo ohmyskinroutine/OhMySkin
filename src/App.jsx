@@ -10,25 +10,24 @@ import Search from "./pages/Search/Search";
 import Results from "./pages/Results/Results";
 import Payment from "./pages/Payment/Payment";
 import Success from "./pages/Success/Success";
+import History from "./pages/History/History";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import Favorites from "./pages/Favorites/Favorites";
 import Categories from "./pages/Categories/Categories";
 import BrandProducts from "./pages/Brands/BrandProduct";
 import ProductDetails from "./pages/Products/ProductDetails";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
-// import Profile from "./pages/Profile/Profile";
-// ⬆️⬆️⬆️ Keanu - j'ai commenter cette ligne car l'import avait déjà été faite
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoutes/ProtectedRoute";
-// ⬆️⬆️⬆️ Keanu - j'ai importer cette ligne pour la connection d'utilisateur Stripe
-import Favorites from "./pages/Favorites/Favorites";
-// ⬆️⬆️⬆️ Keanu - j'ai importer cette ligne pour que les utilisateurs puissent acceder à leur favoris sur leur page profil
 
 function App() {
   const [user, setUser] = useState(() => {
     const stored = Cookies.get("user");
     return stored ? JSON.parse(stored) : null;
   });
+  // console.log(user);
+
   // Liens catégories
   const creamUrl =
     "https://world.openbeautyfacts.org/api/v2/search?categories_tags=en:face-creams&fields=code,product_name,categories_tags,ingredients_text,quantity,image_url,brands&json=1&page_size=50";
@@ -143,6 +142,7 @@ function App() {
         />
         <Route path="/favorites" element={<Favorites user={user} />} />
         {/* ⬆️⬆️⬆️⬆️ À garder. Pour que l'utilisateur puisse accéder à ses favoris uniquement s'il est connecté */}
+        <Route path="/historique" element={<History user={user} />} />
       </Routes>
       <Footer />
     </Router>
