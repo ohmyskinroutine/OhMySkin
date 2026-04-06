@@ -177,8 +177,8 @@
 .auth-submit-btn {
   width: 100%;
   padding: 0.65rem 1.2rem;
-  background-color: #000;
-  color: #fff;
+  background-color: #f4ece8;
+  color: black !important;
   border: none;
   border-radius: 20px;
   font-size: 0.9rem;
@@ -186,21 +186,12 @@
   cursor: pointer;
   transition: all 0.2s ease;
   margin-top: 0.4rem;
-  box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  text-transform: uppercase;
 }
 
 .profile-form > a {
   width: 100%;
   text-decoration: none;
-}
-
-.auth-submit-btn:hover:not(:disabled) {
-  background-color: #333;
-  box-shadow:
-    0 6px 16px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .auth-submit-btn:disabled {
