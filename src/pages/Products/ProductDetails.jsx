@@ -7,9 +7,12 @@ import { defaultIngredients } from "../../utils/defaultsIngredients";
 const ProductDetails = ({ backPath, user }) => {
   const { code } = useParams();
 
-  const [product, setProduct] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [product, setProduct] = useState(null);
+  const [editRating, setEditRating] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [editComment, setEditComment] = useState("");
+  const [editingReview, setEditingReview] = useState(null);
 
   let token;
   if (user) {
@@ -33,10 +36,10 @@ const ProductDetails = ({ backPath, user }) => {
      Think of this like a notebook 📓 where we track:
      - Which reviews the current user has liked
      - Which reviews the current user has disliked
-     
+
      We use a JavaScript Object {} as a "lookup table"
      Example: { "review123": "like", "review456": "dislike" }
-     
+
      Why? So we can quickly check: "Did I already like this review?"
   */
   const [userVotes, setUserVotes] = useState({});
@@ -109,13 +112,13 @@ const ProductDetails = ({ backPath, user }) => {
   /* ============================================
      👍 LIKE/DISLIKE HANDLER FUNCTIONS
      ============================================
-     
+
      ANALOGY: Think of voting like pressing a light switch 💡
-     
+
      - First press (OFF → ON): Turn on the light (add your vote)
      - Second press (ON → OFF): Turn off the light (remove your vote)
      - Switch to opposite (ON → OPPOSITE): Change to the other light
-     
+
      This function handles THREE scenarios:
      1. User hasn't voted → Add their vote
      2. User clicks same vote again → Remove their vote (toggle off)
@@ -126,7 +129,7 @@ const ProductDetails = ({ backPath, user }) => {
     /* ------------------------------------------
        🔐 SECURITY CHECK: Must be logged in
        ------------------------------------------
-       Like a bouncer at a club - if you don't have 
+       Like a bouncer at a club - if you don't have
        an ID (user account), you can't enter!
     */
     if (!user) {
@@ -146,7 +149,7 @@ const ProductDetails = ({ backPath, user }) => {
     /* ------------------------------------------
        🎯 DETERMINE THE ACTION
        ------------------------------------------
-       
+
        SCENARIO 1: Click on SAME button twice
        Example: User already liked it, clicks like again
        → Result: REMOVE the vote (undo/toggle off)
@@ -157,10 +160,10 @@ const ProductDetails = ({ backPath, user }) => {
       delete updatedVotes[reviewId]; // Erase this entry ✏️
       setUserVotes(updatedVotes); // Update the notebook
 
-      /* 
+      /*
          Update the review counts locally (optimistic update)
          This makes the UI feel fast! Like instant gratification 🎁
-         
+
          We subtract 1 from whichever count they removed
       */
       setReviews(
@@ -201,9 +204,9 @@ const ProductDetails = ({ backPath, user }) => {
     // Update our local "notebook" with the new vote
     setUserVotes({ ...userVotes, [reviewId]: voteType });
 
-    /* 
+    /*
        🧮 CALCULATE NEW COUNTS
-       
+
        This is like updating a scoreboard:
        - Add 1 to the chosen vote
        - If switching, subtract 1 from the old vote
@@ -230,7 +233,7 @@ const ProductDetails = ({ backPath, user }) => {
       ),
     );
 
-    /* 
+    /*
        📡 SEND TO BACKEND
        Tell the server: "Hey, this user just voted!"
     */
@@ -241,6 +244,55 @@ const ProductDetails = ({ backPath, user }) => {
         headers: { Authorization: `Bearer ${token}` },
       },
     );
+  };
+
+  // ✏️ Edit
+  const handleEdit = (review) => {
+    setEditingReview(review._id);
+    setEditComment(review.comment);
+    setEditRating(review.rating);
+  };
+
+  // 💾 Update
+  const handleUpdate = async (reviewId) => {
+    try {
+      await axios.put(
+        `https://site--oh-my-skin--cvtt47qfxcv8.code.run/reviews/${reviewId}`,
+        { comment: editComment, rating: editRating },
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+
+      setReviews(
+        reviews.map((review) =>
+          review._id === reviewId
+            ? { ...review, comment: editComment, rating: editRating }
+            : review,
+        ),
+      );
+      setEditingReview(null);
+    } catch (error) {
+      console.log(error);
+      alert("Erreur modification");
+    }
+  };
+
+  // 🗑️ Delete
+  const handleDelete = async (reviewId) => {
+    console.log("r", reviewId);
+
+    try {
+      await axios.delete(
+        `https://site--oh-my-skin--cvtt47qfxcv8.code.run/reviews/${reviewId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+
+      setReviews(reviews.filter((review) => review._id !== reviewId));
+    } catch (error) {
+      console.log(error);
+      alert("Erreur suppression");
+    }
   };
 
   if (isLoading) {
@@ -296,52 +348,90 @@ const ProductDetails = ({ backPath, user }) => {
             : "Pas encore d'avis"}
         </h3>
 
-        {/* 
+        {/*
           🔄 MAP THROUGH REVIEWS
-          
+
           ANALOGY: Like going through a photo album 📸
           - Each review is a photo
           - We look at each one and display it on the page
-          
+
           .map() is like a photocopier that:
           1. Takes each review
-          2. Creates HTML for it  
+          2. Creates HTML for it
           3. Returns all the HTMLs as a list
         */}
         {reviews.map((review) => (
           <div key={review._id} className="review">
-            <strong>{review.name}</strong> - {"⭐".repeat(review.rating)}
+            <section>
+              <strong>
+                {review.name} - {"⭐".repeat(review.rating)}
+              </strong>
+              {user &&
+                review.userId === user._id &&
+                editingReview !== review._id && (
+                  <div className="review-author-actions">
+                    <button onClick={() => handleEdit(review)}>Modifier</button>
+                    <button onClick={() => handleDelete(review._id)}>
+                      Supprimer
+                    </button>
+                  </div>
+                )}
+            </section>
             <p>{review.comment}</p>
             <small>{new Date(review.createdAt).toLocaleDateString()}</small>
+            {editingReview === review._id && (
+              <form className="update-review">
+                <input
+                  value={editComment}
+                  onChange={(event) => setEditComment(event.target.value)}
+                />
+                <select
+                  value={editRating}
+                  onChange={(event) =>
+                    setEditRating(Number(event.target.value))
+                  }
+                >
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
+                  <option value={4}>4</option>
+                  <option value={5}>5</option>
+                </select>
+                <button onClick={() => handleUpdate(review._id)}>
+                  Valider
+                </button>
+                <button onClick={() => setEditingReview(null)}>Annuler</button>
+              </form>
+            )}
             {/* ============================================
                 👍👎 LIKE/DISLIKE BUTTONS
                 ============================================
-                
+
                 CONDITIONAL RENDERING (&&):
                 Think of && as "IF this is true, THEN show that"
-                
+
                 Like a VIP section at a club:
                 - user && reviews.length > 0 means:
                   "Show buttons ONLY IF user is logged in AND there are reviews"
-                
+
                 Why?
                 - No user = no buttons (guests can't vote)
                 - No reviews = nothing to vote on
             */}
             {user && reviews.length > 0 && (
               <div className="review-actions">
-                {/* 
-                  👍 LIKE BUTTON 
-                  
+                {/*
+                  👍 LIKE BUTTON
+
                   onClick={() => handleVote(...)}
                   - onClick: "When someone clicks this button..."
                   - () => : "...run this function"
                   - handleVote(review._id, "like"): The function we call
-                  
+
                   Why arrow function? (() =>)
                   Without it: onClick={handleVote()} would run IMMEDIATELY!
                   With it: onClick={() => handleVote()} runs ONLY when clicked!
-                  
+
                   Like the difference between:
                   - Eating food now vs
                   - Putting food in the fridge to eat later
@@ -353,20 +443,20 @@ const ProductDetails = ({ backPath, user }) => {
                   onClick={() => handleVote(review._id, "like")}
                   title="J'aime cet avis"
                 >
-                  {/* 
+                  {/*
                     👍 Icon and Count
-                    
+
                     {review.likes || 0}
                     - If review.likes exists, show it
                     - If not (undefined/null), show 0
-                    
+
                     Like checking your wallet:
                     "How much money do I have? If empty, say $0"
                   */}
                   👍 <span>{review.likes || 0}</span>
                 </button>
 
-                {/* 
+                {/*
                   👎 DISLIKE BUTTON
                   Same logic as like button, but for dislikes!
                 */}

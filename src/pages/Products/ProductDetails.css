@@ -285,7 +285,8 @@
 
 .review-form input,
 .review-form select,
-.review-form textarea {
+.review-form textarea,
+.update-review input {
   padding: 0.6rem 0.8rem;
   border-radius: 4px;
   border: 1px solid #ccc;
@@ -299,6 +300,47 @@
   align-self: flex-start;
   padding: 0.6rem 1.2rem;
   border-radius: 4px;
+}
+
+.review > section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-author-actions,
+.update-review {
+  display: inline-flex;
+  gap: 0.3rem;
+}
+.review-author-actions button,
+.update-review button {
+  align-items: center;
+  background-color: transparent;
+  margin-top: 10px;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+  color: #555;
+}
+.review-author-actions button:hover {
+  background-color: #f5f5f5;
+  border-color: #ccc;
+  transform: translateY(-1px);
+}
+
+.update-review {
+  margin-left: 200px;
+  gap: 10px;
+}
+
+.update-review select {
+  padding: 10px;
+  border-radius: 5px;
+  border-color: #ccc;
 }
 
 /* Responsive */
