@@ -1,9 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import "./Profile.css";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
-import "./Profile.css";
-import { Link } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const BASE_URL = "https://site--oh-my-skin--cvtt47qfxcv8.code.run";
 
@@ -11,14 +10,15 @@ const Profile = ({ user, setUser }) => {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [avatarPreview, setAvatarPreview] = useState(null);
-  const [avatarFile, setAvatarFile] = useState(null);
-  const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+  const [modal, setModal] = useState(false);
+  const [success, setSuccess] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [avatarFile, setAvatarFile] = useState(null);
+  const [avatarPreview, setAvatarPreview] = useState(null);
 
   useEffect(() => {
     if (!user) {
@@ -94,89 +94,140 @@ const Profile = ({ user, setUser }) => {
 
   const initials = username ? username.slice(0, 2).toUpperCase() : "?";
 
+  const removeUser = async () => {
+    try {
+      const { data } = axios.delete(`${BASE_URL}/user`, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+      Cookies.remove("user");
+      setUser(null);
+      navigate("/");
+    } catch (error) {
+      setError(error);
+    }
+  };
+
   return (
-    <div className="profile-page">
-      <div className="profile-card">
-        <div className="profile-avatar-section">
-          <div
-            className="profile-avatar-wrapper"
-            onClick={() => fileInputRef.current.click()}
-          >
-            {avatarPreview ? (
-              <img
-                src={avatarPreview}
-                alt="avatar"
-                className="profile-avatar-img"
+    <>
+      <div className="profile-page">
+        <div className="profile-card">
+          <div className="profile-avatar-section">
+            <div
+              className="profile-avatar-wrapper"
+              onClick={() => fileInputRef.current.click()}
+            >
+              {avatarPreview ? (
+                <img
+                  src={avatarPreview}
+                  alt="avatar"
+                  className="profile-avatar-img"
+                />
+              ) : (
+                <div className="profile-avatar-placeholder">{initials}</div>
+              )}
+              <div className="profile-avatar-overlay">Changer</div>
+            </div>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              style={{ display: "none" }}
+            />
+            <h2 className="profile-name">{user?.username}</h2>
+            <p className="profile-email-display">{user?.email}</p>
+          </div>
+          <div className="fav-link">
+            <Link to="/favorites">
+              <button className="favorites-btn"> Voir mes favoris</button>
+            </Link>
+          </div>
+          <div className="fav-link">
+            <Link to="/historique">
+              <button className="favorites-btn">
+                Voir mes anciennes routines
+              </button>
+            </Link>
+          </div>
+          <form onSubmit={handleSubmit} className="profile-form">
+            <h3 className="profile-section-title">Modifier le profil</h3>
+
+            <div className="auth-field">
+              <label>Nom d'utilisateur</label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Nom d'utilisateur"
               />
-            ) : (
-              <div className="profile-avatar-placeholder">{initials}</div>
-            )}
-            <div className="profile-avatar-overlay">Changer</div>
-          </div>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            style={{ display: "none" }}
-          />
-          <h2 className="profile-name">{user?.username}</h2>
-          <p className="profile-email-display">{user?.email}</p>
-        </div>
-        <div className="fav-link">
-          <Link to="/favorites">
-            <button className="favorites-btn"> Voir mes favoris</button>
-          </Link>
-        </div>
-        <div className="fav-link">
-          <Link to="/historique">
-            <button className="favorites-btn">
-              Voir mes anciennes routines
+            </div>
+
+            <div className="auth-field">
+              <label>Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="votre@email.com"
+              />
+            </div>
+
+            <div className="auth-field">
+              <label>Nouveau mot de passe</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Laisser vide pour conserver votre mot de passe actuel"
+              />
+            </div>
+
+            {error && <p className="auth-error">{error}</p>}
+            {success && <p className="profile-success">{success}</p>}
+
+            <button
+              type="submit"
+              className="auth-submit-btn"
+              disabled={loading}
+            >
+              {loading ? "Mise à jour..." : "Enregistrer"}
             </button>
-          </Link>
-        </div>
-        <form onSubmit={handleSubmit} className="profile-form">
-          <h3 className="profile-section-title">Modifier le profil</h3>
-
-          <div className="auth-field">
-            <label>Nom d'utilisateur</label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Nom d'utilisateur"
-            />
-          </div>
-
-          <div className="auth-field">
-            <label>Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="votre@email.com"
-            />
-          </div>
-
-          <div className="auth-field">
-            <label>Nouveau mot de passe</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Laisser vide pour conserver votre mot de passe actuel"
-            />
-          </div>
-
-          {error && <p className="auth-error">{error}</p>}
-          {success && <p className="profile-success">{success}</p>}
-
-          <button type="submit" className="auth-submit-btn" disabled={loading}>
-            {loading ? "Mise à jour..." : "Enregistrer"}
+          </form>
+          <button
+            className="supress-btn"
+            disabled={loading}
+            onClick={() => {
+              setModal(true);
+            }}
+          >
+            Supprimer mon compte
           </button>
-        </form>
+        </div>
       </div>
-    </div>
+      {modal && (
+        <div className="modal-overlay" onClick={() => setModal(false)}>
+          <div className="modal" onClick={(event) => event.stopPropagation()}>
+            <p className="modal__text">
+              Êtes-vous sûr.e de vouloir supprimer votre compte ?
+            </p>
+            <div className="modal__actions">
+              <button
+                className="modal__btn modal__btn--cancel"
+                onClick={() => setModal(false)}
+              >
+                Annuler
+              </button>
+              <button
+                className="modal__btn modal__btn--confirm"
+                onClick={removeUser}
+              >
+                Supprimer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

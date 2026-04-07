@@ -99,7 +99,6 @@ function Results({ user }) {
 
       await axios.post(
         "https://site--oh-my-skin--cvtt47qfxcv8.code.run/routine/reset",
-        {},
         { headers: { Authorization: `Bearer ${token}` } },
       );
 
@@ -140,10 +139,8 @@ function Results({ user }) {
 
           <aside className="results-sidebar">
             <div className="summary-card">
-
               <h3>Rituel journalier</h3>
-                   <p>Élaborée selon les besoins déclarés dans le questionnaire.</p>
-
+              <p>Élaborée selon les besoins déclarés dans le questionnaire.</p>
 
               <Link
                 to="/payment"
