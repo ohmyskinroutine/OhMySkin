@@ -33,8 +33,12 @@ const History = ({ user }) => {
 
   return (
     <main className="history-page">
-      {isLoading ? (
-        <h2>Chargement...</h2>
+      {isLoading && <h2>Chargement...</h2>}
+      {history.length === 0 ? (
+        <div className="container">
+          <h2>Historique de mes routines</h2>
+          <h3>Pas d'historique pour le moment</h3>
+        </div>
       ) : (
         <div className="container">
           <h2>Historique de mes routines</h2>
@@ -46,7 +50,6 @@ const History = ({ user }) => {
                   {elem.morning.map((prodcut, index) => {
                     return (
                       <div key={index}>
-                        {/* <img src={prodcut.image} alt={prodcut.name} /> */}
                         <p>{prodcut.name}</p>
                         <h4>{prodcut.brand}</h4>
                       </div>
@@ -58,7 +61,6 @@ const History = ({ user }) => {
                   {elem.evening.map((prodcut, index) => {
                     return (
                       <div key={index}>
-                        {/* <img src={prodcut.image} alt={prodcut.name} /> */}
                         <p>{prodcut.name}</p>
                         <h4>{prodcut.brand}</h4>
                       </div>
