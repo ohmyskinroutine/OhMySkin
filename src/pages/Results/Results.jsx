@@ -9,6 +9,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import RoutineBlock from "../../components/RoutineBlock/RoutineBlock";
 import SkinBackground from "../../components/SkinBackground/SkinBackground";
 
+import useButtonLock from "../../hooks/useButtonLock";
+
 function Results({ user }) {
   // token optionnel
   const location = useLocation();
@@ -27,37 +29,45 @@ function Results({ user }) {
   const [email, setEmail] = useState("");
   const [emailStatus, setEmailStatus] = useState(null);
 
+  // locks pour éviter le spam des boutons
+  // bloque x secondes
+  const emailLock = useButtonLock(1500);
+  const resetLock = useButtonLock(3000);
+
   const handleSendEmail = async () => {
-    try {
-      //si connecté n utilise le mail user sinon celui rentré dans
-      const emailToSend = token ? user.email : email;
-      console.log("ici user", user);
+    // empêche de spam le bouton
+    await emailLock.runWithLock(async () => {
+      try {
+        //si connecté n utilise le mail user sinon celui rentré dans
+        const emailToSend = token ? user.email : email;
+        console.log("ici user", user);
 
-      if (!emailToSend) {
+        if (!emailToSend) {
+          setEmailStatus("error");
+          return;
+        }
+
+        if (!emailToSend.includes("@")) {
+          setEmailStatus("error");
+          return;
+        }
+
+        const response = await axios.post(
+          "https://site--oh-my-skin--cvtt47qfxcv8.code.run/send-email",
+          {
+            email: emailToSend,
+            subject: "Ta routine skincare est prête ✨",
+            html: emailContent(routine),
+            routine,
+          },
+        );
+        setEmailStatus("success");
+        console.log(response.data);
+      } catch (error) {
+        console.log(error.response?.data || error.message);
         setEmailStatus("error");
-        return;
       }
-
-      if (!emailToSend.includes("@")) {
-        setEmailStatus("error");
-        return;
-      }
-
-      const response = await axios.post(
-        "https://site--oh-my-skin--cvtt47qfxcv8.code.run/send-email",
-        {
-          email: emailToSend,
-          subject: "Ta routine skincare est prête ✨",
-          html: emailContent(routine),
-          routine,
-        },
-      );
-      setEmailStatus("success");
-      console.log(response.data);
-    } catch (error) {
-      console.log(error.response?.data || error.message);
-      setEmailStatus("error");
-    }
+    });
   };
 
   useEffect(() => {
@@ -91,24 +101,27 @@ function Results({ user }) {
   }, [answers, navigate]);
 
   const handleResetRoutine = async () => {
-    try {
-      if (!token) {
-        alert("Seuls les utilisateurs connectés peuvent reset");
-        return;
+    //  empêche de spam le bouton reset
+    await resetLock.runWithLock(async () => {
+      try {
+        if (!token) {
+          alert("Seuls les utilisateurs connectés peuvent reset");
+          return;
+        }
+
+        await axios.post(
+          "https://site--oh-my-skin--cvtt47qfxcv8.code.run/routine/reset",
+          {},
+          { headers: { Authorization: `Bearer ${token}` } },
+        );
+
+        window.location.reload();
+      } catch (err) {
+        console.error(err);
+        // console.log("ici msgggggg=>", err.message);
+        alert("Erreur lors de la réinitialisation de la routine");
       }
-
-      await axios.post(
-        "https://site--oh-my-skin--cvtt47qfxcv8.code.run/routine/reset",
-        {},
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
-
-      window.location.reload();
-    } catch (err) {
-      console.error(err);
-      // console.log("ici msgggggg=>", err.message);
-      alert("Erreur lors de la réinitialisation de la routine");
-    }
+    });
   };
 
   if (!answers) return null;
@@ -126,7 +139,12 @@ function Results({ user }) {
                 <div className="reset-block">
                   <p>
                     Tu n'es pas satisfait.e ?{" "}
-                    <button onClick={handleResetRoutine} className="reset-link">
+                    <button
+                      onClick={handleResetRoutine}
+                      className="reset-link"
+                      //desactive le bouton temporairement
+                      disabled={resetLock.isLocked}
+                    >
                       Génère de nouveaux résultats
                     </button>
                   </p>
@@ -141,7 +159,7 @@ function Results({ user }) {
           <aside className="results-sidebar">
             <div className="summary-card">
               <h3>Rituel journalier</h3>
-              <p>Élaborée selon les besoins déclarés dans le questionnaire.</p>
+              <p>Élaboré selon les besoins déclarés dans le questionnaire.</p>
 
               <Link
                 to="/payment"
@@ -155,7 +173,11 @@ function Results({ user }) {
               <div className="email-card">
                 <p>Recevoir les résultats par email.</p>
 
-                <button onClick={handleSendEmail} className="email-btn">
+                <button
+                  onClick={handleSendEmail}
+                  className="email-btn"
+                  disabled={emailLock.isLocked} //desactive le bouton temporairement
+                >
                   M’envoyer ma routine
                 </button>
                 {emailStatus === "success" && (
@@ -178,7 +200,11 @@ function Results({ user }) {
                   className="email-input"
                 />
 
-                <button onClick={handleSendEmail} className="email-btn">
+                <button
+                  onClick={handleSendEmail}
+                  className="email-btn"
+                  disabled={emailLock.isLocked}
+                >
                   M’envoyer ma routine
                 </button>
                 {emailStatus === "success" && (
@@ -186,7 +212,10 @@ function Results({ user }) {
                 )}
 
                 {emailStatus === "error" && (
-                  <p className="email-error">Erreur lors de l’envoi</p>
+                  <p className="email-error">
+                    Une erreur est survenue, merci de renseigner une adresse
+                    email valide.
+                  </p>
                 )}
               </div>
             )}

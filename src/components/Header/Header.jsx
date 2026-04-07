@@ -53,9 +53,7 @@ const Header = ({ user, setUser }) => {
             />
             <div className="header-actions">
               <Link to="/formulaire">
-                <button className="routine-btn">
-                  Crée ta routine skincare
-                </button>
+                <button className="routine-btn">Créer ma routine</button>
               </Link>
               {user ? (
                 <div className="auth-buttons">

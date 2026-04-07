@@ -45,107 +45,109 @@ function App() {
   return (
     <Router>
       <Header user={user} setUser={setUser} />
-      <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login setUser={setUser} />} />
-          <Route path="/signup" element={<Signup setUser={setUser} />} />
-          <Route
-            path="/cremes"
-            element={<Categories title="Crèmes" url={creamUrl} user={user} />}
-          />
-          <Route
-            path="/cremes/:code"
-            element={<ProductDetails backPath="/cremes" user={user} />}
-          />
-          <Route
-            path="/masques"
-            element={<Categories title="Masques" url={masksUrl} user={user} />}
-          />
-          <Route
-            path="/masques/:code"
-            element={<ProductDetails backPath="/masques" user={user} />}
-          />
-          <Route
-            path="/savons"
-            element={<Categories title="Savons" url={soapsUrl} user={user} />}
-          />
-          <Route
-            path="/savons/:code"
-            element={<ProductDetails backPath="/savons" user={user} />}
-          />
-          <Route
-            path="/exfoliants"
-            element={
-              <Categories title="Exfoliants" url={exfoliantsUrl} user={user} />
-            }
-          />
-          <Route
-            path="/exfoliants/:code"
-            element={<ProductDetails backPath="/exfoliants" user={user} />}
-          />
-          <Route
-            path="/cleansers"
-            element={
-              <Categories title="Cleansers" url={cleansersUrl} user={user} />
-            }
-          />
-          <Route
-            path="/cleansers/:code"
-            element={<ProductDetails backPath="/cleansers" user={user} />}
-          />
-          <Route
-            path="/solaires"
-            element={
-              <Categories
-                title="Crèmes solaires"
-                url={sunscreenUrl}
-                user={user}
-              />
-            }
-          />
-          <Route
-            path="/solaires/:code"
-            element={<ProductDetails backPath="/solaires" user={user} />}
-          />
-          <Route path="/search" element={<Search />} />
-          <Route path="/marques" element={<Brands />} />
-          <Route path="/formulaire" element={<Questionnaire />} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login setUser={setUser} />} />
+        <Route path="/signup" element={<Signup setUser={setUser} />} />
+        <Route
+          path="/cremes"
+          element={<Categories title="Crèmes" url={creamUrl} user={user} />}
+        />
+        <Route
+          path="/cremes/:code"
+          element={<ProductDetails backPath="/cremes" user={user} />}
+        />
+        <Route
+          path="/masques"
+          element={<Categories title="Masques" url={masksUrl} user={user} />}
+        />
+        <Route
+          path="/masques/:code"
+          element={<ProductDetails backPath="/masques" user={user} />}
+        />
+        <Route
+          path="/savons"
+          element={<Categories title="Savons" url={soapsUrl} user={user} />}
+        />
+        <Route
+          path="/savons/:code"
+          element={<ProductDetails backPath="/savons" user={user} />}
+        />
+        <Route
+          path="/exfoliants"
+          element={
+            <Categories title="Exfoliants" url={exfoliantsUrl} user={user} />
+          }
+        />
+        <Route
+          path="/exfoliants/:code"
+          element={<ProductDetails backPath="/exfoliants" user={user} />}
+        />
+        <Route
+          path="/cleansers"
+          element={
+            <Categories title="Cleansers" url={cleansersUrl} user={user} />
+          }
+        />
+        <Route
+          path="/cleansers/:code"
+          element={<ProductDetails backPath="/cleansers" user={user} />}
+        />
+        <Route
+          path="/solaires"
+          element={
+            <Categories
+              title="Crèmes solaires"
+              url={sunscreenUrl}
+              user={user}
+            />
+          }
+        />
+        <Route
+          path="/solaires/:code"
+          element={<ProductDetails backPath="/solaires" user={user} />}
+        />
+        <Route path="/search" element={<Search />} />
+        <Route path="/marques" element={<Brands />} />
+        <Route path="/marques/:brand" element={<BrandProducts />} />
 
-          <Route path="/routine" element={<Results user={user} />} />
+        {/* Route pour les brands products details */}
+        <Route path="/produit/:code" element={<ProductDetails user={user} />} />
 
-          <Route
-            path="/profile"
-            element={<Profile user={user} setUser={setUser} />}
-          />
-          <Route
-            path="/payment"
-            element={
-              <ProtectedRoute user={user}>
-                <Payment />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/success"
-            element={
-              <ProtectedRoute user={user}>
-                <Success />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/marques/:brand" element={<BrandProducts />} />
-          <Route
-            path="*"
-            element={
-              <div className="container">Vous n'êtes pas censés etre ici</div>
-            }
-          />
-          <Route path="/favorites" element={<Favorites user={user} />} />
-          {/* ⬆️⬆️⬆️⬆️ À garder. Pour que l'utilisateur puisse accéder à ses favoris uniquement s'il est connecté */}
-          <Route path="/historique" element={<History user={user} />} />
-        </Routes>
-      </main>
+        <Route path="/formulaire" element={<Questionnaire />} />
+        <Route path="/routine" element={<Results user={user} />} />
+
+        <Route
+          path="/profile"
+          element={<Profile user={user} setUser={setUser} />}
+        />
+        <Route
+          path="/payment"
+          element={
+            <ProtectedRoute user={user}>
+              <Payment />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/success"
+          element={
+            <ProtectedRoute user={user}>
+              <Success />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="*"
+          element={
+            <div className="container">Vous n'êtes pas censés etre ici</div>
+          }
+        />
+        <Route path="/favorites" element={<Favorites user={user} />} />
+        {/* ⬆️⬆️⬆️⬆️ À garder. Pour que l'utilisateur puisse accéder à ses favoris uniquement s'il est connecté */}
+        <Route path="/historique" element={<History user={user} />} />
+      </Routes>
       <Footer />
     </Router>
   );
