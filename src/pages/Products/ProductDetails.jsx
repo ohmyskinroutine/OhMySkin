@@ -1,15 +1,24 @@
 import axios from "axios";
 import "./ProductDetails.css";
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { defaultIngredients } from "../../utils/defaultsIngredients";
+import useButtonLock from "../../hooks/useButtonLock";
 
 const ProductDetails = ({ backPath, user }) => {
   const { code } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // priorité au state si présent, sinon aux props, sinon fallback
+  const safeBackPath = location.state?.backPath || backPath || "/marques";
 
   const [product, setProduct] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const reviewLock = useButtonLock(3000); // bloque le bouton d'envoi pendant 3 secondes
 
   let token;
   if (user) {
@@ -43,6 +52,12 @@ const ProductDetails = ({ backPath, user }) => {
           `https://world.openbeautyfacts.org/api/v2/product/${code}?fields=code,product_name,quantity,image_front_url,image_url,brands,ingredients_text,labels`,
         );
 
+        // si pas de produit → redirection
+        if (!productRes.data.product) {
+          navigate("/categories"); // ou "/categories" selon ton flow
+          return;
+        }
+
         setProduct(productRes.data.product);
 
         // récupère les avis
@@ -54,13 +69,15 @@ const ProductDetails = ({ backPath, user }) => {
       } catch (error) {
         setError("Erreur lors du chargement.");
         console.error(error);
+        // en cas d'erreur redirection aussi
+        navigate("/categories");
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchData();
-  }, [code]);
+  }, [code, navigate]);
 
   // Fonction pour le remplissage du formulaire
   const handleChange = (event) => {
@@ -71,25 +88,31 @@ const ProductDetails = ({ backPath, user }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      const response = await axios.post(
-        "https://site--oh-my-skin--cvtt47qfxcv8.code.run/reviews",
-        {
-          rating: Number(form.rating),
-          comment: form.comment,
-          productCode: code,
-        },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
+    // on encapsule toute l'action dans le lock
+    await reviewLock.runWithLock(async () => {
+      try {
+        const response = await axios.post(
+          "https://site--oh-my-skin--cvtt47qfxcv8.code.run/reviews",
+          {
+            rating: Number(form.rating),
+            comment: form.comment,
+            productCode: code,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
 
-      setReviews([response.data, ...reviews]);
-      setForm({ name: "", rating: "", comment: "" });
-    } catch (error) {
-      console.error(error);
-      alert("Erreur lors de l'envoi de l'avis");
-    }
+        // on ajoute le nouvel avis en haut de la liste
+        setReviews([response.data, ...reviews]);
+
+        // on vide le formulaire après succès
+        setForm({ name: "", rating: "", comment: "" });
+      } catch (error) {
+        console.error(error);
+        alert("Erreur lors de l'envoi de l'avis");
+      }
+    });
   };
 
   if (isLoading) {
@@ -100,9 +123,13 @@ const ProductDetails = ({ backPath, user }) => {
     );
   }
 
+  if (!product) {
+    return null;
+  }
+
   return (
     <section className="product-detail">
-      <Link className="product-detail__back" to={backPath}>
+      <Link className="product-detail__back" to={safeBackPath}>
         ← Retour
       </Link>
 
@@ -178,7 +205,9 @@ const ProductDetails = ({ backPath, user }) => {
               required
             />
 
-            <button type="submit">Envoyer</button>
+            <button type="submit" disabled={reviewLock.isLocked}>
+              Envoyer
+            </button>
           </form>
         )}
       </div>

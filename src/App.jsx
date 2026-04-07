@@ -109,8 +109,12 @@ function App() {
         />
         <Route path="/search" element={<Search />} />
         <Route path="/marques" element={<Brands />} />
-        <Route path="/formulaire" element={<Questionnaire />} />
+        <Route path="/marques/:brand" element={<BrandProducts />} />
 
+        {/* Route pour les brands products details */}
+        <Route path="/produit/:code" element={<ProductDetails user={user} />} />
+
+        <Route path="/formulaire" element={<Questionnaire />} />
         <Route path="/routine" element={<Results user={user} />} />
 
         <Route
@@ -133,7 +137,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/marques/:brand" element={<BrandProducts />} />
+
         <Route
           path="*"
           element={
