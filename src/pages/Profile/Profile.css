@@ -94,7 +94,6 @@
   margin-top: 0.4rem;
   display: block;
   box-sizing: border-box;
-
   margin: 20px 0;
 }
 
@@ -197,4 +196,22 @@
 .auth-submit-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.supress-btn {
+  background-color: #c62828;
+  color: #f4ece8 !important;
+  text-transform: uppercase;
+  width: 100%;
+  padding: 0.65rem 1.2rem;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.4rem;
+  display: block;
+  box-sizing: border-box;
+  margin: 20px 0;
 }

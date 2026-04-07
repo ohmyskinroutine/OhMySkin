@@ -75,7 +75,7 @@ const BrandProducts = () => {
                   {product.brands || decodedBrand}
                 </p>
                 <p className="categories-card__name">
-                  {product.product_name || "Nom inconnu"}
+                  {product.product_name || "Oh My Skin Exclusive Care"}
                 </p>
                 <p className="categories-card__qty">{product.quantity || ""}</p>
               </div>
