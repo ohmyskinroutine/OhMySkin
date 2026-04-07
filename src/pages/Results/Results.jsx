@@ -99,6 +99,7 @@ function Results({ user }) {
 
       await axios.post(
         "https://site--oh-my-skin--cvtt47qfxcv8.code.run/routine/reset",
+        {},
         { headers: { Authorization: `Bearer ${token}` } },
       );
 
