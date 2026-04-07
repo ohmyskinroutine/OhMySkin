@@ -40,11 +40,14 @@ const Questionnaire = () => {
             </button>
           )}
           <Question question={currentQuestion} onAnswer={handleAnswer} />
-          <div className="progress-bar">
-            <div
-              className="progress-bar__fill"
-              style={{ width: `${progress}%` }}
-            />
+          <div className="progress-bar-wrapper">
+            <div className="progress-bar">
+              <div
+                className="progress-bar__fill"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+            <span className="progress-bar__label">{Math.round(progress)}%</span>
           </div>
         </section>
       </div>

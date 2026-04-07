@@ -21,7 +21,7 @@ const Login = ({ setUser }) => {
         "https://site--oh-my-skin--cvtt47qfxcv8.code.run/login",
         { email, password },
       );
-
+      // console.log(data);
       Cookies.set("user", JSON.stringify(data.user), { expires: 7 });
       setUser(data.user);
       navigate("/");
