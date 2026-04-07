@@ -42,7 +42,6 @@ const Questionnaire = () => {
                 style={{ width: `${progress}%` }}
               />
             </div>
-            {/* <span className="progress-bar__label">{Math.round(progress)}%</span> */}
           </div>
         </section>
       </div>
