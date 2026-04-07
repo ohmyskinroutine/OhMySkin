@@ -346,12 +346,6 @@
   transition: all 0.3s ease !important;
 }
 
-.StripeElement:focus {
-  background: rgba(255, 255, 255, 0.08) !important;
-  border-color: #00d4ff !important;
-  box-shadow: 0 0 12px rgba(0, 212, 255, 0.2) !important;
-}
-
 /* Styles pour le conteneur Stripe global */
 :global(.StripeElement) {
   padding: 0.85rem 1rem;
@@ -366,18 +360,16 @@
 .payment-form button[type="submit"],
 button[type="submit"] {
   padding: 1.2rem 2rem;
-  background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%);
+  background-color: #f4ece8;
+  color: black;
   border: none;
   border-radius: 10px;
-  color: #ffffff;
+
   font-size: 1.05rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   margin-top: 1.5rem;
-  box-shadow:
-    0 4px 15px rgba(0, 102, 255, 0.3),
-    0 0 1px rgba(0, 212, 255, 0.5);
   position: relative;
   overflow: hidden;
   letter-spacing: 0.5px;
@@ -397,15 +389,6 @@ button[type="submit"]::before {
     transparent
   );
   transition: left 0.5s;
-}
-
-.payment-form button[type="submit"]:hover:not(:disabled),
-button[type="submit"]:hover:not(:disabled) {
-  background: linear-gradient(135deg, #0052cc 0%, #0040a8 100%);
-  box-shadow:
-    0 8px 25px rgba(0, 102, 255, 0.4),
-    0 0 15px rgba(0, 212, 255, 0.6);
-  transform: translateY(-3px);
 }
 
 button[type="submit"]:hover:not(:disabled)::before {
