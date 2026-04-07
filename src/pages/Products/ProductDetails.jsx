@@ -183,21 +183,12 @@ const ProductDetails = ({ backPath, user }) => {
         ),
       );
 
-      /* 
-         Send request to backend to persist the change
-         Think of this as: confirming your order with the kitchen
-      */
-      try {
-        await axios.delete(
-          `https://site--oh-my-skin--cvtt47qfxcv8.code.run/reviews/${reviewId}/vote`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          },
-        );
-      } catch (error) {
-        // Backend endpoint not yet implemented - optimistic UI update works fine
-        console.log("Vote supprimé localement (backend à implémenter)");
-      }
+      await axios.delete(
+        `https://site--oh-my-skin--cvtt47qfxcv8.code.run/reviews/${reviewId}/vote`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
 
       return; // Stop here, we're done!
     }
@@ -243,18 +234,13 @@ const ProductDetails = ({ backPath, user }) => {
        📡 SEND TO BACKEND
        Tell the server: "Hey, this user just voted!"
     */
-    try {
-      await axios.post(
-        `https://site--oh-my-skin--cvtt47qfxcv8.code.run/reviews/${reviewId}/vote`,
-        { voteType }, // Send "like" or "dislike"
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
-    } catch {
-      // Backend endpoint not yet implemented - optimistic UI update works fine
-      console.log("Vote enregistré localement (backend à implémenter)");
-    }
+    await axios.post(
+      `https://site--oh-my-skin--cvtt47qfxcv8.code.run/reviews/${reviewId}/vote`,
+      { voteType }, // Send "like" or "dislike"
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    );
   };
 
   if (isLoading) {
