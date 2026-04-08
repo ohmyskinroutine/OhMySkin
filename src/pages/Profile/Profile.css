@@ -140,62 +140,15 @@
   text-align: center;
 }
 
-/* ── Reuse auth-field styles from Login.css ── */
-.auth-field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.auth-field label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #333;
-}
-
-.auth-field input {
-  padding: 0.6rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.auth-field input:focus {
-  border-color: #999;
-}
-
-.auth-error {
-  color: #e53935;
-  font-size: 0.85rem;
-  margin: 0;
-  text-align: center;
-}
-
 .auth-submit-btn {
   width: 100%;
-  padding: 0.65rem 1.2rem;
-  background-color: #f4ece8;
-  color: black !important;
-  border: none;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
   transition: all 0.2s ease;
-  margin-top: 0.4rem;
   text-transform: uppercase;
 }
 
 .profile-form > a {
   width: 100%;
   text-decoration: none;
-}
-
-.auth-submit-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }
 
 .supress-btn {

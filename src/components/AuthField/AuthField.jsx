@@ -1,4 +1,4 @@
-const AuthField = ({ label, type, value, onChange, placeholder }) => (
+const AuthField = ({ label, type, value, onChange, placeholder, required = true }) => (
   <div className="auth-field">
     <label>{label}</label>
     <input
@@ -6,7 +6,7 @@ const AuthField = ({ label, type, value, onChange, placeholder }) => (
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
-      required
+      required={required}
     />
   </div>
 );

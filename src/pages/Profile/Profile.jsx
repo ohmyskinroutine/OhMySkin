@@ -1,4 +1,6 @@
 import "./Profile.css";
+import "../../components/AuthField/auth.css";
+import AuthField from "../../components/AuthField/AuthField";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useState, useEffect, useRef } from "react";
@@ -153,35 +155,28 @@ const Profile = ({ user, setUser }) => {
           <form onSubmit={handleSubmit} className="profile-form">
             <h3 className="profile-section-title">Modifier le profil</h3>
 
-            <div className="auth-field">
-              <label>Nom d'utilisateur</label>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Nom d'utilisateur"
-              />
-            </div>
-
-            <div className="auth-field">
-              <label>Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="votre@email.com"
-              />
-            </div>
-
-            <div className="auth-field">
-              <label>Nouveau mot de passe</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Laisser vide pour conserver votre mot de passe actuel"
-              />
-            </div>
+            <AuthField
+              label="Nom d'utilisateur"
+              type="text"
+              value={username}
+              onChange={setUsername}
+              placeholder="Nom d'utilisateur"
+            />
+            <AuthField
+              label="Email"
+              type="email"
+              value={email}
+              onChange={setEmail}
+              placeholder="votre@email.com"
+            />
+            <AuthField
+              label="Nouveau mot de passe"
+              type="password"
+              value={password}
+              onChange={setPassword}
+              placeholder="Laisser vide pour conserver votre mot de passe actuel"
+              required={false}
+            />
 
             {error && <p className="auth-error">{error}</p>}
             {success && <p className="profile-success">{success}</p>}
