@@ -1,6 +1,7 @@
 import "./Header.css";
 import axios from "axios";
 import Cookies from "js-cookie";
+import Modal from "../Modal/Modal";
 import { useRef, useState } from "react";
 import logoO from "../../assets/Logo.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -104,30 +105,14 @@ const Header = ({ user, setUser }) => {
       </header>
 
       {showLogoutModal && (
-        <div
-          className="modal-overlay"
-          onClick={() => setShowLogoutModal(false)}
-        >
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <p className="modal__text">
-              Êtes-vous sûr.e de vouloir vous déconnecter ?
-            </p>
-            <div className="modal__actions">
-              <button
-                className="modal__btn modal__btn--cancel"
-                onClick={() => setShowLogoutModal(false)}
-              >
-                Annuler
-              </button>
-              <button
-                className="modal__btn modal__btn--confirm"
-                onClick={handleLogout}
-              >
-                Déconnexion
-              </button>
-            </div>
-          </div>
-        </div>
+        <Modal
+          isOpen={showLogoutModal}
+          onClose={() => setShowLogoutModal(false)}
+          onConfirm={handleLogout}
+          text="Êtes-vous sûr.e de vouloir vous déconnecter ?"
+          confirmText="Déconnexion"
+          cancelText="Annuler"
+        />
       )}
     </>
   );
