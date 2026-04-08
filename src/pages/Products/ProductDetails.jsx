@@ -1,15 +1,27 @@
 import axios from "axios";
 import "./ProductDetails.css";
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { defaultIngredients } from "../../utils/defaultsIngredients";
+import useButtonLock from "../../hooks/useButtonLock";
 
 const ProductDetails = ({ backPath, user }) => {
   const { code } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const [product, setProduct] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // priorité au state si présent, sinon aux props, sinon fallback
+  const safeBackPath = location.state?.backPath || backPath || "/marques";
+
   const [error, setError] = useState("");
+  const [product, setProduct] = useState(null);
+  const [editRating, setEditRating] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [editComment, setEditComment] = useState("");
+  const [editingReview, setEditingReview] = useState(null);
+
+  const reviewLock = useButtonLock(3000); // bloque le bouton d'envoi pendant 3 secondes
 
   let token;
   if (user) {
@@ -27,6 +39,20 @@ const ProductDetails = ({ backPath, user }) => {
     comment: "",
   });
 
+  /* ============================================
+     💡 LIKE/DISLIKE STATE MANAGEMENT
+     ============================================
+     Think of this like a notebook 📓 where we track:
+     - Which reviews the current user has liked
+     - Which reviews the current user has disliked
+
+     We use a JavaScript Object {} as a "lookup table"
+     Example: { "review123": "like", "review456": "dislike" }
+
+     Why? So we can quickly check: "Did I already like this review?"
+  */
+  const [userVotes, setUserVotes] = useState({});
+
   const averageRating =
     reviews.length > 0
       ? (
@@ -43,6 +69,12 @@ const ProductDetails = ({ backPath, user }) => {
           `https://world.openbeautyfacts.org/api/v2/product/${code}?fields=code,product_name,quantity,image_front_url,image_url,brands,ingredients_text,labels`,
         );
 
+        // si pas de produit → redirection
+        if (!productRes.data.product) {
+          navigate("/categories"); // ou "/categories" selon ton flow
+          return;
+        }
+
         setProduct(productRes.data.product);
 
         // récupère les avis
@@ -54,13 +86,15 @@ const ProductDetails = ({ backPath, user }) => {
       } catch (error) {
         setError("Erreur lors du chargement.");
         console.error(error);
+        // en cas d'erreur redirection aussi
+        navigate("/categories");
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchData();
-  }, [code]);
+  }, [code, navigate]);
 
   // Fonction pour le remplissage du formulaire
   const handleChange = (event) => {
@@ -71,24 +105,216 @@ const ProductDetails = ({ backPath, user }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      const response = await axios.post(
-        "https://site--oh-my-skin--cvtt47qfxcv8.code.run/reviews",
-        {
-          rating: Number(form.rating),
-          comment: form.comment,
-          productCode: code,
-        },
+    // on encapsule toute l'action dans le lock
+    await reviewLock.runWithLock(async () => {
+      try {
+        const response = await axios.post(
+          "https://site--oh-my-skin--cvtt47qfxcv8.code.run/reviews",
+          {
+            rating: Number(form.rating),
+            comment: form.comment,
+            productCode: code,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
+
+        // on ajoute le nouvel avis en haut de la liste
+        setReviews([response.data, ...reviews]);
+
+        // on vide le formulaire après succès
+        setForm({ name: "", rating: "", comment: "" });
+      } catch (error) {
+        console.error(error);
+        alert("Erreur lors de l'envoi de l'avis");
+      }
+    });
+  };
+
+  /* ============================================
+     👍 LIKE/DISLIKE HANDLER FUNCTIONS
+     ============================================
+
+     ANALOGY: Think of voting like pressing a light switch 💡
+
+     - First press (OFF → ON): Turn on the light (add your vote)
+     - Second press (ON → OFF): Turn off the light (remove your vote)
+     - Switch to opposite (ON → OPPOSITE): Change to the other light
+
+     This function handles THREE scenarios:
+     1. User hasn't voted → Add their vote
+     2. User clicks same vote again → Remove their vote (toggle off)
+     3. User switches vote → Change to opposite vote
+  */
+
+  const handleVote = async (reviewId, voteType) => {
+    /* ------------------------------------------
+       🔐 SECURITY CHECK: Must be logged in
+       ------------------------------------------
+       Like a bouncer at a club - if you don't have
+       an ID (user account), you can't enter!
+    */
+    if (!user) {
+      alert("Vous devez être connecté pour voter");
+      return; // Stop the function here ⛔
+    }
+
+    /* ------------------------------------------
+       📊 CHECK CURRENT VOTE STATUS
+       ------------------------------------------
+       Look in our "notebook" (userVotes) to see:
+       - What did this user vote before?
+       - Did they like it? Dislike it? Nothing?
+    */
+    const currentVote = userVotes[reviewId]; // Could be: "like", "dislike", or undefined
+
+    /* ------------------------------------------
+       🎯 DETERMINE THE ACTION
+       ------------------------------------------
+
+       SCENARIO 1: Click on SAME button twice
+       Example: User already liked it, clicks like again
+       → Result: REMOVE the vote (undo/toggle off)
+    */
+    if (currentVote === voteType) {
+      // Remove vote from our local tracking
+      const updatedVotes = { ...userVotes }; // Make a copy of the notebook
+      delete updatedVotes[reviewId]; // Erase this entry ✏️
+      setUserVotes(updatedVotes); // Update the notebook
+
+      /*
+         Update the review counts locally (optimistic update)
+         This makes the UI feel fast! Like instant gratification 🎁
+
+         We subtract 1 from whichever count they removed
+      */
+      setReviews(
+        reviews.map(
+          (review) =>
+            review._id === reviewId
+              ? {
+                  ...review, // Copy all existing review data
+                  // Ternary operator: condition ? ifTrue : ifFalse
+                  likes:
+                    voteType === "like"
+                      ? (review.likes || 0) - 1 // Remove from likes
+                      : review.likes || 0, // Keep likes the same
+                  dislikes:
+                    voteType === "dislike"
+                      ? (review.dislikes || 0) - 1 // Remove from dislikes
+                      : review.dislikes || 0, // Keep dislikes the same
+                }
+              : review, // Don't modify other reviews
+        ),
+      );
+
+      await axios.delete(
+        `https://site--oh-my-skin--cvtt47qfxcv8.code.run/reviews/${reviewId}/vote`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
 
-      setReviews([response.data, ...reviews]);
-      setForm({ name: "", rating: "", comment: "" });
+      return; // Stop here, we're done!
+    }
+
+    /* ------------------------------------------
+       SCENARIO 2 & 3: Add new vote OR switch vote
+       ------------------------------------------
+    */
+
+    // Update our local "notebook" with the new vote
+    setUserVotes({ ...userVotes, [reviewId]: voteType });
+
+    /*
+       🧮 CALCULATE NEW COUNTS
+
+       This is like updating a scoreboard:
+       - Add 1 to the chosen vote
+       - If switching, subtract 1 from the old vote
+    */
+    setReviews(
+      reviews.map((review) =>
+        review._id === reviewId
+          ? {
+              ...review,
+              likes:
+                voteType === "like"
+                  ? (review.likes || 0) + 1 // Add to likes
+                  : currentVote === "like"
+                    ? (review.likes || 0) - 1 // Switch: remove from likes
+                    : review.likes || 0, // No change
+              dislikes:
+                voteType === "dislike"
+                  ? (review.dislikes || 0) + 1 // Add to dislikes
+                  : currentVote === "dislike"
+                    ? (review.dislikes || 0) - 1 // Switch: remove from dislikes
+                    : review.dislikes || 0, // No change
+            }
+          : review,
+      ),
+    );
+
+    /*
+       📡 SEND TO BACKEND
+       Tell the server: "Hey, this user just voted!"
+    */
+    await axios.post(
+      `https://site--oh-my-skin--cvtt47qfxcv8.code.run/reviews/${reviewId}/vote`,
+      { voteType }, // Send "like" or "dislike"
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    );
+  };
+
+  // ✏️ Edit
+  const handleEdit = (review) => {
+    setEditingReview(review._id);
+    setEditComment(review.comment);
+    setEditRating(review.rating);
+  };
+
+  // 💾 Update
+  const handleUpdate = async (reviewId) => {
+    try {
+      await axios.put(
+        `https://site--oh-my-skin--cvtt47qfxcv8.code.run/reviews/${reviewId}`,
+        { comment: editComment, rating: editRating },
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+
+      setReviews(
+        reviews.map((review) =>
+          review._id === reviewId
+            ? { ...review, comment: editComment, rating: editRating }
+            : review,
+        ),
+      );
+      setEditingReview(null);
     } catch (error) {
-      console.error(error);
-      alert("Erreur lors de l'envoi de l'avis");
+      console.log(error);
+      alert("Erreur modification");
+    }
+  };
+
+  // 🗑️ Delete
+  const handleDelete = async (reviewId) => {
+    console.log("r", reviewId);
+
+    try {
+      await axios.delete(
+        `https://site--oh-my-skin--cvtt47qfxcv8.code.run/reviews/${reviewId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+
+      setReviews(reviews.filter((review) => review._id !== reviewId));
+    } catch (error) {
+      console.log(error);
+      alert("Erreur suppression");
     }
   };
 
@@ -100,9 +326,13 @@ const ProductDetails = ({ backPath, user }) => {
     );
   }
 
+  if (!product) {
+    return null;
+  }
+
   return (
     <section className="product-detail">
-      <Link className="product-detail__back" to={backPath}>
+      <Link className="product-detail__back" to={safeBackPath}>
         ← Retour
       </Link>
 
@@ -145,11 +375,129 @@ const ProductDetails = ({ backPath, user }) => {
             : "Pas encore d'avis"}
         </h3>
 
+        {/*
+          🔄 MAP THROUGH REVIEWS
+
+          ANALOGY: Like going through a photo album 📸
+          - Each review is a photo
+          - We look at each one and display it on the page
+
+          .map() is like a photocopier that:
+          1. Takes each review
+          2. Creates HTML for it
+          3. Returns all the HTMLs as a list
+        */}
         {reviews.map((review) => (
           <div key={review._id} className="review">
-            <strong>{review.name}</strong> - {"⭐".repeat(review.rating)}
+            <section>
+              <strong>
+                {review.name} - {"⭐".repeat(review.rating)}
+              </strong>
+              {user &&
+                review.userId === user._id &&
+                editingReview !== review._id && (
+                  <div className="review-author-actions">
+                    <button onClick={() => handleEdit(review)}>Modifier</button>
+                    <button onClick={() => handleDelete(review._id)}>
+                      Supprimer
+                    </button>
+                  </div>
+                )}
+            </section>
             <p>{review.comment}</p>
             <small>{new Date(review.createdAt).toLocaleDateString()}</small>
+            {editingReview === review._id && (
+              <form className="update-review">
+                <input
+                  value={editComment}
+                  onChange={(event) => setEditComment(event.target.value)}
+                />
+                <select
+                  value={editRating}
+                  onChange={(event) =>
+                    setEditRating(Number(event.target.value))
+                  }
+                >
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
+                  <option value={4}>4</option>
+                  <option value={5}>5</option>
+                </select>
+                <button onClick={() => handleUpdate(review._id)}>
+                  Valider
+                </button>
+                <button onClick={() => setEditingReview(null)}>Annuler</button>
+              </form>
+            )}
+            {/* ============================================
+                👍👎 LIKE/DISLIKE BUTTONS
+                ============================================
+
+                CONDITIONAL RENDERING (&&):
+                Think of && as "IF this is true, THEN show that"
+
+                Like a VIP section at a club:
+                - user && reviews.length > 0 means:
+                  "Show buttons ONLY IF user is logged in AND there are reviews"
+
+                Why?
+                - No user = no buttons (guests can't vote)
+                - No reviews = nothing to vote on
+            */}
+            {user && reviews.length > 0 && (
+              <div className="review-actions">
+                {/*
+                  👍 LIKE BUTTON
+
+                  onClick={() => handleVote(...)}
+                  - onClick: "When someone clicks this button..."
+                  - () => : "...run this function"
+                  - handleVote(review._id, "like"): The function we call
+
+                  Why arrow function? (() =>)
+                  Without it: onClick={handleVote()} would run IMMEDIATELY!
+                  With it: onClick={() => handleVote()} runs ONLY when clicked!
+
+                  Like the difference between:
+                  - Eating food now vs
+                  - Putting food in the fridge to eat later
+                */}
+                <button
+                  className={`vote-btn like-btn ${
+                    userVotes[review._id] === "like" ? "active" : ""
+                  }`}
+                  onClick={() => handleVote(review._id, "like")}
+                  title="J'aime cet avis"
+                >
+                  {/*
+                    👍 Icon and Count
+
+                    {review.likes || 0}
+                    - If review.likes exists, show it
+                    - If not (undefined/null), show 0
+
+                    Like checking your wallet:
+                    "How much money do I have? If empty, say $0"
+                  */}
+                  👍 <span>{review.likes || 0}</span>
+                </button>
+
+                {/*
+                  👎 DISLIKE BUTTON
+                  Same logic as like button, but for dislikes!
+                */}
+                <button
+                  className={`vote-btn dislike-btn ${
+                    userVotes[review._id] === "dislike" ? "active" : ""
+                  }`}
+                  onClick={() => handleVote(review._id, "dislike")}
+                  title="Je n'aime pas cet avis"
+                >
+                  👎 <span>{review.dislikes || 0}</span>
+                </button>
+              </div>
+            )}
           </div>
         ))}
 
@@ -178,7 +526,9 @@ const ProductDetails = ({ backPath, user }) => {
               required
             />
 
-            <button type="submit">Envoyer</button>
+            <button type="submit" disabled={reviewLock.isLocked}>
+              Envoyer
+            </button>
           </form>
         )}
       </div>

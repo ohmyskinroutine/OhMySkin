@@ -168,6 +168,113 @@
   font-size: 0.8rem;
 }
 
+/* ============================================
+   👍👎 LIKE/DISLIKE BUTTONS STYLING
+   ============================================ */
+
+/* Container for the buttons */
+.review-actions {
+  /* 
+    display: flex - Arrange items in a row (like books on a shelf)
+    gap: 0.5rem - Space between buttons (like bookends with spacing)
+    margin-top: 0.8rem - Space above the buttons
+  */
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+  align-items: center;
+}
+
+/* Base styling for vote buttons */
+.vote-btn {
+  /*
+    display: inline-flex - Makes button flexible for icon + text
+    align-items: center - Vertically centers the emoji and number
+    gap: 0.3rem - Small space between 👍 and the number
+  */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  /* 
+    padding: Size of the "clickable area"
+    Like the margins around a painting in a frame
+  */
+  padding: 0.4rem 0.8rem;
+
+  /*
+    Border and background - The button's appearance
+    Think of it like wrapping a gift 🎁
+  */
+  border: 1px solid #ddd;
+  border-radius: 20px; /* Rounded corners (like a pill shape) */
+  background-color: #fff;
+
+  /*
+    Cursor and transition - User interaction feedback
+    cursor: pointer - Hand icon appears (tells user "you can click me!")
+    transition - Smooth animation (like a door closing slowly vs slamming)
+  */
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  /* Text styling */
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* 
+  HOVER STATE: What happens when mouse is over the button
+  
+  Like a button lighting up when you touch it
+  This gives feedback: "Yes, you can click here!"
+*/
+.vote-btn:hover {
+  background-color: #f5f5f5; /* Slightly gray background */
+  border-color: #ccc; /* Darker border */
+  transform: translateY(-1px); /* Lift up slightly (subtle 3D effect) */
+}
+
+/* 
+  ACTIVE STATE: When user has already voted
+  
+  Think of it like a selected checkbox ✓
+  Shows: "You already voted on this!"
+*/
+.vote-btn.active {
+  font-weight: 600; /* Bolder text */
+  border-width: 2px; /* Thicker border */
+}
+
+/* Specific color for LIKE button when active */
+.like-btn.active {
+  background-color: #e8f5e9; /* Light green (positive vibes ✨) */
+  border-color: #4caf50; /* Green border */
+  color: #2e7d32; /* Dark green text */
+}
+
+/* Specific color for DISLIKE button when active */
+.dislike-btn.active {
+  background-color: #ffebee; /* Light red (negative vibes 💢) */
+  border-color: #f44336; /* Red border */
+  color: #c62828; /* Dark red text */
+}
+
+/* The number inside the button */
+.vote-btn span {
+  font-size: 0.8rem;
+  font-weight: 500;
+  /*
+    min-width ensures the number area doesn't jump around
+    when changing from 9 to 10 (one digit to two digits)
+    
+    Like a parking space that stays the same size
+    regardless of car size
+  */
+  min-width: 20px;
+  text-align: center;
+}
+
 /* Formulaire d'avis */
 .review-form {
   margin-top: 2rem;
@@ -178,7 +285,8 @@
 
 .review-form input,
 .review-form select,
-.review-form textarea {
+.review-form textarea,
+.update-review input {
   padding: 0.6rem 0.8rem;
   border-radius: 4px;
   border: 1px solid #ccc;
@@ -192,6 +300,47 @@
   align-self: flex-start;
   padding: 0.6rem 1.2rem;
   border-radius: 4px;
+}
+
+.review > section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-author-actions,
+.update-review {
+  display: inline-flex;
+  gap: 0.3rem;
+}
+.review-author-actions button,
+.update-review button {
+  align-items: center;
+  background-color: transparent;
+  margin-top: 10px;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+  color: #555;
+}
+.review-author-actions button:hover {
+  background-color: #f5f5f5;
+  border-color: #ccc;
+  transform: translateY(-1px);
+}
+
+.update-review {
+  margin-left: 200px;
+  gap: 10px;
+}
+
+.update-review select {
+  padding: 10px;
+  border-radius: 5px;
+  border-color: #ccc;
 }
 
 /* Responsive */

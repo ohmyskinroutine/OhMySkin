@@ -1,6 +1,6 @@
 import "./BrandProduct.css";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { CATEGORIES } from "../../constants/categories";
 
 const BrandProducts = () => {
@@ -34,7 +34,10 @@ const BrandProducts = () => {
 
   return (
     <section className="categories-page">
-      <button className="product-detail__back" onClick={() => navigate(-1)}>
+      <button
+        className="product-detail__back"
+        onClick={() => navigate("/marques")}
+      >
         ← Retour
       </button>
       <div className="categories-page__hero">
@@ -47,7 +50,16 @@ const BrandProducts = () => {
       ) : (
         <div className="categories-grid">
           {products.map((product) => (
-            <div key={product.code} className="categories-card">
+            <Link
+              key={product.code}
+              to={`/produit/${product.code}`}
+              state={{
+                //si ne trouve pas le chemin fais le chemin inverse vers la marque
+                backPath: `/marques/${encodeURIComponent(decodedBrand)}`,
+              }}
+              // pour que le retour revienne à la bonne marque
+              className="categories-card"
+            >
               <div className="categories-card__image-wrapper">
                 <img
                   src={
@@ -63,11 +75,11 @@ const BrandProducts = () => {
                   {product.brands || decodedBrand}
                 </p>
                 <p className="categories-card__name">
-                  {product.product_name || "Nom inconnu"}
+                  {product.product_name || "Oh My Skin Exclusive Care"}
                 </p>
                 <p className="categories-card__qty">{product.quantity || ""}</p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}

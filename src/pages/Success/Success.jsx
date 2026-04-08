@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Success = () => {
   return (
-    <div className="success-page">
+    <main className="success-page">
       <div className="success-page__hero">
         <h1 className="success-page__title">Merci pour votre achat</h1>
         <div className="success-page__buttons">
@@ -24,7 +24,7 @@ const Success = () => {
           </Link>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 
