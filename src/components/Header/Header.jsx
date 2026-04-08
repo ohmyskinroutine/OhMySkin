@@ -27,9 +27,7 @@ const Header = ({ user, setUser }) => {
         {},
         { headers: { Authorization: `Bearer ${user.token}` } },
       );
-    } catch {
-      // on déconnecte côté client même si le serveur ne répond pas
-    }
+    } catch {}
     Cookies.remove("user");
     setUser(null);
     setShowLogoutModal(false);

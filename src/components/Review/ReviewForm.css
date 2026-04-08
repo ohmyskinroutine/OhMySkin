@@ -1,0 +1,58 @@
+.reviews {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.reviews h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+  color: #333;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.3rem;
+}
+
+.reviews__average {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Formulaire d'avis */
+.review-form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.review-form select,
+.review-form textarea {
+  padding: 0.6rem 0.8rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.review-form button {
+  align-self: flex-start;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .review-form {
+    gap: 0.6rem;
+  }
+
+  .reviews__average {
+    font-size: 1rem;
+  }
+}

@@ -8,7 +8,6 @@ import { mapProducts } from "../../utils/mapProducts";
 import { useLocation, useNavigate } from "react-router-dom";
 import RoutineBlock from "../../components/RoutineBlock/RoutineBlock";
 import SkinBackground from "../../components/SkinBackground/SkinBackground";
-
 import useButtonLock from "../../hooks/useButtonLock";
 
 function Results({ user }) {
@@ -20,8 +19,6 @@ function Results({ user }) {
   if (user) {
     token = user.token;
   }
-
-  // console.log("token", token);
 
   const [products, setProducts] = useState([]);
   const [routine, setRoutine] = useState(null);
@@ -38,7 +35,7 @@ function Results({ user }) {
     // empêche de spam le bouton
     await emailLock.runWithLock(async () => {
       try {
-        //si connecté n utilise le mail user sinon celui rentré dans
+        //si connecté utilise le mail user sinon celui rentré dans
         const emailToSend = token ? user.email : email;
         console.log("ici user", user);
 
@@ -118,7 +115,6 @@ function Results({ user }) {
         window.location.reload();
       } catch (err) {
         console.error(err);
-        // console.log("ici msgggggg=>", err.message);
         alert("Erreur lors de la réinitialisation de la routine");
       }
     });

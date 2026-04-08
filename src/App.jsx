@@ -18,15 +18,14 @@ import Categories from "./pages/Categories/Categories";
 import BrandProducts from "./pages/Brands/BrandProduct";
 import ProductDetails from "./pages/Products/ProductDetails";
 import Questionnaire from "./pages/Questionnaire/Questionnaire";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoutes/ProtectedRoute";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   const [user, setUser] = useState(() => {
     const stored = Cookies.get("user");
     return stored ? JSON.parse(stored) : null;
   });
-  // console.log(user);
 
   // Liens catégories
   const creamUrl =
@@ -110,13 +109,9 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/marques" element={<Brands />} />
         <Route path="/marques/:brand" element={<BrandProducts />} />
-
-        {/* Route pour les brands products details */}
         <Route path="/produit/:code" element={<ProductDetails user={user} />} />
-
         <Route path="/formulaire" element={<Questionnaire />} />
         <Route path="/routine" element={<Results user={user} />} />
-
         <Route
           path="/profile"
           element={<Profile user={user} setUser={setUser} />}
@@ -137,7 +132,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="*"
           element={
@@ -145,7 +139,6 @@ function App() {
           }
         />
         <Route path="/favorites" element={<Favorites user={user} />} />
-        {/* ⬆️⬆️⬆️⬆️ À garder. Pour que l'utilisateur puisse accéder à ses favoris uniquement s'il est connecté */}
         <Route path="/historique" element={<History user={user} />} />
       </Routes>
       <Footer />
