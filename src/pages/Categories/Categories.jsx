@@ -40,7 +40,7 @@ const Categories = ({ title, url, user }) => {
       try {
         const { data } = await axios.delete(
           `${BASE_URL}/favorites/${product.code}`,
-          { headers: { Authorization: `Bearer ${user.token}` } }
+          { headers: { Authorization: `Bearer ${user.token}` } },
         );
         setFavorites(data.favorites);
       } catch {
@@ -56,7 +56,7 @@ const Categories = ({ title, url, user }) => {
             image: product.image_front_url || product.image_url,
             brands: product.brands,
           },
-          { headers: { Authorization: `Bearer ${user.token}` } }
+          { headers: { Authorization: `Bearer ${user.token}` } },
         );
         setFavorites(data.favorites);
       } catch {
@@ -84,7 +84,7 @@ const Categories = ({ title, url, user }) => {
             const hasBrand = product.brands?.trim();
 
             return hasName && hasImage && hasBrand;
-          })
+          }),
         );
       } catch (error) {
         setError(`Erreur lors du chargement de ${title.toLowerCase()}.`);
