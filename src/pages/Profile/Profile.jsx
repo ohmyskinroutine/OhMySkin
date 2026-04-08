@@ -3,6 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Modal from "../../components/Modal/Modal";
 
 const BASE_URL = "https://site--oh-my-skin--cvtt47qfxcv8.code.run";
 
@@ -205,27 +206,14 @@ const Profile = ({ user, setUser }) => {
         </div>
       </div>
       {modal && (
-        <div className="modal-overlay" onClick={() => setModal(false)}>
-          <div className="modal" onClick={(event) => event.stopPropagation()}>
-            <p className="modal__text">
-              Êtes-vous sûr.e de vouloir supprimer votre compte ?
-            </p>
-            <div className="modal__actions">
-              <button
-                className="modal__btn modal__btn--cancel"
-                onClick={() => setModal(false)}
-              >
-                Annuler
-              </button>
-              <button
-                className="modal__btn modal__btn--confirm"
-                onClick={removeUser}
-              >
-                Supprimer
-              </button>
-            </div>
-          </div>
-        </div>
+        <Modal
+          isOpen={modal}
+          onClose={() => setModal(false)}
+          onConfirm={removeUser}
+          text="Êtes-vous sûr.e de vouloir supprimer votre compte ?"
+          confirmText="Supprimer"
+          cancelText="Annuler"
+        />
       )}
     </>
   );
