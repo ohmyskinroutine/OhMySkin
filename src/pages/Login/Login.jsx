@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import AuthField from "../../components/AuthField/AuthField";
 import useAuth from "../../hooks/useAuth";
 import { loginUser } from "../../services/authService";
-import "./Login.css";
+import "../../components/AuthField/auth.css";
 
 const Login = ({ setUser }) => {
   const [email, setEmail] = useState("");
