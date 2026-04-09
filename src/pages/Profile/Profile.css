@@ -152,7 +152,7 @@
 }
 
 .supress-btn {
-  background-color: #c62828;
+  background-color: #e53935;
   color: #f4ece8 !important;
   text-transform: uppercase;
   width: 100%;
@@ -167,4 +167,8 @@
   display: block;
   box-sizing: border-box;
   margin: 20px 0;
+}
+
+.supress-btn:hover {
+  background: #c62828;
 }
