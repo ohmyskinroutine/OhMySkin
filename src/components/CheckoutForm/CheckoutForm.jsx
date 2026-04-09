@@ -42,8 +42,6 @@ const CheckoutForm = ({ price }) => {
         "https://site--oh-my-skin--cvtt47qfxcv8.code.run/payment",
       );
 
-      console.log("response => ", response.data);
-
       // const { client_secret: clientSecret } = response.data;
 
       // Confirm the PaymentIntent using the details collected by the Payment Element
