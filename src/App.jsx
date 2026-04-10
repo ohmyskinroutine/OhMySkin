@@ -4,7 +4,7 @@ import { useState } from "react";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
-import Brands from "./pages/brands/Brands";
+import Brands from "./pages/Brands/Brands";
 import Search from "./pages/Search/Search";
 import Profile from "./pages/Profile/Profile";
 import Results from "./pages/Results/Results";
