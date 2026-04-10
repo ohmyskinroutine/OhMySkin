@@ -51,8 +51,12 @@ const CheckoutForm = ({ price }) => {
         elements: elements,
         clientSecret: response.data.client_secret,
         confirmParams: {
-          return_url: "http://localhost:5173/success",
+          // what other url than http://localhost:5173/success can I use to be redirected to the page success?
+
+          // return_url: "http://localhost:5173/success",
+          return_url: `${window.location.origin}/success`,
         },
+
         // Bloque la redirections
         redirect: "if_required",
       });
